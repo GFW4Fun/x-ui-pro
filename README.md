@@ -61,8 +61,3 @@ https://cloudflare-scanner.vercel.app |
 https://ircfspace.github.io/scanner/
 
 
-![](https://hits.sh/github.com/GFW4Fun/x-ui-pro.svg?label=x-ui-pro&extraCount=20&logo=firefox)
-
-
-
-
