@@ -51,15 +51,14 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/client_config.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Server Allow to ports ⚙️
-> Allow to SSH HTTP HTTPS
-> 
 > Allow to 22,80,443
 >
 ```
 apt install ufw -y
 ufw reset && ufw enable
-ufw allow 22,80,443/tcp
-ufw allow 22,80,443/udp
+ufw allow ssh
+ufw allow http
+ufw allow https
 ```
 
 
