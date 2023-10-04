@@ -49,16 +49,6 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Client Configuration :white_check_mark:	:computer:🔌
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/client_config.png)
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-### Server Allow to ports ⚙️
-```
-apt install ufw -y
-ufw reset && ufw enable
-ufw allow ssh #22
-ufw allow http #80
-ufw allow https #443
-```
-
 
 ## Tools
 ### Cloudflare Find Good IP (VPN off❗ during scanning)
