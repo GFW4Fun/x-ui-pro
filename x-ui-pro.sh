@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.0 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.1 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "Run as root!" && exit 1
 if [[ -f /etc/redhat-release ]]; then Pak="yum"
 elif grep -Eqi "debian" /etc/issue; then Pak="apt"
@@ -211,7 +211,7 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "\nX-UI Admin Panel: https://${domain}/${RNDSTR}\n"
-	sqlite3 -box $XUIDB 'SELECT "username","password" FROM users;'
+	sqlite3 -batch -interactive -line -table -box $XUIDB 'SELECT "username","password" FROM users;'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
