@@ -211,7 +211,7 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "\nX-UI Admin Panel: https://${domain}/${RNDSTR}\n"
-	sqlite3 -batch -interactive -line -table -box $XUIDB 'SELECT "username","password" FROM users;'
+	sqlite3 -batch -interactive -line -table $XUIDB 'SELECT "username","password" FROM users;'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
