@@ -56,6 +56,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 CF IP Range: https://www.cloudflare.com/ips/
 
 CF IP Scanner:
+https://vfarid.github.io/cf-ip-scanner/ |
 https://cloudflare-scanner.vercel.app |
 https://ircfspace.github.io/scanner/
 
