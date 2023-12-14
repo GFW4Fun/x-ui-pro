@@ -17,7 +17,7 @@
 **Install Panel**:dvd::package:
 
 ```
-bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 0
+bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1
 ```
 > -panel 0> FranzKafkaYu 1> MHSanaei 2> alireza0
 > 
