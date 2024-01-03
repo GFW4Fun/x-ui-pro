@@ -62,4 +62,4 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 <h6>CF IP Scanner: https://vfarid.github.io/cf-ip-scanner/ | https://cloudflare-scanner.vercel.app | https://ircfspace.github.io/scanner/</h6>
 
 ##
-[![Star History Chart](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro)](https://star-history.com/#GFW4Fun/x-ui-pro)
+![](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro&type=Date)
