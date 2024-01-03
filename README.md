@@ -58,8 +58,10 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/xui-warp.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Cloudflare Find Good IP (VPN off❗ during scanning)
-<h6>CCF IP Range: https://www.cloudflare.com/ips/</h6>
-<h6>CF IP Scanner: https://vfarid.github.io/cf-ip-scanner/ | https://cloudflare-scanner.vercel.app | https://ircfspace.github.io/scanner/</h6>
+Cloudflare IP Range: https://www.cloudflare.com/ips/
+
+Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/)
 
 ##
-![](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro&type=Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro&type=Date)](https://github.com/GFW4Fun/x-ui-pro)
+
