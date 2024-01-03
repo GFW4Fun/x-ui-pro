@@ -52,16 +52,15 @@ bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Fix Error 403 (Forbidden)❗️❗️ Google
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
+> bash > x-ui
+> 
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warp.png)
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/xui-warp.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Cloudflare Find Good IP (VPN off❗ during scanning)
+<h6>CCF IP Range: https://www.cloudflare.com/ips/</h6>
+<h6>CF IP Scanner: https://vfarid.github.io/cf-ip-scanner/ | https://cloudflare-scanner.vercel.app | https://ircfspace.github.io/scanner/</h6>
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
-CF IP Range: https://www.cloudflare.com/ips/
-
-CF IP Scanner:
-https://vfarid.github.io/cf-ip-scanner/ |
-https://cloudflare-scanner.vercel.app |
-https://ircfspace.github.io/scanner/
-
-
+### Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro)](https://star-history.com/#GFW4Fun/x-ui-pro)
