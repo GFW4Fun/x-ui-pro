@@ -9,7 +9,6 @@
 - Access to x-ui panel via nginx
 - Compatible with Debian 10+ and Ubuntu 20+
 - More security and low detection with nginx
-- Nginx with anti-exploit, keepalive=on, cache=off
 - Random 150+ fake template!
   
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
