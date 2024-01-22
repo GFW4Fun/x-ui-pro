@@ -1,36 +1,15 @@
 #!/bin/bash
-############### x-ui-pro v1.1 @ github.com/GFW4Fun ##############
-[[ $EUID -ne 0 ]] && echo "Run as root!" && exit 1
-if [[ -f /etc/redhat-release ]]; then Pak="yum"
-elif grep -Eqi "debian" /etc/issue; then Pak="apt"
-elif grep -Eqi "ubuntu" /etc/issue; then Pak="apt"
-elif grep -Eqi "centos|red hat|redhat" /etc/issue; then Pak="yum"
-elif grep -Eqi "debian|raspbian" /proc/version; then Pak="apt"
-elif grep -Eqi "ubuntu" /proc/version; then Pak="apt"
-elif grep -Eqi "centos|red hat|redhat" /proc/version; then Pak="yum"
-fi
-################################Msg#################################
-Green="\033[32m"
-Red="\033[31m"
-Yellow="\033[33m"
-Blue="\033[36m"
-Font="\033[0m"
-OK="${Green}[OK]${Font}"
-ERROR="${Red}[ERROR]${Font}"
-function msg_inf() {  echo -e "${Blue} $1 ${Font}"; }
-function msg_ok() { echo -e "${OK} ${Blue} $1 ${Font}"; }
-function msg_err() { echo -e "${ERROR} ${Yellow} $1 ${Font}"; }
-echo
-echo " ##     ##         ##     ## ####         ########  ########   ####### ";
-echo "  ##   ##          ##     ##  ##          ##     ## ##     ## ##     ## ";
-echo "   ## ##           ##     ##  ##          ##     ## ##     ## ##     ## ";
-echo "    ###    ####### ##     ##  ##  ####### ########  ########  ##     ## ";
-echo "   ## ##           ##     ##  ##          ##        ##   ##   ##     ## ";
-echo "  ##   ##          ##     ##  ##          ##        ##    ##  ##     ## ";
-echo " ##     ##          #######  ####         ##        ##     ##  ####### ";
-echo
-#####################Random String and Port ####################################
+############### x-ui-pro v1.2 @ github.com/GFW4Fun ##############
+[[ $EUID -ne 0 ]] && echo "not root!" && exit 1
+Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
+msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
+msg_err() { echo -e "\e[1;41m $1 \e[0m";}
+msg_inf() { echo -e "\e[1;34m$1\e[0m";}
+echo;msg_inf '           ___    _   _   _  '	;
+msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
+msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
     status="$(nc -z 127.0.0.1 $PORT < /dev/null &>/dev/null; echo $?)"
@@ -39,11 +18,6 @@ while true; do
     fi
 done
 ################################Get arguments########################
-XUIDB="/etc/x-ui/x-ui.db"
-domain=""
-UNINSTALL="x"
-INSTALL="n"
-PNLNUM=0
 while [ "$#" -gt 0 ]; do
   case "$1" in
     -install) INSTALL="$2"; shift 2;;
@@ -77,13 +51,13 @@ while true; do
 			break
 		fi
 	fi
-	echo -en "${Blue}Enter available subdomain${Font} (${Yellow}sub.domain.tld${Font}): " && read domain 
+	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
 done
 ###############################Install Packages#############################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
 	$Pak -y install nginx-full certbot python3-certbot-nginx sqlite3 
-	systemctl enable --now nginx
+	systemctl daemon-reload && systemctl enable --now nginx
 fi
 #########################Install nginx Config###############################
 systemctl stop nginx 
@@ -112,21 +86,13 @@ server {
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
 	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 444; }
-	if (\$request_method !~ ^(GET|HEAD|POST|PUT|DELETE)\$ ) { return 444; }
-	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-	location ~* (?:\.(?:db|json|pub|pem|config|conf|inf|ini|inc|bak|sql|log|py|sh|passwd|pwd|cgi|lua)|~)\$ { deny all; }
-	location ~* (\`|"|'|0x00|%0A|%0D|%27|%22|%3C|%3E|%00|%60|%24&x|%0|%A|%B|%C|%D|%E|%F|127\.0) { deny all; }
-	location ~* "(&pws=0|_vti_|\(null\)|\{\$itemURL\}|echo(.*)kae|etc/passwd|eval\(|self/environ)" { deny all; }
-	location ~ "(\\|\.\.\.|\.\./|~|\`|<|>|\|)" { deny all; }
-	location ~* [a-zA-Z0-9_]=(\.\.//?)+ { deny all; }
-	location ~* [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ { deny all; }
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 		proxy_pass http://127.0.0.1:$PORT;
-   }
+	}
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 		client_max_body_size 0;
 		client_body_timeout 1d;
@@ -166,10 +132,7 @@ fi
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
 	sqlite3 $XUIDB <<EOF
-	DELETE FROM "settings" WHERE "key"="webPort";
-	DELETE FROM "settings" WHERE "key"="webCertFile";
-	DELETE FROM "settings" WHERE "key"="webKeyFile";
-	DELETE FROM "settings" WHERE "key"="webBasePath";
+	DELETE FROM "settings" WHERE ( "key"="webPort" ) OR ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ) OR ( "key"="webBasePath" ); 
 	INSERT INTO "settings" ("key", "value") VALUES ("webPort",  "${PORT}");
 	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
 	INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
@@ -184,9 +147,9 @@ if systemctl is-active --quiet x-ui; then
 	UPDATE_XUIDB
 	x-ui restart
 else
-	PANEL=("https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
-		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh")
+	PANEL=(	"https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+		)
 
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
 	UPDATE_XUIDB
@@ -198,12 +161,11 @@ else
 fi
 ######################cronjob for ssl and reload service##################
 crontab -l | grep -v "certbot\|x-ui" | crontab -
-(crontab -l 2>/dev/null; echo '0 1 * * * x-ui restart && nginx -s reload') | crontab -
-(crontab -l 2>/dev/null; echo '0 0 1 * * certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload"') | crontab -
+(crontab -l 2>/dev/null; echo '0 1 * * * x-ui restart > /dev/null 2>&1 && nginx -s reload;') | crontab -
+(crontab -l 2>/dev/null; echo '0 0 1 * * certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details############################
 XUIPORT=$(sqlite3 -list $XUIDB 'SELECT "value" FROM settings WHERE "key"="webPort" LIMIT 1;' 2>&1)
 if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
