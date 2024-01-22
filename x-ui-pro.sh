@@ -123,7 +123,7 @@ EOF
 ###################################Enable Site###############################
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	unlink /etc/nginx/sites-enabled/default 2>/dev/null
-	ln -s "/etc/nginx/sites-available/$MainDomain" /etc/nginx/sites-enabled/
+	ln -s "/etc/nginx/sites-available/$MainDomain" /etc/nginx/sites-enabled/ 2>/dev/null
 	systemctl start nginx 
 else
 	msg_err "$MainDomain nginx config not exist!" && exit 1
