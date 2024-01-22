@@ -18,7 +18,7 @@
 ```
 bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1
 ```
-> -panel 0> FranzKafkaYu 1> MHSanaei 2> alireza0
+> -panel 0> alireza0 1> MHSanaei 
 > 
 > For the additional subdomain, New A,AAAA[VPSIP] Recorde , no any config in vps!!!
 >
