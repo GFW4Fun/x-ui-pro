@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.2 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.3 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && exit 1
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -44,9 +44,8 @@ fi
 ##############################Domain Validations######################
 while true; do
 	domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
-	SubDomain=$(echo "$domain" 2>&1 | sed 's/^[^ ]* \|\..*//g')
 	MainDomain=$(echo "$domain" 2>&1 | sed 's/.*\.\([^.]*\..*\)$/\1/')
-	if [[ -n "$domain" ]] &&  [[ "${SubDomain}.${MainDomain}" == "${domain}" ]] ; then
+	if [[ -n "$domain" ]]; then
 		if [[ -n $(host "$domain" 2>/dev/null | grep -v NXDOMAIN) ]]; then
 			break
 		fi
