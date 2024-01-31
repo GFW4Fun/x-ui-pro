@@ -44,8 +44,12 @@ fi
 ##############################Domain Validations######################
 while true; do
 	domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
+	SubDomain=$(echo "$domain" 2>&1 | sed 's/^[^ ]* \|\..*//g')
 	MainDomain=$(echo "$domain" 2>&1 | sed 's/.*\.\([^.]*\..*\)$/\1/')
-	if [[ -n "$domain" ]]; then
+	if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
+		MainDomain=${domain}
+	fi
+	if [[ -n "$domain" ]] ; then
 		if [[ -n $(host "$domain" 2>/dev/null | grep -v NXDOMAIN) ]]; then
 			break
 		fi
