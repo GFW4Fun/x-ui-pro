@@ -153,6 +153,7 @@ else
 	PANEL=(	 "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
 		 "https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
   		 "https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
+     		 "https://gitlab.com/rwkgyg/x-ui-yg/raw/main/install.sh"
 		)
 
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
