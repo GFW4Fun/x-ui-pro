@@ -26,7 +26,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 >
 > No need to on/off CDN, during installation
 >
-**Add New Domain**:heavy_plus_sign:	
+**ADD New Domain**:heavy_plus_sign:	
 ```
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -subdomain sub.newdomain.com"
 ```
