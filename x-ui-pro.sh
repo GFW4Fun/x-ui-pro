@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.3.1 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.3.3 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && exit 1
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -42,39 +42,47 @@ if [[ ${UNINSTALL} == *"y"* ]]; then
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations######################
-while true; do
+	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
+	domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
+	
+	if [[ -n "$domain" ]] ; then
+		if [[ -n $(host "$domain" 2>/dev/null | grep -v NXDOMAIN) ]]; then
+			msg_ok "Domain is Valid!"
+		else
+			echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
+		fi
+	else
+		echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
+	fi
+	
 	domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
 	SubDomain=$(echo "$domain" 2>&1 | sed 's/^[^ ]* \|\..*//g')
 	MainDomain=$(echo "$domain" 2>&1 | sed 's/.*\.\([^.]*\..*\)$/\1/')
+	
 	if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 		MainDomain=${domain}
 	fi
-	if [[ -n "$domain" ]] ; then
-		if [[ -n $(host "$domain" 2>/dev/null | grep -v NXDOMAIN) ]]; then
-			break
-		fi
-	fi
-	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
-done
 ###############################Install Packages#############################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
 	$Pak -y install nginx-full certbot python3-certbot-nginx sqlite3 
 	systemctl daemon-reload && systemctl enable --now nginx
 fi
-#########################Install nginx Config###############################
 systemctl stop nginx 
 fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
-if [[ ! -f "/etc/letsencrypt/live/${MainDomain}/privkey.pem" ]]; then
-	certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
-else
-	msg_ok "$MainDomain SSL Certificate is exist!"
-fi
-sleep 3
-if [[ ! -f "/etc/letsencrypt/live/${MainDomain}/privkey.pem" ]]; then
+##############################Install SSL####################################
+for D in `find /etc/letsencrypt/live -mindepth 1 -type d -exec basename {} \;`; do
+	if [[ $D == *"${MainDomain}"* ]]; then
+		certbot delete --non-interactive --cert-name ${MainDomain}
+	fi       
+done
+ 
+certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
+
+if [ ! -d "/etc/letsencrypt/live/${MainDomain}" ]; then
 	msg_err "$MainDomain SSL certificate could not be generated, Maybe the domain or IP domain is invalid!" && exit 1
 fi
-
+###########################################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
 server {
 	server_name ~^((?<subdomain>.*)\.)?(?<domain>[^.]+)\.(?<tld>[^.]+)\$;
@@ -150,9 +158,9 @@ if systemctl is-active --quiet x-ui; then
 	UPDATE_XUIDB
 	x-ui restart
 else
-	PANEL=(	 "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-		 "https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-  		 "https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
+	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+			"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
 		)
 
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
@@ -179,6 +187,7 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
  	echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
 	echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	msg_inf "Please Save this Screen!!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "sqlite and x-ui to be checked, try on a new clean linux! "
