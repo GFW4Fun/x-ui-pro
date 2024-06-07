@@ -13,7 +13,7 @@
   
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
-**Install Panel**:dvd::package:
+**Install X-UI-PRO**:dvd::package:
 
 ```
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 0"
