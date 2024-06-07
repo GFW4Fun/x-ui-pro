@@ -79,7 +79,7 @@ done
  
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
 
-if [ ! -d "/etc/letsencrypt/live/${MainDomain}" ]; then
+if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL certificate could not be generated, Maybe the domain or IP domain is invalid!" && exit 1
 fi
 ###########################################################################
