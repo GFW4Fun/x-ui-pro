@@ -1,6 +1,6 @@
 #!/bin/bash
 ############### x-ui-pro v1.3.3 @ github.com/GFW4Fun ##############
-[[ $EUID -ne 0 ]] && echo "not root!" && exit 1
+[[ $EUID -ne 0 ]] && echo "not root!" && sudo su
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
