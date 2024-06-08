@@ -48,11 +48,11 @@ while true; do
 		break
 	fi
 done
-	
+
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
 SubDomain=$(echo "$domain" 2>&1 | sed 's/^[^ ]* \|\..*//g')
 MainDomain=$(echo "$domain" 2>&1 | sed 's/.*\.\([^.]*\..*\)$/\1/')
-	
+
 if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 	MainDomain=${domain}
 fi
@@ -66,7 +66,7 @@ systemctl stop nginx
 fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 ##############################Install SSL####################################
 for D in `find /etc/letsencrypt/live -mindepth 1 -type d -exec basename {} \;`; do
-	if [[ $D == *"${MainDomain}" ]]; then
+	if [[ $D == "${MainDomain}" ]]; then
 		certbot delete --non-interactive --cert-name ${MainDomain}
 	fi       
 done
