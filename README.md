@@ -4,7 +4,7 @@
 - Auto SSL renewal (cronjob)
 - Auto-reload nginx and x-ui
 - Multi-domain and sub-domain support
-- Handle WebSocket and GRPC via nginx.
+- Handle WebSocket/GRPC/HttpUgrade via nginx.
 - Multi-user and config via port 443
 - Access to x-ui panel via nginx
 - Compatible with Debian 10+ and Ubuntu 20+
