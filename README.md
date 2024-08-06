@@ -12,15 +12,12 @@
 **Install X-UI-PRO**:dvd::package:
 
 ```
-sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 0"
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
 ```
-> -panel 0>alireza 1>MHSanaei 2>FranzKafkaYu
 > 
-> For the additional subdomain, New A,AAAA[VPSIP] Recorde , no any config in vps!!!
->
-> SSL works for (yourdomain.com, *.yourdomain.com)
->
-> No need to on/off CDN, during installation
+> -ONLY_CF_IP_ALLOW yes   ### Highly recommended if CDN=ON
+> 
+> SSL works for (yourdomain.com, *.yourdomain.com) / For the additional subdomain, New A,AAAA[VPSIP] Recorde
 >
 
 **Random Fake HTMLSite**:earth_asia:	
