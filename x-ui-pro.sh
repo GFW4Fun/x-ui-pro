@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.3.6 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.4.1 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -9,7 +9,7 @@ echo;msg_inf '           ___    _   _   _  '	;
 msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
 msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n"
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
     status="$(nc -z 127.0.0.1 $PORT < /dev/null &>/dev/null; echo $?)"
@@ -23,6 +23,7 @@ while [ "$#" -gt 0 ]; do
     -install) INSTALL="$2"; shift 2;;
     -panel) PNLNUM="$2"; shift 2;;
     -subdomain) domain="$2"; shift 2;;
+    -ONLY_CF_IP_ALLOW) CFALLOW="$2"; shift 2;;
     -uninstall) UNINSTALL="$2"; shift 2;;
     *) shift 1;;
   esac
@@ -36,17 +37,18 @@ UNINSTALL_XUI(){
 	$Pak -y autoremove
 	$Pak -y autoclean
 	rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
+	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations######################
-while true; do
-	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
+while true; do	
 	if [[ ! -z "$domain" ]]; then
 		break
 	fi
+	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
 done
 
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
@@ -59,7 +61,7 @@ fi
 ###############################Install Packages#############################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
-	$Pak -y install nginx certbot python3-certbot-nginx sqlite3 
+	$Pak -y install curl nginx certbot python3-certbot-nginx sqlite3 
 	systemctl daemon-reload && systemctl enable --now nginx
 fi
 systemctl stop nginx 
@@ -74,7 +76,30 @@ done
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
 
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
-	msg_err "$MainDomain SSL certificate could not be generated, Maybe the domain or IP domain is invalid!" && exit 1
+	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
+fi
+################################# Access to configs only with cloudflare 
+cat << 'EOF' >> /etc/nginx/cloudflareips.sh
+#!/bin/bash
+CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
+CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
+echo "geo \$realip_remote_addr \$cloudflare_ip {
+	default 0;" >> $CLOUDFLARE_WHITELIST_PATH
+for type in v4 v6; do
+	echo "# IP$type"
+	for ip in `curl https://www.cloudflare.com/ips-$type`; do
+		echo "set_real_ip_from $ip;" >> $CLOUDFLARE_REAL_IPS_PATH;
+		echo "	$ip 1;" >> $CLOUDFLARE_WHITELIST_PATH;
+	done
+done
+echo "real_ip_header X-Real-IP;" >> $CLOUDFLARE_REAL_IPS_PATH
+echo "}" >> $CLOUDFLARE_WHITELIST_PATH
+EOF
+sudo bash "/etc/nginx/cloudflareips.sh" 1>&2
+if [[ ${CFALLOW} == *"y"* ]]; then
+	CF_IP="if (\$cloudflare_ip != 1) {return 404;}";
+	else	
+	CF_IP="";
 fi
 ###########################################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -99,6 +124,7 @@ server {
 		proxy_pass http://127.0.0.1:$PORT;
 	}
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
+		$CF_IP
 		client_max_body_size 0;
 		client_body_timeout 1d;
 		grpc_read_timeout 1d;
@@ -169,7 +195,8 @@ else
 	x-ui restart
 fi
 ######################cronjob for ssl and reload service##################
-crontab -l | grep -v "certbot\|x-ui" | crontab -
+crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
+(crontab -l 2>/dev/null; echo '@monthly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '0 1 * * * x-ui restart > /dev/null 2>&1 && nginx -s reload;') | crontab -
 (crontab -l 2>/dev/null; echo '0 0 1 * * certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details############################
