@@ -81,7 +81,8 @@ fi
 ################################# Access to configs only with cloudflare 
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
-CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
+rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
+CLOUDFLARE_REAL_IPS_PATH=rm /etc/nginx/conf.d/cloudflare_real_ips.conf
 CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
 echo "geo \$realip_remote_addr \$cloudflare_ip {
 	default 0;" >> $CLOUDFLARE_WHITELIST_PATH
@@ -95,7 +96,7 @@ done
 echo "real_ip_header X-Real-IP;" >> $CLOUDFLARE_REAL_IPS_PATH
 echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
-sudo bash "/etc/nginx/cloudflareips.sh" 1>&2
+sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
 if [[ ${CFALLOW} == *"y"* ]]; then
 	CF_IP="if (\$cloudflare_ip != 1) {return 404;}";
 	else	
