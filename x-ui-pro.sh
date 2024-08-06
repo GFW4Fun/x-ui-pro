@@ -82,7 +82,7 @@ fi
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
-CLOUDFLARE_REAL_IPS_PATH=rm /etc/nginx/conf.d/cloudflare_real_ips.conf
+CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
 CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
 echo "geo \$realip_remote_addr \$cloudflare_ip {
 	default 0;" >> $CLOUDFLARE_WHITELIST_PATH
