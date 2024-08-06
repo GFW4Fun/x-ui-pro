@@ -16,7 +16,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 > 
 > -ONLY_CF_IP_ALLOW yes  >  Highly recommended if CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON
 > 
-> SSL works for (yourdomain.com, *.yourdomain.com) / For the additional subdomain, New A,AAAA[VPSIP] Recorde
+> SSL works for (domain.com, *.domain.com) / For the additional subdomain, New A,AAAA[IP] Recorde
 >
 
 **Random Fake HTMLSite**:earth_asia:	
