@@ -1,6 +1,5 @@
 ## x-ui-pro (x-ui + nginx) :octocat:	:open_file_folder:	
 - Auto Installation (lightweight)
-- Compatible with Cloudflare (CDN)
 - Auto SSL renewal / Daily reload Nginx X-ui
 - Handle **WebSocket/GRPC/HttpUgrade** via **nginx**.
 - Multi-user and config via port **443**
@@ -15,7 +14,7 @@
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> -ONLY_CF_IP_ALLOW yes  >  Highly recommended if CloudflareCDN=ON
+> -ONLY_CF_IP_ALLOW yes  >  Highly recommended if CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON
 > 
 > SSL works for (yourdomain.com, *.yourdomain.com) / For the additional subdomain, New A,AAAA[VPSIP] Recorde
 >
