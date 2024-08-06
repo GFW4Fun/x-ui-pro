@@ -18,7 +18,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 > 
 > SSL works for (domain.com, *.domain.com) / For the additional subdomain, New A,AAAA[IP] Recorde
 >
-> if <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON Cloudflare > SSL/TLS > Full (strict)
+> if <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON >Cloudflare > SSL/TLS > Full (strict)!
 
 **Random Fake HTMLSite**:earth_asia:	
 ```
