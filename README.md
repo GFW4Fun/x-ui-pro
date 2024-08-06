@@ -14,7 +14,7 @@
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> Highly recommended -ONLY_CF_IP_ALLOW yes + (CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON)
+> Highly recommended -ONLY_CF_IP_ALLOW yes  (CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON)
 >
 > If <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON set Cloudflare> SSL/TLS >Full (strict) Else Full
 >
