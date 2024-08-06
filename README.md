@@ -1,8 +1,7 @@
 ## x-ui-pro (x-ui + nginx) :octocat:	:open_file_folder:	
 - Auto Installation (lightweight)
-- Compatible with Cloudflare
-- Auto SSL renewal (cronjob)
-- Auto-reload nginx and x-ui
+- Compatible with Cloudflare (CDN)
+- Auto SSL renewal / Daily reload Nginx X-ui
 - Handle **WebSocket/GRPC/HttpUgrade** via **nginx**.
 - Multi-user and config via port **443**
 - More security and low detection with nginx
