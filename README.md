@@ -15,7 +15,7 @@
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> -ONLY_CF_IP_ALLOW yes   ### Highly recommended if CDN=ON
+> -ONLY_CF_IP_ALLOW yes  >  Highly recommended if CloudflareCDN=ON
 > 
 > SSL works for (yourdomain.com, *.yourdomain.com) / For the additional subdomain, New A,AAAA[VPSIP] Recorde
 >
