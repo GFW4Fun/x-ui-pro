@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.4.1 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.5.0 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -78,6 +78,26 @@ certbot certonly --standalone --non-interactive --force-renewal --agree-tos --re
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
+###########################################################################
+IPV4_REGEX='^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'
+IP6_REGEX='([a-f0-9:]+:+)+[a-f0-9]+'
+
+IP4=$(ip route get 9.9.9.9 | grep -Po -- 'src \K\S*')
+IP6=$(ip route get 2620:fe::fe | grep -Po -- 'src \K\S*')
+
+if [[ "$IP4" != $IP4_REGEX ]]; then
+	IP4=$(dig @resolver1.opendns.com A myip.opendns.com +short -4) 
+fi
+if [[ "$IP6" != $IP6_REGEX ]]; then
+	IP6=$(dig @resolver1.opendns.com AAAA myip.opendns.com +short -6)
+fi
+
+if [[ "$IP4" != $IP4_REGEX ]]; then
+	IP4=$(curl -s ipv4.icanhazip.com)
+fi
+if [[ "$IP6" != $IP6_REGEX ]]; then
+	IP6=$(curl -s ipv6.icanhazip.com)
+fi
 ################################# Access to configs only with cloudflare 
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
@@ -110,7 +130,6 @@ server {
 	listen 443 ssl http2;
 	listen [::]:80 ipv6only=on;
 	listen [::]:443 ssl http2 ipv6only=on;
-	http2_push_preload on;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
@@ -140,16 +159,16 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-		if (\$content_type = "application/grpc") {
-			grpc_pass grpc://127.0.0.1:\$fwdport;
+		if (\$content_type ~* "GRPC") {
+			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}
-		if (\$http_upgrade = "websocket") {
-			proxy_pass http://127.0.0.1:\$fwdport/\$fwdport/\$fwdpath;
+		if (\$http_upgrade ~* "(WEBS|WSS|WS)") {
+			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
-		}	
-		if (\$request_method = "POST") {
-			proxy_pass http://127.0.0.1:\$fwdport/\$fwdport/\$fwdpath;
+	        }
+		if (\$request_method ~* ^(PUT|POST|GET)\$) {
+			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}	
 	}
@@ -197,7 +216,7 @@ else
 fi
 ######################cronjob for ssl and reload service##################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
-(crontab -l 2>/dev/null; echo '@monthly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
+(crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '0 1 * * * x-ui restart > /dev/null 2>&1 && nginx -s reload;') | crontab -
 (crontab -l 2>/dev/null; echo '0 0 1 * * certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details############################
@@ -209,7 +228,14 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_inf "\nX-UI Admin Panel: https://${domain}/${RNDSTR}\n"
+	if [[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]]; then 
+		msg_inf "IPv4: $IP4"	
+	fi
+	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
+		msg_inf "IPv6: $IP6"
+	fi
+	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	msg_inf "X-UI Admin Panel: https://${domain}/${RNDSTR}\n"
  	echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
 	echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
