@@ -21,7 +21,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 > 
 > SSL works for (domain.com, *.domain.com) / For the additional subdomain, New A,AAAA[IP] Recorde
 > 
-> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu)
+> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu) -subdomain sub.domain.com (Add another domain)
 > 
 **Random Fake HTMLSite**:earth_asia:	
 ```
