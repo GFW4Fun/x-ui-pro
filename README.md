@@ -15,12 +15,8 @@
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> Highly recommended -ONLY_CF_IP_ALLOW yes + (CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON)
+> Recommended -ONLY_CF_IP_ALLOW yes + (CloudflareCDN<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + Cloudflare > SSL/TLS > Full (strict) else Full
 >
-> If <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON > SSL/TLS> Full (strict) Else Full
-> 
-> SSL works for (domain.com, *.domain.com) / For the additional subdomain, New A,AAAA[IP] Recorde
-> 
 > -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu) -subdomain sub.domain.com (Add another domain)
 > 
 **Random Fake HTMLSite**:earth_asia:	
