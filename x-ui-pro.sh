@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.6.2 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.6.3 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -123,7 +123,7 @@ if [[ ${CFALLOW} == *"y"* ]]; then
 	CF_IP="";
 fi
 ###########################################################################
-cat > "/etc/nginx/sites-available/$MainDomain" << EOF
+cat > "/etc/nginx/sites-available/default" << EOF
 server {
 	server_tokens off;
 	server_name ~^((?<subdomain>.*)\.)?(?<domain>[^.]+)\.(?<tld>[^.]+)\$;
@@ -178,13 +178,11 @@ server {
 	location / { try_files \$uri \$uri/ =404; }
 }
 EOF
-###################################Enable Site###############################
-if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
-	unlink /etc/nginx/sites-enabled/default 2>/dev/null
-	ln -s "/etc/nginx/sites-available/$MainDomain" /etc/nginx/sites-enabled/ 2>/dev/null
-	systemctl start nginx 
+##################################Check Nginx#################################
+if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
+    msg_err "nginx configuration is not ok" & exit 1
 else
-	msg_err "$MainDomain nginx config not exist!" && exit 1
+	systemctl start nginx 
 fi
 ###################################Update Db##################################
 UPDATE_XUIDB(){
