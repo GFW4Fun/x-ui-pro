@@ -138,7 +138,7 @@ server {
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
 	if (\$host = "\$server_addr") {return 403;}
-    if (\$host = "[\$server_addr]") {return 403;}
+	if (\$host = "[\$server_addr]") {return 403;}
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
