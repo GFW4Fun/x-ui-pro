@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.5.3 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.5.4 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
