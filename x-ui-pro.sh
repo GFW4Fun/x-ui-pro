@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.5.4 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.5.3 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -126,7 +126,7 @@ fi
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
 server {
 	server_tokens off;
-	server_name $MainDomain *.$MainDomain;
+	server_name ~^((?<subdomain>.*)\.)?(?<domain>[^.]+)\.(?<tld>[^.]+)\$;
 	listen 80;
 	listen 443 ssl http2;
 	listen [::]:80;
@@ -137,7 +137,8 @@ server {
 	ssl_ciphers HIGH:!aNULL:!MD5;
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
-	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
+	if (\$host = "\$server_addr") {return 403;}
+    if (\$host = "[\$server_addr]") {return 403;}
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
@@ -234,7 +235,7 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
 		msg_inf "IPv4: $IP4"	
 	fi
 	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
-		msg_inf "IPv6: $IP6"
+		msg_inf "IPv6: [$IP6]"
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Admin Panel: https://${domain}/${RNDSTR}\n"
