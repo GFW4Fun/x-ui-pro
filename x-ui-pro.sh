@@ -126,7 +126,7 @@ fi
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
 server {
 	server_tokens off;
-	server_name _;
+	server_name ~^((?<subdomain>.*)\.)?(?<domain>[^.]+)\.(?<tld>[^.]+)\$;
 	listen 80;
 	listen 443 ssl http2;
 	listen [::]:80;
