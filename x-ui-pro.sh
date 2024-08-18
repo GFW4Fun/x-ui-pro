@@ -126,11 +126,11 @@ fi
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
 server {
 	server_tokens off;
-	server_name ~^((?<subdomain>.*)\.)?(?<domain>[^.]+)\.(?<tld>[^.]+)\$;
+	server_name $MainDomain *.$MainDomain;
 	listen 80;
 	listen 443 ssl http2;
-	listen [::]:80 ipv6only=on;
-	listen [::]:443 ssl http2 ipv6only=on;
+	listen [::]:80;
+	listen [::]:443 ssl http2;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
