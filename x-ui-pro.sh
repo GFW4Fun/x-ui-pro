@@ -1,5 +1,5 @@
 #!/bin/bash
-############### x-ui-pro v1.5.3 @ github.com/GFW4Fun ##############
+############### x-ui-pro v1.6.0 @ github.com/GFW4Fun ##############
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -138,7 +138,7 @@ server {
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
 	if (\$host = "\$server_addr") {return 403;}
-    if (\$host = "[\$server_addr]") {return 403;}
+	if (\$host = "[\$server_addr]") {return 403;}
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
