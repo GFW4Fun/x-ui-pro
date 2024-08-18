@@ -17,7 +17,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 > 
 > Recommended -ONLY_CF_IP_ALLOW yes + (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full (strict) else Full
 >
-> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu) -subdomain sub.domain.com (Add another domain)
+> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu) -subdomain sub.domain.com (Add another subdomain)
 > 
 **Random Fake HTMLSite**:earth_asia:	
 ```
