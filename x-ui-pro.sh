@@ -237,7 +237,7 @@ if systemctl is-active --quiet x-ui && [[ $XUIPORT -eq $PORT ]]; then clear
 	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
 		msg_inf "IPv6: [$IP6]"
 	fi
-	echo "X-UI Panel Port: $XUIPORT" 
+	#echo "X-UI Panel Port: $XUIPORT" 
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Admin Panel: https://${domain}/${RNDSTR}\n"
  	echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
