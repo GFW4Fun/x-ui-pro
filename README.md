@@ -12,12 +12,14 @@
 **Install X-UI-PRO**:dvd::package:
 
 ```
-sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -ONLY_CF_IP_ALLOW no"
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 0 -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> Recommended -ONLY_CF_IP_ALLOW yes + (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full (strict) else Full
+> Recommended -ONLY_CF_IP_ALLOW yes + (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full (strict)/Full
 >
-> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu) -subdomain sub.domain.com (Add another subdomain)
+> -panel 0  (0=alireza 1=MHSanaei 2=FranzKafkaYu)
+>
+> SSL Support (yourdomain.com, *.yourdomain.com) for new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!
 > 
 **Random Fake HTMLSite**:earth_asia:	
 ```
