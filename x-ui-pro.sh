@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.0.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -217,6 +217,7 @@ if systemctl is-active --quiet x-ui; then
 else
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+		"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
 	)
  
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
