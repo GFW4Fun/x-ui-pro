@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.0.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -70,6 +70,7 @@ fi
 systemctl stop nginx 
 fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 ##################################GET SERVER IPv4-6#####################################################
+IP6_ON=$(sysctl -a | grep ipv6.*disable | grep -o 0 | head -1);
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
 IP4=$(ip route get 8.8.8.8 | grep -Po -- 'src \K\S*')
@@ -186,8 +187,9 @@ server {
 EOF
 ##################################Check Nginx status####################################################
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
-	unlink /etc/nginx/sites-enabled/default 2>/dev/null
-	ln -s "/etc/nginx/sites-available/$MainDomain" /etc/nginx/sites-enabled/ 2>/dev/null
+	unlink "/etc/nginx/sites-enabled/default"
+	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
+	ln -s "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 else
 	msg_err "$MainDomain nginx config not exist!" && exit 1
 fi
@@ -216,10 +218,10 @@ if systemctl is-active --quiet x-ui; then
 	x-ui restart
 else
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
-	)
- 
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+			"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
+		)
+
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
 	UPDATE_XUIDB
 	if ! systemctl is-enabled --quiet x-ui; then
@@ -241,10 +243,10 @@ if systemctl is-active --quiet x-ui; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	if [[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]]; then 
-		msg_inf "IPv4: http://$IP4:$XUIPORT/$RNDSTR/"
+		msg_inf "IPv4: http://$IP4:$PORT/$RNDSTR/"
 	fi
-	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
-		msg_inf "IPv6: http://[$IP6]:$XUIPORT/$RNDSTR/"
+	if [[ -n $IP6 && $IP6_ON -eq 0 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
+		msg_inf "IPv6: http://[$IP6]:$PORT/$RNDSTR/"
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Secure Panel: https://${domain}/${RNDSTR}\n"
