@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.0.4 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -231,9 +231,9 @@ else
 fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
+(crontab -l 2>/dev/null; echo '@daily x-ui restart > /dev/null 2>&1 && nginx -s reload;') | crontab -
 (crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
-(crontab -l 2>/dev/null; echo '0 1 * * * x-ui restart > /dev/null 2>&1 && nginx -s reload;') | crontab -
-(crontab -l 2>/dev/null; echo '0 0 1 * * certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
+(crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
