@@ -52,6 +52,15 @@ Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
 Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/)
 
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+### Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
+```
+apt update && apt install ufw
+ufw reset && ufw allow ssh && ufw allow ftp && ufw allow http && ufw allow https
+ufw enable && ufw reload
+ufw status
+```
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ##
 [![Star History Chart](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro&type=Date)](https://github.com/GFW4Fun/x-ui-pro)
 
