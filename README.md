@@ -40,7 +40,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/grpc_config_format.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Client Configuration :white_check_mark:	:computer:🔌
-![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/client_config.png)
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_CONFIG_XRAY_CLIENT_EDIT2.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Fix Error 403 (Forbidden)❗️❗️ Google
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
