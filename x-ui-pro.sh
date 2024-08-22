@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.0.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -146,6 +146,8 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
 	if (\$host ~* '([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})')  {return 403;}
 	if (\$host ~* '([a-f0-9:]+:+)+[a-f0-9]+') {return 403;}
+ 	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
+        if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
