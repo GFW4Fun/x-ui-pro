@@ -45,7 +45,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Fix Error 403 (Forbidden)❗️❗️ Google
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
-#### X-UI Admin Panel > Xray Setting > Outbands > Add WARP > then...
+#### X-UI Admin Panel > Xray Setting > Outbands > Add WARP > Save > then...
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/xui-warp.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Cloudflare Find Good IP (VPN off❗ during scanning)
