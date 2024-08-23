@@ -57,8 +57,7 @@ Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [gold
 ```
 apt update && apt install ufw
 ufw reset && ufw allow ssh && ufw allow ftp && ufw allow http && ufw allow https
-ufw enable && ufw reload
-ufw status
+ufw enable && ufw reload && ufw status
 ```
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ##
