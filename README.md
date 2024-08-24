@@ -7,7 +7,7 @@
 - More security and low detection with nginx
 - Compatible with Cloudflare
 - Random 150+ fake template!
-- Install only in Linux Debian/Ubuntu!
+- Linux Debian/Ubuntu!
   
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
@@ -24,6 +24,8 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 > SSL Support (yourdomain.com, *.yourdomain.com) for new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the
 panel!
 > 
+> Do not change SubDomain for renew SSL❗
+> ##
 > -panel (0=alireza 1=MHSanaei 2=FranzKafkaYu)
 > 
 **Random Fake HTMLSite**:earth_asia:	
