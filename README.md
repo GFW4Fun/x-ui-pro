@@ -7,6 +7,7 @@
 - More security and low detection with nginx
 - Compatible with Cloudflare
 - Random 150+ fake template!
+- Install only in Linux Debian/Ubuntu!
   
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
