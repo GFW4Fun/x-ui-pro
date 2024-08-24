@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.9 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -80,17 +80,8 @@ IP6=$(ip route get 2620:fe::fe | grep -Po -- 'src \K\S*')
 [[ $IP4 =~ $IP4_REGEX ]] || IP4=$(curl -s ipv4.icanhazip.com);
 [[ $IP6 =~ $IP6_REGEX ]] || IP6=$(curl -s ipv6.icanhazip.com);
 ##############################Install SSL###############################################################
-for D in `find /etc/letsencrypt/live -mindepth 1 -type d -exec basename {} \;`; do
-	if [[ $D == "${MainDomain}" ]]; then
-		certbot delete --non-interactive --cert-name ${MainDomain}
-	fi       
-done
- 
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
-
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
-	unlink "/etc/nginx/sites-enabled/${MainDomain}" >/dev/null 2>&1
-	rm -f "/etc/nginx/sites-enabled/${MainDomain}" "/etc/nginx/sites-available/${MainDomain}"
  	systemctl start nginx >/dev/null 2>&1
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
