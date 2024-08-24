@@ -141,11 +141,9 @@ server {
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
-	ssl_verify_client optional;
 	ssl_ciphers HIGH:!aNULL:!eNULL:!MD5:!DES:!RC4:!ADH:!SSLv3:!EXP:!PSK:!DSS;
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
-	if (\$ssl_client_verify != "SUCCESS")  { return 495; }
 	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
 	location /$RNDSTR/ {
 		proxy_redirect off;
