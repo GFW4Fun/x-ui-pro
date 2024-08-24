@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.0.8 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.0.9 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -89,6 +89,8 @@ done
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
 
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
+	unlink "/etc/nginx/sites-enabled/${MainDomain}" >/dev/null 2>&1
+	rm -f "/etc/nginx/sites-enabled/${MainDomain}" "/etc/nginx/sites-available/${MainDomain}"
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
@@ -141,9 +143,11 @@ server {
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
+	ssl_verify_client optional;
 	ssl_ciphers HIGH:!aNULL:!eNULL:!MD5:!DES:!RC4:!ADH:!SSLv3:!EXP:!PSK:!DSS;
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
+	if (\$ssl_client_verify != "SUCCESS")  { return 495; }
 	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
 	location /$RNDSTR/ {
 		proxy_redirect off;
@@ -186,7 +190,7 @@ server {
 EOF
 ##################################Check Nginx status####################################################
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
-	unlink "/etc/nginx/sites-enabled/default"
+	unlink "/etc/nginx/sites-enabled/default" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
 	ln -s "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 else
