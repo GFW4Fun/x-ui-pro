@@ -91,6 +91,7 @@ certbot certonly --standalone --non-interactive --force-renewal --agree-tos --re
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	unlink "/etc/nginx/sites-enabled/${MainDomain}" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/${MainDomain}" "/etc/nginx/sites-available/${MainDomain}"
+ 	systemctl start nginx >/dev/null 2>&1
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
