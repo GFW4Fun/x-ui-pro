@@ -53,7 +53,12 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 #### XUI PANEL> Xray Configs> Routing Rules> Add Rules > 
 #### Inbound Tags (Select Your Configs/inbounds) + Outbound Tag (WARP outbound) > Add rule! > Save Restart!
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-### Cloudflare Find Good IP (VPN off❗ during scanning)
+## Enable Subscription :link:
+#### XUI Panel > Panel Setting > Subscription > Enable Subscription Service
+#### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
+#### In the displayed address, change : to /
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
 Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/)
