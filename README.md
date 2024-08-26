@@ -54,7 +54,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 #### Inbound Tags (Select Your Configs/inbounds) + Outbound Tag (WARP outbound) > Add rule! > Save Restart!
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
-#### XUI Panel > Panel Setting > Subscription > Enable Subscription Service
+#### XUI Panel > Panel Setting > Subscription > Enable Subscription Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  `
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
