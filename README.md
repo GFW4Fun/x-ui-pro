@@ -56,7 +56,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Subscription Service
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
-#### In the displayed address, change : to /
+#### In the displayed address, change `  :  to  /  `
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
