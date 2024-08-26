@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.1.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.2.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -139,13 +139,34 @@ server {
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
 	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
-	location /$RNDSTR/ {
+	#X-UI Admin Panel
+ 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 		proxy_pass http://127.0.0.1:$PORT;
+  		break;
 	}
+ 	#Subscription Path (simple/encode)
+        location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
+                proxy_redirect off;
+                proxy_set_header Host \$host;
+                proxy_set_header X-Real-IP \$remote_addr;
+                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                proxy_pass http://127.0.0.1:\$fwdport/sub/\$fwdpath\$is_args\$args;
+                break;
+        }
+	#Subscription Path (json/fragment)
+        location ~ ^/(?<fwdport>\d+)/json/(?<fwdpath>.*)\$ {
+                proxy_redirect off;
+                proxy_set_header Host \$host;
+                proxy_set_header X-Real-IP \$remote_addr;
+                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                proxy_pass http://127.0.0.1:\$fwdport/json/\$fwdpath\$is_args\$args;
+                break;
+        }
+ 	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 		$CF_IP
 		client_max_body_size 0;
