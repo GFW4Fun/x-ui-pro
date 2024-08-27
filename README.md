@@ -70,4 +70,5 @@ apt update && apt install ufw
 ufw reset && ufw allow ssh && ufw allow ftp && ufw allow http && ufw allow https
 ufw enable && ufw reload && ufw status
 ```
-
+##
+[![Star History Chart](https://api.star-history.com/svg?repos=GFW4Fun/x-ui-pro&type=Date)](https://github.com/GFW4Fun/x-ui-pro)
