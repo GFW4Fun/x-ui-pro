@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.2.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.2.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -138,7 +138,7 @@ server {
 	ssl_ciphers HIGH:!aNULL:!eNULL:!MD5:!DES:!RC4:!ADH:!SSLv3:!EXP:!PSK:!DSS;
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
-	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 403; }
+	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 444; }
 	#X-UI Admin Panel
  	location /$RNDSTR/ {
 		proxy_redirect off;
