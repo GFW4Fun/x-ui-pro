@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.2.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.3.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -138,18 +138,23 @@ server {
 	ssl_ciphers HIGH:!aNULL:!eNULL:!MD5:!DES:!RC4:!ADH:!SSLv3:!EXP:!PSK:!DSS;
 	ssl_certificate /etc/letsencrypt/live/$MainDomain/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/$MainDomain/privkey.pem;
-	if (\$host !~* ^(.+\.)?$MainDomain\$ ) { return 444; }
+	if (\$host !~* ^(.+\.)?$MainDomain\$ ){return 444;}
+	if (\$scheme ~* https) {set \$safe 1;}
+	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
+	if (\$safe = 10){return 444;}
+	if (\$request_uri ~ "(~|,|:|--|;|%|&&|\?\?|0x00|0X00|\||\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
 	#X-UI Admin Panel
- 	location /$RNDSTR/ {
+	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 		proxy_pass http://127.0.0.1:$PORT;
-  		break;
+		break;
 	}
  	#Subscription Path (simple/encode)
         location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
+                if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
                 proxy_set_header X-Real-IP \$remote_addr;
@@ -159,6 +164,7 @@ server {
         }
 	#Subscription Path (json/fragment)
         location ~ ^/(?<fwdport>\d+)/json/(?<fwdpath>.*)\$ {
+                if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
                 proxy_set_header X-Real-IP \$remote_addr;
@@ -169,6 +175,7 @@ server {
  	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 		$CF_IP
+		if (\$hack = 1) {return 404;}
 		client_max_body_size 0;
 		client_body_timeout 1d;
 		grpc_read_timeout 1d;
