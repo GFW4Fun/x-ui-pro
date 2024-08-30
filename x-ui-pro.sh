@@ -142,7 +142,7 @@ server {
 	if (\$scheme ~* https) {set \$safe 1;}
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
-	if (\$request_uri ~ "(~|,|:|--|;|%|&&|\?\?|0x00|0X00|\||\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
+	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
