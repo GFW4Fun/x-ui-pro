@@ -58,16 +58,15 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  `
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Cloudflare Find Good IP (VPN off❗ during scanning)
-Cloudflare IP Ranges: https://www.cloudflare.com/ips/
-
-Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/)
-
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
 ```
 apt update && apt install ufw
 ufw reset && ufw allow ssh && ufw allow ftp && ufw allow http && ufw allow https
 ufw enable && ufw reload && ufw status
 ```
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+## Cloudflare Find Good IP (VPN off❗ during scanning)
+Cloudflare IP Ranges: https://www.cloudflare.com/ips/
+
+Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/)
 ##
