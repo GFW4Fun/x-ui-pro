@@ -70,13 +70,10 @@ fi
 systemctl stop nginx 
 fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 ##################################GET SERVER IPv4-6#####################################################
-IP6_ON=$(sysctl -a | grep ipv6.*disable | grep -o 0 | head -1);
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
 IP4=$(ip route get 8.8.8.8 2>&1 | grep -Po -- 'src \K\S*')
 IP6=$(ip route get 2620:fe::fe 2>&1 | grep -Po -- 'src \K\S*')
-[[ $IP4 =~ $IP4_REGEX ]] || IP4=$(dig @resolver1.opendns.com A myip.opendns.com +short -4);
-[[ $IP6 =~ $IP6_REGEX ]] || IP6=$(dig @resolver1.opendns.com AAAA myip.opendns.com +short -6);
 [[ $IP4 =~ $IP4_REGEX ]] || IP4=$(curl -s ipv4.icanhazip.com);
 [[ $IP6 =~ $IP6_REGEX ]] || IP6=$(curl -s ipv6.icanhazip.com);
 ##############################Install SSL###############################################################
@@ -266,7 +263,7 @@ if systemctl is-active --quiet x-ui; then clear
 	if [[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]]; then 
 		msg_inf "IPv4: http://$IP4:$PORT/$RNDSTR/"
 	fi
-	if [[ -n $IP6 && $IP6_ON -eq 0 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
+	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
 		msg_inf "IPv6: http://[$IP6]:$PORT/$RNDSTR/"
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
