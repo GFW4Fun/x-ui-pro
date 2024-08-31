@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.3.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.3.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -73,8 +73,8 @@ fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 IP6_ON=$(sysctl -a | grep ipv6.*disable | grep -o 0 | head -1);
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
-IP4=$(ip route get 8.8.8.8 | grep -Po -- 'src \K\S*')
-IP6=$(ip route get 2620:fe::fe | grep -Po -- 'src \K\S*')
+IP4=$(ip route get 8.8.8.8 2>&1 | grep -Po -- 'src \K\S*')
+IP6=$(ip route get 2620:fe::fe 2>&1 | grep -Po -- 'src \K\S*')
 [[ $IP4 =~ $IP4_REGEX ]] || IP4=$(dig @resolver1.opendns.com A myip.opendns.com +short -4);
 [[ $IP6 =~ $IP6_REGEX ]] || IP6=$(dig @resolver1.opendns.com AAAA myip.opendns.com +short -6);
 [[ $IP4 =~ $IP4_REGEX ]] || IP4=$(curl -s ipv4.icanhazip.com);
