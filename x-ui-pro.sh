@@ -140,6 +140,8 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
+	set \$client_real_ip \$remote_addr;
+	if (\$http_cf_connecting_ip != false) {set \$client_real_ip \$http_cf_connecting_ip;}
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
@@ -185,9 +187,9 @@ server {
 		proxy_set_header Upgrade \$http_upgrade;
 		proxy_set_header Connection "upgrade";
 		proxy_set_header Host \$host;
-		proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header X-Real-IP \$client_real_ip;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-  		proxy_set_header CF-IPCountry \$http_cf_ipcountry;
+		proxy_set_header CF-IPCountry \$http_cf_ipcountry;
 		if (\$content_type ~* "GRPC") {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
