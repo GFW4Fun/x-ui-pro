@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.3.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.3.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -187,6 +187,7 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+  		proxy_set_header CF-IPCountry \$http_cf_ipcountry;
 		if (\$content_type ~* "GRPC") {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
