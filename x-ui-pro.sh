@@ -194,7 +194,7 @@ server {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}
-		if (\$http_upgrade ~* "(WEBS|WS)") {
+		if (\$http_upgrade ~* "(WEBSOCKET|WS)") {
 			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 	        }
