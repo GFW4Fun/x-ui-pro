@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.3.5 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.3.6 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -141,7 +141,9 @@ server {
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
 	set \$client_real_ip \$remote_addr;
-	if (\$http_cf_connecting_ip != false) {set \$client_real_ip \$http_cf_connecting_ip;}
+	if (\$cloudflare_ip = 1) {
+		set \$client_real_ip \$http_cf_connecting_ip;
+	}
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
