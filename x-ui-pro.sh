@@ -102,9 +102,9 @@ echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
 if [[ ${CFALLOW} == *"y"* ]]; then
-	CF_IP="if (\$cloudflare_ip != 1) {return 404;}";
-	else	
 	CF_IP="";
+	else	
+	CF_IP="#";
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
@@ -173,7 +173,7 @@ server {
         }
  	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
-		$CF_IP
+	$CF_IP	if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
 		client_max_body_size 0;
 		client_body_timeout 1d;
