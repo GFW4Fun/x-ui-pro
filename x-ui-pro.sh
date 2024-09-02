@@ -141,9 +141,7 @@ server {
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
 	set \$client_real_ip \$remote_addr;
-	if (\$cloudflare_ip = 1) {
-		set \$client_real_ip \$http_cf_connecting_ip;
-	}
+	if (\$cloudflare_ip = 1) {set \$client_real_ip \$http_cf_connecting_ip;}
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
