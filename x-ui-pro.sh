@@ -189,7 +189,7 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$client_real_ip;
 		proxy_set_header X-Forwarded-For \$http_x_forwarded_for;
-		proxy_set_header CF-IPCountry \$http_cf_ipcountry;
+  		if (\$cloudflare_ip = 1) {proxy_set_header CF-IPCountry \$http_cf_ipcountry;}
 		if (\$content_type ~* "GRPC") {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
