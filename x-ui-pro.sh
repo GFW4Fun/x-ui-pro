@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.3.8 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.4.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -83,6 +83,7 @@ if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
+rm -f "/etc/nginx/cloudflareips.sh"
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
@@ -97,7 +98,7 @@ for type in v4 v6; do
 		echo "	$ip 1;" >> $CLOUDFLARE_WHITELIST_PATH;
 	done
 done
-echo "real_ip_header X-Real-IP;" >> $CLOUDFLARE_REAL_IPS_PATH
+echo "real_ip_header X-Forwarded-For;" >> $CLOUDFLARE_REAL_IPS_PATH
 echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
@@ -140,13 +141,11 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
-	set \$client_real_ip \$remote_addr;
-	if (\$cloudflare_ip = 1) {set \$client_real_ip \$http_cf_connecting_ip;}
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
-		proxy_set_header X-Real-IP \$client_real_ip;
+		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
 		proxy_pass http://127.0.0.1:$PORT;
 		break;
@@ -156,7 +155,7 @@ server {
                 if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$client_real_ip;
+                proxy_set_header X-Real-IP \$remote_addr;
                 proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
                 proxy_pass http://127.0.0.1:\$fwdport/sub/\$fwdpath\$is_args\$args;
                 break;
@@ -166,7 +165,7 @@ server {
                 if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$client_real_ip;
+                proxy_set_header X-Real-IP \$remote_addr;
                 proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
                 proxy_pass http://127.0.0.1:\$fwdport/json/\$fwdpath\$is_args\$args;
                 break;
@@ -187,7 +186,7 @@ server {
 		proxy_set_header Upgrade \$http_upgrade;
 		proxy_set_header Connection "upgrade";
 		proxy_set_header Host \$host;
-		proxy_set_header X-Real-IP \$client_real_ip;
+		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
   		proxy_set_header CF-IPCountry \$http_cf_ipcountry;
 		if (\$content_type ~* "GRPC") {
