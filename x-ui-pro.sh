@@ -202,7 +202,7 @@ server {
 			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}
-  		error_page 400 401 402 403 404 500 501 502 503 504 =404 /404;  		
+		error_page 400 401 402 403 404 500 501 502 503 504 =404 /404;
 	}
 	location / { try_files \$uri \$uri/ =404; }
 }
