@@ -141,7 +141,7 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
-	error_page 400 401 402 500 501 502 503 504 =404 /404;
+	error_page 400 401 402 403 500 501 502 503 504 =404 /404;
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
