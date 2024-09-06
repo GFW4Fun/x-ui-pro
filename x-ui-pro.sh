@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.4.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.4.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -141,6 +141,7 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
+	error_page 400 401 402 500 501 502 503 504 =404 /404;
 	#X-UI Admin Panel
 	location /$RNDSTR/ {
 		proxy_redirect off;
@@ -202,7 +203,6 @@ server {
 			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}
-		error_page 400 401 402 403 404 500 501 502 503 504 =404 /404;
 	}
 	location / { try_files \$uri \$uri/ =404; }
 }
