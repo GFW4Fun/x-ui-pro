@@ -1,14 +1,21 @@
-## x-ui-pro (x-ui + warp + nginx) :octocat:	:open_file_folder:	
-- Auto Installation (lightweight)
-- Auto SSL renewal / Daily reload Nginx X-ui
+## X-ui-pro (x-ui + warp + nginx) :octocat:	:open_file_folder:	
+### x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of xray-ui, WARP, and Nginx to offer a comprehensive solution for bypassing internet restrictions.
+
+- Automatic installation and configuration of the x-ui panel, WARP, and Nginx
+- Auto SSL / Renewal / Daily reload Nginx X-ui
 - Handle **WebSocket/GRPC/HttpUgrade/SplitHttp** via **nginx**.
-- Multi-user and config via port **443**
-- Install multiple domains with one server/panel
+- Supports multiple users and configurations via port **443**
+- Install multiple domains with one a server/panel
 - More security and low detection with nginx
-- Compatible with Cloudflare
-- Random 150+ fake template!
+- Compatible with Cloudflare CDN/IP
+- Random 150+ fake HTML template!
 - Linux Debian/Ubuntu!
-  
+
+## Technology Stack
+- X-ui: Web-based control panel for Xray
+- Nginx: Reverse proxy server
+- WARP: Secure and fast VPN service
+
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
 **Install X-UI-PRO**:dvd::package:
