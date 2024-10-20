@@ -11,11 +11,6 @@
 - Random 150+ fake HTML template!
 - Linux Debian/Ubuntu!
 
-## Technology Stack
-- X-ui: Web-based control panel for Xray
-- Nginx: Reverse proxy server
-- WARP: Secure and fast VPN service
-
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
 **Install X-UI-PRO**:dvd::package:
