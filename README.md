@@ -53,14 +53,18 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ### Client Configuration :white_check_mark:	:computer:🔌
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_CONFIG_XRAY_CLIENT_EDIT2.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-### Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> & TOR 🧅 (Fix Google Error and Hide VPS IP)
+## Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> & TOR 🧅 (Fix Google Error and Hide VPS IP)
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
-#### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol Socks > Tag tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
+#### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
-#### Connect Config(Inbound) to WARP/TOR(Outbound)
+#### Connect Config(Inbound) to WARP/TOR(Outbound):
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
-
+➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+## Checking Config/Port from inside the VPS (Internal)
+#### Example: Check TOR on your server!
+```curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com```
+#### If return VPS/WARP/TOR IP Means the port is active and healthy
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
