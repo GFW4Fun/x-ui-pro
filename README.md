@@ -53,9 +53,10 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ### Client Configuration :white_check_mark:	:computer:🔌
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_CONFIG_XRAY_CLIENT_EDIT2.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-### Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> (Fix Error 403-Forbidden Google Search)
+### Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> & TOR 🧅 (Fix Google Error and Hide VPS IP)
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
-#### XUI PANEL> Xray Configs> Outbands > Add WARP > Create > Add > Save Restart!
+#### WARP☁️> XUI > Xray Configs > Outbands > WARP > Create > Add > Save Restart!
+#### TOR 🧅> XUI > Xray Configs > Outbands > Add Outbound > Protocol Socks > Tag tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/Enable_WARP.jpg)
 #### XUI PANEL> Xray Configs> Routing Rules> Add Rules > 
 #### Inbound Tags (Select Your Configs/inbounds) + Outbound Tag (WARP outbound) > Add rule! > Save Restart!
