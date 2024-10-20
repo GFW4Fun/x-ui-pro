@@ -57,9 +57,10 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/error403Google.png)
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol Socks > Tag tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
-![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/Enable_WARP.jpg)
-#### XUI PANEL> Xray Configs> Routing Rules> Add Rules > 
-#### Inbound Tags (Select Your Configs/inbounds) + Outbound Tag (WARP outbound) > Add rule! > Save Restart!
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
+#### Connect Config(Inbound) to WARP/TOR(Outbound)
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
+
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
