@@ -66,7 +66,7 @@ fi
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
 	$Pak -y install epel-release
-	$Pak -y install curl nginx certbot python3-certbot-nginx sqlite3 sqlite tor
+	$Pak -y install curl nginx certbot python3-certbot-nginx sqlite3 tor sqlite
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
