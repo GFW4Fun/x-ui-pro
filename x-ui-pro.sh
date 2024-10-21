@@ -67,7 +67,8 @@ if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
 	$Pak -y install epel-release
 	$Pak -y install sqlite
-	$Pak -y install curl nginx certbot python3-certbot-nginx sqlite3 tor
+	$Pak -y install sqlite3
+	$Pak -y install curl nginx certbot python3-certbot-nginx tor
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
