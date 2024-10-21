@@ -103,7 +103,7 @@ if [ $Pak == "apt" ]; then
  else
 	nginxuser="nginx"
 fi
-cat > " /etc/nginx/nginx.conf" << EOF
+cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxuser;
 worker_processes auto;
 pid /run/nginx.pid;
