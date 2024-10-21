@@ -58,7 +58,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Checking Config/Port from inside the VPS (Internal)
 #### Example: Check TOR on your server!
-```curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com```
+````curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com````
 #### If return VPS/WARP/TOR IP Means the port is active and healthy
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
