@@ -109,10 +109,10 @@ include /usr/share/nginx/modules/*.conf;
 events {worker_connections 2048;}
 http {
 	sendfile            on;
-    tcp_nopush          on;
-    tcp_nodelay         on;
-    keepalive_timeout   65;
-    types_hash_max_size 4096;
+	tcp_nopush          on;
+	tcp_nodelay         on;
+	keepalive_timeout   65;
+	types_hash_max_size 4096;
 	include /etc/nginx/mime.types;
 	default_type application/octet-stream;
 	access_log /var/log/nginx/access.log;
