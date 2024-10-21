@@ -89,10 +89,37 @@ if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
-mkdir -p "/etc/nginx/sites-available"
-mkdir -p "/etc/nginx/sites-enabled"
-rm -f "/etc/nginx/cloudflareips.sh"
+mkdir -p /etc/nginx/sites-{available,enabled}
+mkdir -p /usr/share/nginx
+mkdir -p /var/log/nginx
+mkdir -p /var/www
+mkdir -p /var/www/html
+
 rm -rf "/etc/nginx/default.d"
+rm -f "/etc/nginx/nginx.conf"
+rm -f "/etc/nginx/cloudflareips.sh"
+
+cat << 'EOF' >> /etc/nginx/nginx.conf
+user nginx;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+include /usr/share/nginx/modules/*.conf;
+events {worker_connections 2048;}
+http {
+	sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 4096;
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+	include /etc/nginx/conf.d/*.conf;
+	include /etc/nginx/sites-enabled/*;
+}
+EOF
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
@@ -221,7 +248,7 @@ EOF
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	unlink "/etc/nginx/sites-enabled/default" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
-	ln -s "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
+	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 else
 	msg_err "$MainDomain nginx config not exist!" && exit 1
 fi
