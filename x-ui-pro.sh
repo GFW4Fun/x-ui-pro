@@ -65,10 +65,8 @@ fi
 ###############################Install Packages#########################################################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
-	$Pak -y install epel-release
-	$Pak -y install sqlite
-	$Pak -y install sqlite3
-	$Pak -y install curl nginx certbot python3-certbot-nginx tor
+	packages=(epel-release unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor)
+	$Pak -y install "${packages[@]}"
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
