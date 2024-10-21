@@ -101,7 +101,7 @@ rm -f "/etc/nginx/cloudflareips.sh"
 if [ $Pak == "apt" ]; then
 	nginxuser="www-data"
  else
-	nginxuser= "nginx"
+	nginxuser="nginx"
 fi
 cat > " /etc/nginx/nginx.conf" << EOF
 user $nginxuser;
