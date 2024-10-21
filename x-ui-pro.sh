@@ -92,6 +92,7 @@ fi
 mkdir -p "/etc/nginx/sites-available"
 mkdir -p "/etc/nginx/sites-enabled"
 rm -f "/etc/nginx/cloudflareips.sh"
+rm -rf "/etc/nginx/default.d"
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
