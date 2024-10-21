@@ -40,7 +40,6 @@ UNINSTALL_XUI(){
 	done
 	$Pak -y autoremove
 	$Pak -y autoclean
-	$Pak -y clean all
 	rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 }
@@ -99,9 +98,13 @@ mkdir -p /var/www/html
 rm -rf "/etc/nginx/default.d"
 rm -f "/etc/nginx/nginx.conf"
 rm -f "/etc/nginx/cloudflareips.sh"
-
-cat << 'EOF' >> /etc/nginx/nginx.conf
-user nginx;
+if [ $Pak == "apt" ]; then
+	nginxuser="www-data"
+ else
+	nginxuser= "nginx"
+fi
+cat > " /etc/nginx/nginx.conf" << EOF
+user $nginxuser;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
