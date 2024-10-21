@@ -94,17 +94,12 @@ mkdir -p /var/www
 mkdir -p /var/www/html
 
 rm -rf "/etc/nginx/default.d"
-rm -f "/etc/nginx/nginx.conf"
 rm -f "/etc/nginx/cloudflareips.sh"
 
-if [ $Pak == "apt" ]; then
-	nginxuser="www-data"
- else
-	nginxuser="nginx"
-fi
-
-cat > "/etc/nginx/nginx.conf" << EOF
-user $nginxuser;
+if [ $Pak == "dnf" ]; then
+rm -f "/etc/nginx/nginx.conf"
+cat << 'EOF' >> /etc/nginx/nginx.conf
+user nginx;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
@@ -124,6 +119,7 @@ http {
 	include /etc/nginx/sites-enabled/*;
 }
 EOF
+fi
 
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
