@@ -98,11 +98,13 @@ mkdir -p /var/www/html
 rm -rf "/etc/nginx/default.d"
 rm -f "/etc/nginx/nginx.conf"
 rm -f "/etc/nginx/cloudflareips.sh"
+
 if [ $Pak == "apt" ]; then
 	nginxuser="www-data"
  else
 	nginxuser="nginx"
 fi
+
 cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxuser;
 worker_processes auto;
@@ -124,6 +126,7 @@ http {
 	include /etc/nginx/sites-enabled/*;
 }
 EOF
+
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
@@ -141,6 +144,7 @@ done
 echo "real_ip_header X-Forwarded-For;" >> $CLOUDFLARE_REAL_IPS_PATH
 echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
+
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
 if [[ ${CFALLOW} == *"y"* ]]; then
 	CF_IP="";
