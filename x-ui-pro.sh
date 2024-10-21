@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v2.4.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v2.4.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -10,7 +10,7 @@ msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
 msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
 ##################################Variables#############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n"
-Pak=$(type apt &>/dev/null && echo "apt" || echo "yum")
+Pak=$(type apt &>/dev/null && echo "apt" || echo "dnf")
 ##################################Random Port and Path #################################################
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
 while true; do 
@@ -39,6 +39,7 @@ UNINSTALL_XUI(){
 	$Pak -y purge nginx nginx-common nginx-core nginx-full python3-certbot-nginx tor
 	$Pak -y autoremove
 	$Pak -y autoclean
+	$Pak -y clean all
 	rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 }
@@ -64,9 +65,9 @@ fi
 ###############################Install Packages#########################################################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
-	$Pak -y install curl nginx certbot python3-certbot-nginx sqlite3 tor
+	$Pak -y install epel-release curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor
 	systemctl daemon-reload
- 	systemctl enable --now nginx
+ 	systemctl enable nginx.service
   	systemctl enable tor.service
 fi
 systemctl stop nginx 
