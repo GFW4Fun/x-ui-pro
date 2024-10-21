@@ -89,6 +89,8 @@ if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
+mkdir -p "/etc/nginx/sites-available"
+mkdir -p "/etc/nginx/sites-enabled"
 rm -f "/etc/nginx/cloudflareips.sh"
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
