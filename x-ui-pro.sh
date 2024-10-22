@@ -88,7 +88,7 @@ IP6=$(ip route get 2620:fe::fe 2>&1 | grep -Po -- 'src \K\S*')
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
  	systemctl start nginx >/dev/null 2>&1
-	msg_err "$MainDomain SSL could not be generated! Check Domain/IP Or Enter new domain!" && exit 1
+	msg_err "$MainDomain SSL failed! Check Domain/IP! Exceeded limit!? Try another domain or VPS!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
 mkdir -p /etc/nginx/sites-{available,enabled}
