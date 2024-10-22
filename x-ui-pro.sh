@@ -269,7 +269,7 @@ if [[ -f $XUIDB ]]; then
 RNDSTRSLASH="/$RNDSTR/"
 sqlite3 "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
-	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
+	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', ${RNDSTRSLASH});
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
