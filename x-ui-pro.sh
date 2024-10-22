@@ -266,11 +266,11 @@ fi
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-RNDSTRSLASH="/${RNDSTR}/"
 sqlite3 "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
-	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', ${RNDSTRSLASH});
+	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', '');
 EOF
+sqlite3 "$XUIDB" "INSERT INTO 'settings' ('key', 'value') VALUES ('webBasePath', '/${RNDSTR}/');" 
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
 fi
