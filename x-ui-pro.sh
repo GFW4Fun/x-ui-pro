@@ -155,13 +155,9 @@ if [[ -n "$XUIPORT" && "$XUIPORT" =~ ^-?[0-9]+$ ]] && [[ ${#XUIPATH} -gt 4 ]]; t
 if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]]; then
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
-	sqlite3 "$XUIDB" << EOF
+sqlite3 "$XUIDB" << EOF
 	DELETE FROM "settings" WHERE "key" IN ("webCertFile", "webKeyFile");
 	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile", ''),("webKeyFile", '');
-EOF
-	sqlite3 "$XUIDB" << EOF
-	DELETE FROM 'settings' WHERE 'key' IN ('webCertFile', 'webKeyFile');
-	INSERT INTO 'settings' ('key', 'value') VALUES ('webCertFile', ''),('webKeyFile', '');
 EOF
 fi
 fi
@@ -273,10 +269,6 @@ if [[ -f $XUIDB ]]; then
 sqlite3 "$XUIDB" << EOF
 	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
 	INSERT INTO "settings" ("key", "value") VALUES ("webPort", ${PORT}),("webCertFile", ''),("webKeyFile", ''),("webBasePath", '${RNDSTR}');
-EOF
-sqlite3 "$XUIDB" << EOF
-	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
-	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', ${PORT}),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTR}');
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
