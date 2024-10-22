@@ -88,7 +88,6 @@ if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 fi
 ################################# Access to configs only with cloudflare#################################
 mkdir -p /etc/nginx/sites-{available,enabled}
-mkdir -p /usr/share/nginx
 mkdir -p /var/log/nginx
 mkdir -p /var/www
 mkdir -p /var/www/html
