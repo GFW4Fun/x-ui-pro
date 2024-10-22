@@ -111,10 +111,10 @@ http {
 	tcp_nodelay         on;
 	keepalive_timeout   65;
 	types_hash_max_size 4096;
-	include /etc/nginx/*.types;
-	default_type application/octet-stream;
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
+ 	default_type application/octet-stream;
+	include /etc/nginx/*.types;
 	include /etc/nginx/conf.d/*.conf;
 	include /etc/nginx/sites-enabled/*;
 }
