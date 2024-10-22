@@ -269,7 +269,7 @@ fi
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
 sqlite3 $XUIDB << EOF
-	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
+ 	DELETE FROM "settings" WHERE ( "key"="webPort" ) OR ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ) OR ( "key"="webBasePath" ); 
 	INSERT INTO "settings" ("key", "value") VALUES ("webPort", "${PORT}"),("webCertFile", ""),("webKeyFile", ""),("webBasePath", "/${RNDSTR}/");
 EOF
 else
