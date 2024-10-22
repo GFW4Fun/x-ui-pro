@@ -92,9 +92,7 @@ mkdir -p /usr/share/nginx
 mkdir -p /var/log/nginx
 mkdir -p /var/www
 mkdir -p /var/www/html
-
 rm -rf "/etc/nginx/default.d"
-rm -f "/etc/nginx/cloudflareips.sh"
 
 nginxusr="www-data"
 if ! id -u "$nginxusr" > /dev/null 2>&1; then
@@ -123,6 +121,7 @@ http {
 }
 EOF
 
+rm -f "/etc/nginx/cloudflareips.sh"
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
