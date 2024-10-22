@@ -104,7 +104,6 @@ user $nginxusr;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
-include /usr/share/nginx/modules/*.conf;
 events {worker_connections 2048;}
 http {
 	sendfile            on;
