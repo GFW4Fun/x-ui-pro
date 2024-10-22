@@ -77,7 +77,6 @@ fi
 sudo nginx -s stop 2>/dev/null
 sudo systemctl stop nginx 2>/dev/null
 sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
-sudo lsof -t -i :80 -sTCP:LISTEN | xargs sudo kill -9 2>/dev/null
 ##################################GET SERVER IPv4-6#####################################################
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
