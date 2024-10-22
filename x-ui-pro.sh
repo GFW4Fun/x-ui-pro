@@ -156,11 +156,9 @@ if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]]; then
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
 	sqlite3 $XUIDB <<EOF
-	BEGIN TRANSACTION;
 	DELETE FROM "settings" WHERE ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ); 
 	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
 	INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
-	COMMIT;
 EOF
 fi
 fi
@@ -269,11 +267,9 @@ fi
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-sqlite3 "$XUIDB" <<EOF
-	BEGIN TRANSACTION;
+sqlite3 $XUIDB <<EOF
 	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
 	INSERT INTO "settings" ("key", "value") VALUES ("webPort", "${PORT}"),("webCertFile", ""),("webKeyFile", ""),("webBasePath", "/${RNDSTR}/");
-	COMMIT;
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
