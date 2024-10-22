@@ -151,8 +151,8 @@ fi
 if [[ -f $XUIDB ]]; then
 	XUIPORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	XUIPATH=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
-if [[ -n "$XUIPORT" && "$XUIPORT" =~ ^-?[0-9]+$ ]]; then 
-if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]] && [[ ${#XUIPATH} -gt 4 ]]; then
+if [[ -n "$XUIPORT" && "$XUIPORT" =~ ^-?[0-9]+$ ]] && [[ ${#XUIPATH} -gt 4 ]]; then 
+if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]]; then
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
 	sqlite3 $XUIDB <<EOF
