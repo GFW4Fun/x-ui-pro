@@ -149,18 +149,20 @@ if [[ ${CFALLOW} == *"y"* ]]; then
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
-	XUIPORT=$(sqlite3 -list $XUIDB 'SELECT "value" FROM settings WHERE "key"="webPort" LIMIT 1;' 2>&1)
-	XUIPATH=$(sqlite3 -list $XUIDB 'SELECT "value" FROM settings WHERE "key"="webBasePath" LIMIT 1;' 2>&1)
+	XUIPORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
+ 	XUIPATH=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
+if [[ -n "$XUIPORT" && "$XUIPORT" =~ ^-?[0-9]+$ ]]; then 
 if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]] && [[ ${#XUIPATH} -gt 4 ]]; then
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
-sqlite3 $XUIDB <<EOF
-BEGIN TRANSACTION;
-DELETE FROM "settings" WHERE ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ); 
-INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
-INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
-COMMIT;
+	sqlite3 $XUIDB <<EOF
+	BEGIN TRANSACTION;
+	DELETE FROM "settings" WHERE ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ); 
+	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
+	INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
+	COMMIT;
 EOF
+fi
 fi
 fi
 #################################Nginx Config###########################################################
@@ -268,10 +270,10 @@ fi
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
 sqlite3 "$XUIDB" <<EOF
-BEGIN TRANSACTION;
-DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
-INSERT INTO "settings" ("key", "value") VALUES ("webPort", "${PORT}"),("webCertFile", ""),("webKeyFile", ""),("webBasePath", "/${RNDSTR}/");
-COMMIT;
+	BEGIN TRANSACTION;
+	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
+	INSERT INTO "settings" ("key", "value") VALUES ("webPort", "${PORT}"),("webCertFile", ""),("webKeyFile", ""),("webBasePath", "/${RNDSTR}/");
+	COMMIT;
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
