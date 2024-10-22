@@ -74,7 +74,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
 fi
 ###############################Stop nginx#############################################################
 sudo pkill nginx 2>/dev/null
-nginx -s stop 2>/dev/null
+sudo nginx -s stop 2>/dev/null
 sudo systemctl stop nginx 2>/dev/null
 sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 sudo lsof -t -i :80 -sTCP:LISTEN | xargs sudo kill -9 2>/dev/null
