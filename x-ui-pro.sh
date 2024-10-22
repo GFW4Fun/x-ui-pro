@@ -108,7 +108,6 @@ http {
 	gzip on;
 	sendfile on;
 	tcp_nopush on;
-	tcp_nodelay on;
 	types_hash_max_size 4096;
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
