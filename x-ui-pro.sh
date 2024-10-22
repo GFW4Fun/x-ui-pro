@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v4.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v4.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -151,7 +151,7 @@ fi
 if [[ -f $XUIDB ]]; then
 	XUIPORT=$(sqlite3 -list $XUIDB 'SELECT "value" FROM settings WHERE "key"="webPort" LIMIT 1;' 2>&1)
 	XUIPATH=$(sqlite3 -list $XUIDB 'SELECT "value" FROM settings WHERE "key"="webBasePath" LIMIT 1;' 2>&1)
-if [[ $XUIPORT -gt 0 && $XUIPORT != "54321" && $XUIPORT != "2053" ]] && [[ ${#XUIPATH} -gt 4 ]]; then
+if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]] && [[ ${#XUIPATH} -gt 4 ]]; then
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
 	sqlite3 $XUIDB <<EOF
@@ -265,12 +265,11 @@ fi
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-	sqlite3 $XUIDB <<EOF
-	DELETE FROM "settings" WHERE ( "key"="webPort" ) OR ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ) OR ( "key"="webBasePath" ); 
-	INSERT INTO "settings" ("key", "value") VALUES ("webPort",  "${PORT}");
-	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
-	INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
-	INSERT INTO "settings" ("key", "value") VALUES ("webBasePath", "/${RNDSTR}/");
+sqlite3 "$XUIDB" <<EOF
+BEGIN TRANSACTION;
+DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
+INSERT INTO "settings" ("key", "value") VALUES ("webPort", "${PORT}"),("webCertFile", ""),("webKeyFile", ""),("webBasePath", "/${RNDSTR}/");
+COMMIT;
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
