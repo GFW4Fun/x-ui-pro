@@ -155,9 +155,11 @@ if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]] && [[ ${#XUIPATH} -gt 4 ]]; t
 	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
 	PORT=$XUIPORT
 	sqlite3 $XUIDB <<EOF
+	BEGIN TRANSACTION;
 	DELETE FROM "settings" WHERE ( "key"="webCertFile" ) OR ( "key"="webKeyFile" ); 
 	INSERT INTO "settings" ("key", "value") VALUES ("webCertFile",  "");
 	INSERT INTO "settings" ("key", "value") VALUES ("webKeyFile", "");
+ 	COMMIT;
 EOF
 fi
 fi
