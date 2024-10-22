@@ -69,7 +69,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
-   	systemctl enable crond
+   	systemctl enable crond.service
 	systemctl start nginx
    	systemctl start tor
 fi
