@@ -34,8 +34,8 @@ done
 ##############################Uninstall#################################################################
 UNINSTALL_XUI(){
 	printf 'y\n' | x-ui uninstall
-	rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
-	for i in nginx nginx-common nginx-core nginx-full python3-certbot-nginx tor; do
+	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
+	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
 	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
