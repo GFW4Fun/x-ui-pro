@@ -96,10 +96,13 @@ mkdir -p /var/www/html
 rm -rf "/etc/nginx/default.d"
 rm -f "/etc/nginx/cloudflareips.sh"
 
-if [ $Pak == "dnf" ]; then
-rm -f "/etc/nginx/nginx.conf"
-cat << 'EOF' >> /etc/nginx/nginx.conf
-user nginx;
+nginxusr="www-data"
+if ! id -u "$nginxusr" > /dev/null 2>&1; then
+    nginxusr="nginx"
+fi
+
+cat > "/etc/nginx/nginx.conf" << EOF
+user $nginxusr;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
@@ -111,7 +114,7 @@ http {
 	tcp_nodelay         on;
 	keepalive_timeout   65;
 	types_hash_max_size 4096;
-	include /etc/nginx/mime.types;
+	include /etc/nginx/*.types;
 	default_type application/octet-stream;
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
