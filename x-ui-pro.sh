@@ -122,7 +122,6 @@ http {
 	include /etc/nginx/sites-enabled/*;
 }
 EOF
-fi
 
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
