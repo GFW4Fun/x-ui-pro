@@ -63,12 +63,13 @@ fi
 ###############################Install Packages#########################################################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
-	for i in epel-release unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor; do
+	for i in epel-release cronie unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor; do
 		$Pak -y install $i
 	done
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
+   	systemctl enable cronie.service
 	systemctl start nginx
    	systemctl start tor
 fi
