@@ -105,6 +105,7 @@ pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 events {worker_connections 2048;}
 http {
+	gzip on;
 	sendfile on;
 	tcp_nopush on;
 	tcp_nodelay on;
