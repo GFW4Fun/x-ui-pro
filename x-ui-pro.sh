@@ -38,7 +38,7 @@ UNINSTALL_XUI(){
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
- 	$Pak autoremove
+ 	$Pak -y autoremove
 	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 }
