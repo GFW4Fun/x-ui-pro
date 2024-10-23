@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.1.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.1.4 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -38,6 +38,7 @@ UNINSTALL_XUI(){
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
+ 	$Pak autoremove
 	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 }
