@@ -265,12 +265,16 @@ UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
 
 sqlite3 -safe "$XUIDB" << EOF
+	BEGIN TRANSACTION;
 	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
 	INSERT INTO "settings" ("key", "value") VALUES ("webPort", ${PORT}),("webCertFile", ''),("webKeyFile", ''),("webBasePath", '/${RNDSTR}/');
+ 	COMMIT;
 EOF
 sqlite3 -safe "$XUIDB" << EOF
+	BEGIN TRANSACTION;
 	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
 	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', ${PORT}),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '/${RNDSTR}/');
+ 	COMMIT;
 EOF
 else
 	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
