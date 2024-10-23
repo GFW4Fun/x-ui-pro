@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.1.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.1.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -9,7 +9,7 @@ echo;msg_inf '           ___    _   _   _  '	;
 msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
 msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
 ##################################Variables#############################################################
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n";NOPATH="";PORT="2053";
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n";NOPATH="";
 Pak=$(type apt &>/dev/null && echo "apt" || echo "dnf")
 ##################################Random Port and Path #################################################
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
@@ -185,6 +185,10 @@ if [[ -f $XUIDB ]]; then
 		RNDSTR="/"
 		NOPATH="#"
 	fi		
+else
+	PORT="2053"
+	RNDSTR="/"
+	NOPATH="#"
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
