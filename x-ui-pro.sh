@@ -186,13 +186,13 @@ if ! systemctl is-active --quiet x-ui; then
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
-	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
- 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
+	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
+ 	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
 	fi
-	if [[ -z "${RNDSTR}" ]]; then
-		RNDSTR="/"
+	if [ -z "$RNDSTR" ]; then
+		RNDSTR="/panel/"
 	fi	
 fi
 #################################Nginx Config###########################################################
