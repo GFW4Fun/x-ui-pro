@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v5.1.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.0.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -147,17 +147,53 @@ if [[ ${CFALLOW} == *"y"* ]]; then
 	else	
 	CF_IP="#";
 fi
+########################################Update X-UI Port/Path for first INSTALL#########################
+UPDATE_XUIDB(){
+if [[ -f $XUIDB ]]; then
+RNDSTRSLASH="'/${RNDSTR}/'"
+sqlite3 -safe "$XUIDB" << EOF
+	BEGIN TRANSACTION;
+	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
+	INSERT INTO "settings" ("key", "value") VALUES ("webPort", ${PORT}),("webCertFile", ''),("webKeyFile", ''),("webBasePath", ${RNDSTRSLASH});
+	ROLLBACK;
+	COMMIT;
+EOF
+sqlite3 -safe "$XUIDB" << EOF
+	BEGIN TRANSACTION;
+	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
+	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', ${PORT}),('webCertFile', ''),('webKeyFile', ''),('webBasePath', ${RNDSTRSLASH});
+	ROLLBACK;
+	COMMIT;
+EOF
+else
+	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
+fi
+}
+###################################Install X-UI#########################################################
+if ! systemctl is-active --quiet x-ui; then
+	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+	)
+
+	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
+	UPDATE_XUIDB
+	
+	if ! systemctl is-enabled --quiet x-ui; then
+		systemctl daemon-reload
+		systemctl enable x-ui.service
+	fi
+	systemctl restart x-ui		
+fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
-	XUIPORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
- 	XUIPATH=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
-if [[ -n "$XUIPORT" && "$XUIPORT" =~ ^-?[0-9]+$ ]] && [[ ${#XUIPATH} -gt 4 ]]; then 
-if [[ $XUIPORT != "54321" && $XUIPORT != "2053" ]]; then
-	RNDSTR=$(echo "$XUIPATH" 2>&1 | tr -d '/')
-	PORT=$XUIPORT
-fi
-fi
-
+	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
+ 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
+	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
+		PORT="2053"
+	fi
+	if [[ -z "${RNDSTR}" ]]; then
+		RNDSTR="/"
+	fi	
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -182,7 +218,7 @@ server {
 	error_page 400 401 402 403 500 501 502 503 504 =404 /404;
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
-	location /$RNDSTR/ {
+	location $RNDSTR {
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
@@ -260,44 +296,6 @@ if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 else
 	systemctl start nginx 
 fi
-########################################Update X-UI Port/Path for first INSTALL#########################
-UPDATE_XUIDB(){
-if [[ -f $XUIDB ]]; then
-RNDSTRSLASH="/${RNDSTR}/"
-sqlite3 -safe "$XUIDB" << EOF
-	BEGIN TRANSACTION;
-	DELETE FROM "settings" WHERE "key" IN ("webPort", "webCertFile", "webKeyFile", "webBasePath");
-	INSERT INTO "settings" ("key", "value") VALUES ("webPort", ${PORT}),("webCertFile", ''),("webKeyFile", ''),("webBasePath", '${RNDSTRSLASH}');
-	ROLLBACK;
-	COMMIT;
-EOF
-sqlite3 -safe "$XUIDB" << EOF
-	BEGIN TRANSACTION;
-	DELETE FROM 'settings' WHERE 'key' IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
-	INSERT INTO 'settings' ('key', 'value') VALUES ('webPort', ${PORT}),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
-	ROLLBACK;
-	COMMIT;
-EOF
-else
-	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
-fi
-}
-###################################Install X-UI#########################################################
-if systemctl is-active --quiet x-ui; then
-	x-ui restart
-else
-	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-			"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
-		)
-
-	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
-	UPDATE_XUIDB
-	if ! systemctl is-enabled --quiet x-ui; then
-		systemctl daemon-reload && systemctl enable x-ui.service
-	fi
-	x-ui restart
-fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@daily sudo systemctl restart x-ui nginx tor > /dev/null 2>&1') | crontab -
@@ -312,13 +310,13 @@ if systemctl is-active --quiet x-ui; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	if [[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]]; then 
-		msg_inf "IPv4: http://$IP4:$PORT/$RNDSTR/"
+		msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	fi
 	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
-		msg_inf "IPv6: http://[$IP6]:$PORT/$RNDSTR/"
+		msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_inf "X-UI Secure Panel: https://${domain}/${RNDSTR}\n"
+	msg_inf "X-UI Secure Panel: https://${domain}${RNDSTR}\n"
  	echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
 	echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
