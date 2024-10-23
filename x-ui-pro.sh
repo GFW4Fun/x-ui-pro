@@ -180,6 +180,7 @@ if [[ -f $XUIDB ]]; then
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
+  		NOPATH="#"
 	fi
 	if [ -z "$RNDSTR" ]; then
 		RNDSTR="/"
