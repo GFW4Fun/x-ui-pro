@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.1.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.1.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -180,9 +180,8 @@ if [[ -f $XUIDB ]]; then
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
-  		NOPATH="#"
-	fi
-	if [ -z "$RNDSTR" ]; then
+  	fi
+	if [ -z "$RNDSTR" ] || [ "$RNDSTR" == "/" ]; then
 		RNDSTR="/"
 		NOPATH="#"
 	fi		
