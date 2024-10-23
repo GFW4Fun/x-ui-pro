@@ -28,7 +28,7 @@ panel!
 > 
 > Do not change SubDomain for renew SSL❗
 > ##
-> -panel (0=alireza 1=MHSanaei 2=FranzKafkaYu)
+> -panel (0=alireza 1=MHSanaei)
 > 
 **Random Fake HTMLSite**:earth_asia:	
 ```
