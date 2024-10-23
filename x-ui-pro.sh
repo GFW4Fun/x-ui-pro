@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -9,7 +9,7 @@ echo;msg_inf '           ___    _   _   _  '	;
 msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
 msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
 ##################################Variables#############################################################
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n"
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n";NOPATH="";PORT="2053";
 Pak=$(type apt &>/dev/null && echo "apt" || echo "dnf")
 ##################################Random Port and Path #################################################
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
@@ -182,8 +182,9 @@ if [[ -f $XUIDB ]]; then
 		PORT="2053"
 	fi
 	if [ -z "$RNDSTR" ]; then
-		RNDSTR="/panel/"
-	fi	
+		RNDSTR="/"
+		NOPATH="#"
+	fi		
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -216,8 +217,8 @@ server {
 		proxy_pass http://127.0.0.1:$PORT;
 		break;
 	}
- 	#Subscription Path (simple/encode)
-        location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
+	#Subscription Path (simple/encode)
+	location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
                 if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
@@ -227,7 +228,7 @@ server {
                 break;
         }
 	#Subscription Path (json/fragment)
-        location ~ ^/(?<fwdport>\d+)/json/(?<fwdpath>.*)\$ {
+	location ~ ^/(?<fwdport>\d+)/json/(?<fwdpath>.*)\$ {
                 if (\$hack = 1) {return 404;}
                 proxy_redirect off;
                 proxy_set_header Host \$host;
@@ -236,7 +237,7 @@ server {
                 proxy_pass http://127.0.0.1:\$fwdport/json/\$fwdpath\$is_args\$args;
                 break;
         }
- 	#Xray Config Path
+	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 	$CF_IP	if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
@@ -269,7 +270,7 @@ server {
 			break;
 		}
 	}
-	location / { try_files \$uri \$uri/ =404; }
+	$NOPATH location / { try_files \$uri \$uri/ =404; }
 }
 EOF
 ##################################Check Nginx status####################################################
