@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -169,17 +169,17 @@ fi
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui; then
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-			"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
 	)
 
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
- 
-	UPDATE_XUIDB
  
 	if ! systemctl is-enabled --quiet x-ui; then
 		systemctl daemon-reload
 		systemctl enable x-ui.service
 	fi	
+ 
+ 	UPDATE_XUIDB
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
