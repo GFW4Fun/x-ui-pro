@@ -9,7 +9,7 @@
 - More security and low detection with nginx
 - Compatible with Cloudflare CDN/IP
 - Random 150+ fake HTML template!
-- Linux Debian/Ubuntu/CentOS/Fedora!
+- Debian/Ubuntu/CentOS/Fedora/Alma/Rockey Linux!
 
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
