@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -39,8 +39,8 @@ UNINSTALL_XUI(){
 	done
  	$Pak -y autoremove
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
-	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
-	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
+	rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
+	rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
