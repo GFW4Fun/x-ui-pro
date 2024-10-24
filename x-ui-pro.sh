@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.4 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -64,7 +64,7 @@ fi
 ###############################Install Packages#########################################################
 if [[ ${INSTALL} == *"y"* ]]; then
 	$Pak -y update
-	for i in epel-release cronie unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor; do
+	for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor; do
 		$Pak -y install $i
 	done
 	systemctl daemon-reload
