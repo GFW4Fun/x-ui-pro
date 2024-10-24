@@ -157,6 +157,8 @@ add_slashes() {
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
+x-ui stop
+fuser "$XUIDB" 2>/dev/null
 RNDSTRSLASH=$(add_slashes "$RNDSTR")
 sqlite3 -safe "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE key IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
@@ -171,16 +173,18 @@ if ! systemctl is-active --quiet x-ui; then
 	)
 
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
+ 
 	UPDATE_XUIDB
-	
+ 
 	if ! systemctl is-enabled --quiet x-ui; then
 		systemctl daemon-reload
 		systemctl enable x-ui.service
-	fi
-	systemctl restart x-ui		
+	fi	
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
+	x-ui stop
+ 	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
@@ -303,6 +307,7 @@ crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui; then clear
+	systemctl start x-ui
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
