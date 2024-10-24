@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -70,14 +70,14 @@ if [[ ${INSTALL} == *"y"* ]]; then
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
-   	systemctl enable crond.service &>/dev/null
+   	systemctl enable crond.service
 	systemctl start nginx
    	systemctl start tor
 fi
 ###############################Stop nginx#############################################################
-sudo nginx -s stop &>/dev/null
-sudo systemctl stop nginx &>/dev/null
-sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp &>/dev/null
+sudo nginx -s stop 2>/dev/null
+sudo systemctl stop nginx 2>/dev/null
+sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
 ##################################GET SERVER IPv4-6#####################################################
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
@@ -157,8 +157,8 @@ add_slashes() {
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-x-ui stop &>/dev/null
-fuser "$XUIDB" &>/dev/null
+x-ui stop
+fuser "$XUIDB" 2>/dev/null
 RNDSTRSLASH=$(add_slashes "$RNDSTR")
 sqlite3 "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE key IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
@@ -183,8 +183,8 @@ if ! systemctl is-active --quiet x-ui; then
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
-	x-ui stop &>/dev/null
- 	fuser "$XUIDB" &>/dev/null
+	x-ui stop
+ 	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
@@ -290,7 +290,7 @@ EOF
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	unlink "/etc/nginx/sites-enabled/default" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
-	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" &>/dev/null
+	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 else
 	msg_err "$MainDomain nginx config not exist!" && exit 1
 fi
@@ -300,7 +300,7 @@ if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	systemctl restart nginx
 else
 	systemctl start nginx 
- 	x-ui start &>/dev/null
+ 	x-ui start
 fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
