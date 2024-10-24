@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.6 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.7 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -72,6 +72,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
   	systemctl enable tor.service
    	systemctl enable cron.service > /dev/null 2>&1
    	systemctl enable crond.service > /dev/null 2>&1
+    	systemctl start cron crond > /dev/null 2>&1
 	systemctl start nginx
    	systemctl start tor
 fi
