@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.1.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.3.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -34,13 +34,13 @@ done
 ##############################Uninstall#################################################################
 UNINSTALL_XUI(){
 	printf 'y\n' | x-ui uninstall
-	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
  	$Pak -y autoremove
-	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
+	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
+	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
@@ -148,16 +148,20 @@ if [[ ${CFALLOW} == *"y"* ]]; then
 	else	
 	CF_IP="#";
 fi
+######################################## add_slashes /webBasePath/ #####################################
+add_slashes() {
+    [[ "$1" =~ ^/ ]] || set -- "/$1"
+    [[ "$1" =~ /$ ]] || set -- "$1/"
+    echo "$1"
+}
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-RNDSTRSLASH="/${RNDSTR}/"
+RNDSTRSLASH=$(add_slashes "$RNDSTR")
 sqlite3 -safe "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE key IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
-else
-	msg_err "x-ui.db file not exist! Maybe x-ui isn't installed." && exit 1;
 fi
 }
 ###################################Install X-UI#########################################################
@@ -183,9 +187,9 @@ if [[ -f $XUIDB ]]; then
 		PORT="2053"
   	fi
 	if [ -z "$RNDSTR" ] || [ "$RNDSTR" == "/" ]; then
-		RNDSTR="/"
 		NOPATH="#"
 	fi		
+	RNDSTR=$(add_slashes "$RNDSTR")
 else
 	PORT="2053"
 	RNDSTR="/"
