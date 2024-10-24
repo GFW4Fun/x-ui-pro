@@ -301,6 +301,7 @@ if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	exit 1
 else
 	systemctl start nginx 
+ 	x-ui start
 fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
@@ -308,9 +309,7 @@ crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui; then
-	x-ui start
- 	clear
+if systemctl is-active --quiet x-ui; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
