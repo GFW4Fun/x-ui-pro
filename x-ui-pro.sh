@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.5.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -193,7 +193,7 @@ if [[ -f $XUIDB ]]; then
 	if [ -z "$RNDSTR" ] || [ "$RNDSTR" == "/" ]; then
 		NOPATH="#"
 	fi		
-	RNDSTR=$(add_slashes "$RNDSTR")
+	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
 else
 	PORT="2053"
 	RNDSTR="/"
