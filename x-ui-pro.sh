@@ -72,7 +72,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
   	systemctl enable tor.service
    	systemctl enable cron.service > /dev/null 2>&1
    	systemctl enable crond.service > /dev/null 2>&1
-    	systemctl start cron crond > /dev/null 2>&1
+    	systemctl restart cron crond > /dev/null 2>&1
 	systemctl start nginx
    	systemctl start tor
 fi
