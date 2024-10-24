@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -70,7 +70,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
 	systemctl daemon-reload
  	systemctl enable nginx.service
   	systemctl enable tor.service
-   	systemctl enable crond.service
+   	systemctl enable crond.service 2>/dev/null
 	systemctl start nginx
    	systemctl start tor
 fi
@@ -157,7 +157,7 @@ add_slashes() {
 ########################################Update X-UI Port/Path for first INSTALL#########################
 UPDATE_XUIDB(){
 if [[ -f $XUIDB ]]; then
-x-ui stop
+x-ui stop 2>/dev/null
 fuser "$XUIDB" 2>/dev/null
 RNDSTRSLASH=$(add_slashes "$RNDSTR")
 sqlite3 "$XUIDB" << EOF
@@ -183,7 +183,7 @@ if ! systemctl is-active --quiet x-ui; then
 fi
 ###################################Get Installed XUI Port/Path##########################################
 if [[ -f $XUIDB ]]; then
-	x-ui stop
+	x-ui stop 2>/dev/null
  	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
@@ -300,7 +300,7 @@ if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	systemctl restart nginx
 else
 	systemctl start nginx 
- 	x-ui start
+ 	x-ui start 2>/dev/null
 fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
