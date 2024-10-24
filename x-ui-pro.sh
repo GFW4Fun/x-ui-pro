@@ -37,10 +37,10 @@ UNINSTALL_XUI(){
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
- 	$Pak -y autoremove
+ 	#$Pak -y autoremove
 	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
-	rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
-	rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
+	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
+	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
