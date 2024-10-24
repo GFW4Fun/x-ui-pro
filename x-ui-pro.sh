@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.4.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.5.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -160,7 +160,7 @@ if [[ -f $XUIDB ]]; then
 x-ui stop
 fuser "$XUIDB" 2>/dev/null
 RNDSTRSLASH=$(add_slashes "$RNDSTR")
-sqlite3 -safe "$XUIDB" << EOF
+sqlite3 "$XUIDB" << EOF
 	DELETE FROM 'settings' WHERE key IN ('webPort', 'webCertFile', 'webKeyFile', 'webBasePath');
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
@@ -298,7 +298,6 @@ fi
 if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	msg_err "nginx config is not ok!"
 	systemctl restart nginx
-	exit 1
 else
 	systemctl start nginx 
  	x-ui start
