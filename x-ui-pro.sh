@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.8 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.9 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -303,14 +303,13 @@ if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	msg_err "nginx config is not ok!"
 	systemctl restart nginx
 fi
-
-x-ui start > /dev/null 2>&1
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@daily sudo systemctl restart x-ui nginx tor > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
+x-ui start > /dev/null 2>&1
 if ls /etc/systemd/system/ | grep -q x-ui; then
 	clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
@@ -327,8 +326,12 @@ if ls /etc/systemd/system/ | grep -q x-ui; then
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Secure Panel: https://${domain}${RNDSTR}\n"
- 	echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
-	echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
+ 	if [[ -f $XUIDB ]]; then
+ 		echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
+		echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
+ 	else
+  		echo "Username: admin  /  Password: admin"
+  	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "Please Save this Screen!!"	
 else
