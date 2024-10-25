@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.7 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v6.6.8 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -297,20 +297,22 @@ else
 	msg_err "$MainDomain nginx config not exist!" && exit 1
 fi
 
+systemctl start nginx 
+
 if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
 	msg_err "nginx config is not ok!"
 	systemctl restart nginx
-else
-	systemctl start nginx 
- 	x-ui start > /dev/null 2>&1
 fi
+
+x-ui start > /dev/null 2>&1
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@daily sudo systemctl restart x-ui nginx tor > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui; then clear
+if ls /etc/systemd/system/ | grep -q x-ui; then
+	clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
