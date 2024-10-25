@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v6.6.9 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v7.0.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -37,10 +37,9 @@ UNINSTALL_XUI(){
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
- 	#$Pak -y autoremove
-	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
-	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 
-	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
+	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab 
+	#$Pak -y autoremove
+	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
@@ -72,7 +71,7 @@ if [[ ${INSTALL} == *"y"* ]]; then
   	systemctl enable tor.service
    	systemctl enable cron.service > /dev/null 2>&1
    	systemctl enable crond.service > /dev/null 2>&1
-    	systemctl restart cron crond > /dev/null 2>&1
+	systemctl restart cron crond > /dev/null 2>&1
 	systemctl start nginx
    	systemctl start tor
 fi
@@ -188,18 +187,22 @@ if [[ -f $XUIDB ]]; then
 	x-ui stop > /dev/null 2>&1
  	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
- 	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)
+ 	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)	
+	XUIUSER=$(sqlite3 "${XUIDB}" "SELECT 'username' FROM users LIMIT 1;" 2>&1)
+	XUIPASS=$(sqlite3 "${XUIDB}" "SELECT 'password' FROM users LIMIT 1;" 2>&1)
+	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
+	if [ "$RNDSTR" == "/" ]; then
+		NOPATH="#"
+	fi	
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
   	fi
-	if [ -z "$RNDSTR" ] || [ "$RNDSTR" == "/" ]; then
-		NOPATH="#"
-	fi		
-	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
 else
 	PORT="2053"
 	RNDSTR="/"
 	NOPATH="#"
+	XUIUSER="admin"
+	XUIPASS="admin"	
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -310,6 +313,7 @@ crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
 x-ui start > /dev/null 2>&1
+
 if ls /etc/systemd/system/ | grep -q x-ui; then
 	clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
@@ -326,12 +330,8 @@ if ls /etc/systemd/system/ | grep -q x-ui; then
 	fi
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Secure Panel: https://${domain}${RNDSTR}\n"
- 	if [[ -f $XUIDB ]]; then
- 		echo -n "Username:  " && sqlite3 $XUIDB 'SELECT "username" FROM users;'
-		echo -n "Password:  " && sqlite3 $XUIDB 'SELECT "password" FROM users;'
- 	else
-  		echo "Username: admin  /  Password: admin"
-  	fi
+	echo "Username: $XUIUSER"
+	echo "Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "Please Save this Screen!!"	
 else
