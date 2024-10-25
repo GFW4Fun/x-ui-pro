@@ -188,8 +188,8 @@ if [[ -f $XUIDB ]]; then
  	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)	
-	XUIUSER=$(sqlite3 "${XUIDB}" "SELECT 'username' FROM users LIMIT 1;" 2>&1)
-	XUIPASS=$(sqlite3 "${XUIDB}" "SELECT 'password' FROM users LIMIT 1;" 2>&1)
+	XUIUSER=$(sqlite3 "${XUIDB}" 'SELECT "username" FROM users;' 2>&1)
+	XUIPASS=$(sqlite3 "${XUIDB}" 'SELECT "password" FROM users;' 2>&1)
 	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
 	if [ "$RNDSTR" == "/" ]; then
 		NOPATH="#"
