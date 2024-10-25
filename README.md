@@ -19,11 +19,17 @@
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1 -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> Recommended -ONLY_CF_IP_ALLOW yes + (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full
+> Recommended:
+> 
+>  -ONLY_CF_IP_ALLOW yes
+> 
+> (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full
 >
 > Cloudflare > yourDomain > Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28">
 > ##
-> SSL Support (yourdomain.com, *.yourdomain.com) for new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the
+> SSL Support (yourdomain.com, *.yourdomain.com)
+>
+> For new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the
 panel!
 > 
 > Do not change SubDomain for renew SSL❗
