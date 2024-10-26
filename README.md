@@ -19,13 +19,15 @@
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1 -ONLY_CF_IP_ALLOW no"
 ```
 > 
-> Recommended:
+> Recommended for Cloudflare users:
 > 
 >  -ONLY_CF_IP_ALLOW yes
 > 
-> (Cloudflare<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON) + SSL/TLS > Full
+> Cloudflare > yourDomain > <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON CDN
 >
-> Cloudflare > yourDomain > Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28">
+>  Cloudflare > yourDomain > DNS > SSL/TLS > mode: Full
+>
+> Cloudflare > yourDomain > Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28"> ON
 > ##
 > SSL Support (yourdomain.com, *.yourdomain.com)
 >
