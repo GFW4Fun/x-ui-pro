@@ -1,32 +1,32 @@
 #!/bin/bash
-#################### x-ui-pro v7.0.1 @ github.com/GFW4Fun ##############################################
-[[ $EUID -ne 0 ]] && echo "not root!" && sudo su -
+#################### x-ui-pro v8.0.0 @ github.com/GFW4Fun ##############################################
+[[ $EUID -ne 0 ]] && echo "not root!" && exec sudo "$0" "$@"
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
 msg_inf() { echo -e "\e[1;34m$1\e[0m";}
-echo;msg_inf '           ___    _   _   _  '	;
-msg_inf		 ' \/ __ | |  | __ |_) |_) / \ '	;
-msg_inf		 ' /\    |_| _|_   |   | \ \_/ '	; echo
+echo
+msg_inf		'           ___    _   _   _  ';
+msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
+msg_inf		' /\    |_| _|_   |   | \ \_/ ';
+echo
 ##################################Variables#############################################################
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="n";NOPATH="";
-Pak=$(type apt &>/dev/null && echo "apt" || echo "dnf")
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="off";NOPATH="";xuiVer=""
 ##################################Random Port and Path #################################################
+Pak=$(command -v apt||echo dnf)
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
-    status="$(nc -z 127.0.0.1 $PORT < /dev/null &>/dev/null; echo $?)"
-    if [ "${status}" != "0" ]; then
-        break
-    fi
+	nc -z 127.0.0.1 "$PORT" &>/dev/null || break
 done
 ################################Get arguments###########################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
     -install) INSTALL="$2"; shift 2;;
     -panel) PNLNUM="$2"; shift 2;;
+	-xuiver) xuiVer="$2"; shift 2;;
     -subdomain) domain="$2"; shift 2;;
-    -ONLY_CF_IP_ALLOW) CFALLOW="$2"; shift 2;;
+    -cdn) CFALLOW="$2"; shift 2;;
     -uninstall) UNINSTALL="$2"; shift 2;;
     *) shift 1;;
   esac
@@ -37,20 +37,15 @@ UNINSTALL_XUI(){
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
-	crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab 
-	#$Pak -y autoremove
-	#rm -rf "/var/www/html/" "/etc/nginx/" "/usr/share/nginx/" 	#rm -rf "/etc/x-ui/" "/usr/local/x-ui/" "/usr/bin/x-ui/"
+	crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab 
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations########################################################
-while true; do	
-	if [[ -n "$domain" ]]; then
-		break
-	fi
-	echo -en "Enter available subdomain (sub.domain.tld): " && read domain 
+while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
+    read -rp "Enter available subdomain (sub.domain.tld): " domain
 done
 
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
@@ -67,13 +62,10 @@ if [[ ${INSTALL} == *"y"* ]]; then
 		$Pak -y install $i
 	done
 	systemctl daemon-reload
- 	systemctl enable nginx.service
-  	systemctl enable tor.service
-   	systemctl enable cron.service > /dev/null 2>&1
-   	systemctl enable crond.service > /dev/null 2>&1
-	systemctl restart cron crond > /dev/null 2>&1
-	systemctl start nginx
-   	systemctl start tor
+	systemctl enable nginx tor 
+	systemctl start nginx tor
+	systemctl enable crond cron > /dev/null 2>&1
+	systemctl restart crond cron > /dev/null 2>&1
 fi
 ###############################Stop nginx#############################################################
 sudo nginx -s stop 2>/dev/null
@@ -93,35 +85,28 @@ if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
 	msg_err "$MainDomain SSL failed! Check Domain/IP! Exceeded limit!? Try another domain or VPS!" && exit 1
 fi
 ################################# Access to configs only with cloudflare#################################
-mkdir -p /etc/nginx/sites-{available,enabled}
-mkdir -p /var/log/nginx
-mkdir -p /var/www
-mkdir -p /var/www/html
+mkdir -p /etc/nginx/sites-{available,enabled} /var/log/nginx /var/www /var/www/html
 rm -rf "/etc/nginx/default.d"
 
 nginxusr="www-data"
-if ! id -u "$nginxusr" > /dev/null 2>&1; then
-    nginxusr="nginx"
-fi
+id -u "$nginxusr" &>/dev/null || nginxusr="nginx"
+chown ${nginxusr}:${nginxusr} /var/run/nginx.pid
 
 cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxusr;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
-events {worker_connections 2048;}
-http {
-	gzip on;
-	sendfile on;
-	tcp_nopush on;
-	types_hash_max_size 4096;
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
+events{worker_connections 4444;}
+http{
+	gzip on;sendfile on;tcp_nopush on;
 	default_type application/octet-stream;
 	include /etc/nginx/*.types;
 	include /etc/nginx/conf.d/*.conf;
 	include /etc/nginx/sites-enabled/*;
-}
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+	}
 EOF
 
 rm -f "/etc/nginx/cloudflareips.sh"
@@ -144,7 +129,7 @@ echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
-if [[ ${CFALLOW} == *"y"* ]]; then
+if [[ ${CFALLOW} == *"on"* ]]; then
 	CF_IP="";
 	else	
 	CF_IP="#";
@@ -168,13 +153,13 @@ EOF
 fi
 }
 ###################################Install X-UI#########################################################
-if ! systemctl is-active --quiet x-ui; then
-	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-	)
-
-	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
- 
+if ! command -v x-ui &>/dev/null; then
+	xuiVer=${xuiVer:-master}
+	
+	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/${xuiVer}/install.sh"
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/${xuiVer}/install.sh")
+	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") "${xuiVer}"		
+	
 	if ! systemctl is-enabled --quiet x-ui; then
 		systemctl daemon-reload
 		systemctl enable x-ui.service
@@ -199,10 +184,8 @@ if [[ -f $XUIDB ]]; then
   	fi
 else
 	PORT="2053"
-	RNDSTR="/"
-	NOPATH="#"
-	XUIUSER="admin"
-	XUIPASS="admin"	
+	RNDSTR="/";	NOPATH="#";
+	XUIUSER="admin";XUIPASS="admin";
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -237,27 +220,27 @@ server {
 	}
 	#Subscription Path (simple/encode)
 	location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
-                if (\$hack = 1) {return 404;}
-                proxy_redirect off;
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_pass http://127.0.0.1:\$fwdport/sub/\$fwdpath\$is_args\$args;
-                break;
-        }
+		if (\$hack = 1) {return 404;}
+		proxy_redirect off;
+		proxy_set_header Host \$host;
+		proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+		proxy_pass http://127.0.0.1:\$fwdport/sub/\$fwdpath\$is_args\$args;
+		break;
+	}
 	#Subscription Path (json/fragment)
 	location ~ ^/(?<fwdport>\d+)/json/(?<fwdpath>.*)\$ {
-                if (\$hack = 1) {return 404;}
-                proxy_redirect off;
-                proxy_set_header Host \$host;
-                proxy_set_header X-Real-IP \$remote_addr;
-                proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-                proxy_pass http://127.0.0.1:\$fwdport/json/\$fwdpath\$is_args\$args;
-                break;
-        }
+		if (\$hack = 1) {return 404;}
+		proxy_redirect off;
+		proxy_set_header Host \$host;
+		proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+		proxy_pass http://127.0.0.1:\$fwdport/json/\$fwdpath\$is_args\$args;
+		break;
+	}
 	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
-	$CF_IP	if (\$cloudflare_ip != 1) {return 404;}
+	$CF_IP if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
 		client_max_body_size 0;
 		client_body_timeout 1d;
@@ -282,7 +265,7 @@ server {
 		if (\$http_upgrade ~* "(WEBSOCKET|WS)") {
 			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
-	        }
+		}
 		if (\$request_method ~* ^(PUT|POST|GET)\$) {
 			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
@@ -296,25 +279,24 @@ if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	unlink "/etc/nginx/sites-enabled/default" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
 	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
-else
-	msg_err "$MainDomain nginx config not exist!" && exit 1
 fi
 
-systemctl start nginx 
-
-if [[ $(nginx -t 2>&1 | grep -o 'successful') != "successful" ]]; then
-	msg_err "nginx config is not ok!"
-	systemctl restart nginx
+if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -s reload 2>&1 | grep -q error; then
+	pkill -9 nginx || killall -9 nginx
+	nginx -c /etc/nginx/nginx.conf
+	nginx -s reload
 fi
+
 ######################cronjob for ssl/reload service/cloudflareips######################################
-crontab -l | grep -v "certbot\|x-ui\|cloudflareips" | crontab -
-(crontab -l 2>/dev/null; echo '@daily x-ui restart > /dev/null 2>&1 && nginx -s reload && systemctl reload tor;') | crontab -
-(crontab -l 2>/dev/null; echo '@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;') | crontab -
+crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab -
+(crontab -l 2>/dev/null; echo "@daily x-ui restart > /dev/null 2>&1 && systemctl reload tor;") | crontab -
+(crontab -l 2>/dev/null; echo "@daily nginx -s reload 2>&1 | grep -q error && $(pkill -9 nginx;nginx -c /etc/nginx/nginx.conf;nginx -s reload);") | crontab -
+(crontab -l 2>/dev/null; echo "@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
 x-ui start > /dev/null 2>&1
 
-if ls /etc/systemd/system/ | grep -q x-ui; then
+if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then
 	clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
@@ -322,12 +304,8 @@ if ls /etc/systemd/system/ | grep -q x-ui; then
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	if [[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]]; then 
-		msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
-	fi
-	if [[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]]; then 
-		msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
-	fi
+	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
+	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "X-UI Secure Panel: https://${domain}${RNDSTR}\n"
 	echo "Username: $XUIUSER"
@@ -336,6 +314,6 @@ if ls /etc/systemd/system/ | grep -q x-ui; then
 	msg_inf "Please Save this Screen!!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
-	msg_err "sqlite and x-ui to be checked, try on a new clean linux! "
+	msg_err "X-UI-PRO : Installation error..."
 fi
 #################################################N-joy##################################################
