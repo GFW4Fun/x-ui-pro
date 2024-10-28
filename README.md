@@ -16,12 +16,12 @@
 **Install X-UI-PRO**:dvd::package:
 
 ```
-sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1 -ONLY_CF_IP_ALLOW no"
+sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1 -cdn off"
 ```
 > 
 > Recommended for Cloudflare users:
 > 
-> Install >  -ONLY_CF_IP_ALLOW yes
+> Install >  -cdn on
 > 
 > Cloudflare > yourDomain > <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON CDN
 >
