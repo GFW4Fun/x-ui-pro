@@ -155,7 +155,7 @@ EOF
 fi
 }
 ###################################Install X-UI#########################################################
-if ! command -v x-ui &>/dev/null; then
+if ! systemctl is-active --quiet x-ui; then
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
 	)
