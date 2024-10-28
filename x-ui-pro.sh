@@ -62,10 +62,13 @@ if [[ ${INSTALL} == *"y"* ]]; then
 		$Pak -y install $i
 	done
 	systemctl daemon-reload
-	systemctl enable nginx tor 
-	systemctl start nginx tor
-	systemctl enable crond cron > /dev/null 2>&1
-	systemctl restart crond cron > /dev/null 2>&1
+ 	systemctl enable nginx.service
+  	systemctl enable tor.service
+   	systemctl enable cron.service > /dev/null 2>&1
+   	systemctl enable crond.service > /dev/null 2>&1
+	systemctl restart cron crond > /dev/null 2>&1
+	systemctl start nginx
+   	systemctl start tor
 fi
 ###############################Stop nginx#############################################################
 sudo nginx -s stop 2>/dev/null
