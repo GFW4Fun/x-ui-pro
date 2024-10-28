@@ -156,11 +156,12 @@ fi
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui; then
-	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
+	xuiVer=${xuiVer:-master}
+	PANEL=( "https://raw.githubusercontent.com/alireza0/${xuiVer}/install.sh"
+		"https://raw.githubusercontent.com/mhsanaei/3x-ui/${xuiVer}/install.sh"
 	)
 
-	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
+	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") ${xuiVer}
  
 	if ! systemctl is-enabled --quiet x-ui; then
 		systemctl daemon-reload
