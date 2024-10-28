@@ -24,7 +24,7 @@ while [ "$#" -gt 0 ]; do
   case "$1" in
     -install) INSTALL="$2"; shift 2;;
     -panel) PNLNUM="$2"; shift 2;;
-	-xuiver) xuiVer="$2"; shift 2;;
+    -xuiver) xuiVer="$2"; shift 2;;
     -subdomain) domain="$2"; shift 2;;
     -cdn) CFALLOW="$2"; shift 2;;
     -uninstall) UNINSTALL="$2"; shift 2;;
