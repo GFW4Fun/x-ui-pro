@@ -21,7 +21,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 > 
 > Recommended for Cloudflare users:
 > 
-> Install >  -cdn on
+> Install command >  -cdn on
 > 
 > Cloudflare > yourDomain > <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON CDN
 >
