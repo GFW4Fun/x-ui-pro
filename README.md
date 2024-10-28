@@ -37,8 +37,6 @@ panel!
 > Do not change SubDomain for renew SSL❗
 > ##
 > -panel 0 (alireza) 1 (MHSanaei)
->
-> -xuiver 1.8.7 (alireza) -xuiver v2.4.5 (MHSanaei)
 > 
 **Random Fake HTMLSite**:earth_asia:	
 ```
