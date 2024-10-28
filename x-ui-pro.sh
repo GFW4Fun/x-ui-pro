@@ -93,7 +93,6 @@ rm -rf "/etc/nginx/default.d"
 
 nginxusr="www-data"
 id -u "$nginxusr" &>/dev/null || nginxusr="nginx"
-chown ${nginxusr}:${nginxusr} /var/run/nginx.pid
 
 cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxusr;
