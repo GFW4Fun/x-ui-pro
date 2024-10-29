@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v8.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v8.0.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && echo "not root!" && exec sudo "$0" "$@"
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -293,7 +293,7 @@ fi
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo "@daily x-ui restart > /dev/null 2>&1 && systemctl reload tor;") | crontab -
-(crontab -l 2>/dev/null; echo "@daily nginx -s reload 2>&1 | grep -q error && \$(pkill -9 nginx;nginx -c /etc/nginx/nginx.conf;nginx -s reload);") | crontab -
+(crontab -l 2>/dev/null; echo "@daily bash -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }'") | crontab -
 (crontab -l 2>/dev/null; echo "@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 (crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
 ##################################Show Details##########################################################
