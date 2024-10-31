@@ -25,8 +25,6 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 > 
 > Cloudflare > yourDomain > <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON CDN
 >
->  Cloudflare > yourDomain > DNS > SSL/TLS > Configure mode: Full
->
 > Cloudflare > yourDomain > Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28"> ON
 > ##
 > SSL Support (yourdomain.com, *.yourdomain.com)
