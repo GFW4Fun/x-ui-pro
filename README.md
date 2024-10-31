@@ -32,7 +32,6 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 > For new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the
 panel!
 > 
-> Do not change SubDomain for renew SSL❗
 > ##
 > -panel 0 (alireza) 1 (MHSanaei)
 > 
