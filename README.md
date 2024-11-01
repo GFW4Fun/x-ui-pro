@@ -62,9 +62,16 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Checking Config/Port from inside the VPS (Internal)
-#### Example: Check TOR on your server!
+#### Example: Check TOR/Psiphon/WARP on your server!
 ```
+# Your current IP on TOR
 curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com
+
+# Your current IP on Psiphon
+curl --socks5-hostname 127.0.0.1:1081 checkip.amazonaws.com
+
+# Your current IP on CloudflareWARP
+curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
 ```
 #### If return VPS/WARP/TOR IP Means the port is active and healthy
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
