@@ -11,7 +11,7 @@
 - Random 150+ fake HTML template!
 - Debian/Ubuntu/CentOS/Fedora/Alma/Rocky Linux!
 
-#### Psiphone and Warp+ Commig Soon! Please Star ⭐ Thank you!
+#### Psiphone and Warp+ Commig Soon...
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 
 **Install X-UI-PRO**:dvd::package:
