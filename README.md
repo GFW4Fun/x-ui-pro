@@ -20,13 +20,7 @@
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -install yes -panel 1 -cdn off"
 ```
 > 
-> Recommended for Cloudflare users:
-> 
-> Install command >  -cdn on
-> 
-> Cloudflare > yourDomain > <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">TURN ON CDN
->
-> Cloudflare > yourDomain > Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28"> ON
+> Cloudflare Users: -cdn on / Domain CDN <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> / Network > gRPC <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/TURNON.png" width="28"> ON
 > ##
 > SSL Support (yourdomain.com, *.yourdomain.com)
 >
