@@ -9,7 +9,6 @@
 - Compatible with Cloudflare CDN/IP
 - Random 150+ fake HTML template!
 - Debian/Ubuntu/CentOS/Fedora Linux!
-- Warp+/Psiphon 🔜
 ##
 
 **Install X-UI-PRO**:dvd::package:
