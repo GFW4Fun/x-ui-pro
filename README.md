@@ -27,8 +27,11 @@ SSL Support (yourdomain.com, *.yourdomain.com)
 For new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!
 </details>
 <details><summary>Installation arguments</summary>
+
+ **PanelType**
+ ```
  -panel 0 (alireza) 1 (MHSanaei)
-</details>
+```
 
 **Random FakeSite**:earth_asia:	
 ```
@@ -39,6 +42,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 ```
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -uninstall yes"
 ```
+</details>
 
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ### Server Configuration :wrench:🐧⚙️
