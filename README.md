@@ -80,6 +80,7 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> TOR 🧅 (Fix Google&ChatGPT Forbidden/Hide VPS IP)
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
+#### WARP-Plus☁️> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:warp+ > Address:Port 127.0.0.1:8086 > Add > Save Restart!
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
