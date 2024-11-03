@@ -29,7 +29,7 @@ panel!
 > ##
 > -panel 0 (alireza) 1 (MHSanaei)
 > 
-**Random Fake HTMLSite**:earth_asia:	
+**Random FakeSite**:earth_asia:	
 ```
 sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/randomfakehtml.sh)"
 ```
