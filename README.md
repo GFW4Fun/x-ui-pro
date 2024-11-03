@@ -59,7 +59,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound):
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Checking Config/Port from inside the VPS (Internal)
+## Checking Config/Port inside VPS (Internal)
 #### Example: Check TOR/Psiphon/WARP on your server!
 ```
 # Your current IP from TOR
@@ -72,6 +72,7 @@ curl --socks5-hostname 127.0.0.1:1081 checkip.amazonaws.com
 curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
 ```
 #### If return VPS/WARP/TOR IP Means the port is active and healthy
+
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
