@@ -77,7 +77,7 @@ curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
-#### In the displayed address, change `  :  to  /  `
+#### In the displayed address, change `  :  to  /  ` ✏️
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
 ```
