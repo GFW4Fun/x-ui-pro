@@ -91,10 +91,7 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 # Your current IP from TOR
 curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com
 
-# Your current IP from Psiphon
-curl --socks5-hostname 127.0.0.1:1081 checkip.amazonaws.com
-
-# Your current IP from WARP
+# Your current IP from WARP/Psiphon
 curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
 ```
 #### If return VPS/WARP/TOR IP Means the port is active and healthy📶✅
