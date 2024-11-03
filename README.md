@@ -20,11 +20,12 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 ```
 
 <details><summary>Cloudflare users</summary>
-Cloudflare users > -cdn on > Domain<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON
+ 
+**Cloudflare users > -cdn on > Domain<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON**
+ 
+**SSL Support** (yourdomain.com, *.yourdomain.com)
 
-SSL Support (yourdomain.com, *.yourdomain.com)
-
-For new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!
+**For new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!**
 </details>
 <details><summary>Installation arguments</summary>
 
