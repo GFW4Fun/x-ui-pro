@@ -55,7 +55,7 @@ sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
-#### Connect Config(Inbound) to WARP/TOR(Outbound):
+#### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound):
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Checking Config/Port from inside the VPS (Internal)
