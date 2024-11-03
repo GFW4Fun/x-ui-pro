@@ -25,7 +25,7 @@ while [ "$#" -gt 0 ]; do
 	-WarpLicKey) WarpLicKey="$2"; shift 2;;
 	-CleanKeyCfon) CleanKeyCfon="$2"; shift 2;;
 	-RandomTemplate) RNDTMPL="$2"; shift 2;;
-	-uninstall) UNINSTALL="$2"; shift 2;;
+	-Uninstall) UNINSTALL="$2"; shift 2;;
 	-panel) PNLNUM="$2"; shift 2;;
 	-subdomain) domain="$2"; shift 2;;
 	-cdn) CFALLOW="$2"; shift 2;;
