@@ -34,7 +34,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 
 **Random FakeSite**:earth_asia:	
 ```
-sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/randomfakehtml.sh)"
+sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes"
 ```
 
 **Uninstall X-UI-PRO**:x:
