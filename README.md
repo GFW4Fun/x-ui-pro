@@ -8,7 +8,7 @@
 - Auto SSL Renew, Reload Daily Services
 - Compatible with Cloudflare CDN/IP
 - Random 150+ fake HTML template!
-- Debian/Ubuntu/CentOS/Fedora/Alma/Rocky Linux!
+- Debian/Ubuntu/CentOS/Fedora Linux!
 
 #### Psiphon and Warp-plus Commig Soon...
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
