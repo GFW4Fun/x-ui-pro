@@ -1,6 +1,6 @@
 #!/bin/bash
-#################### x-ui-pro v8.0.1 @ github.com/GFW4Fun ##############################################
-[[ $EUID -ne 0 ]] && echo "not root!" && exec sudo "$0" "$@"
+#################### x-ui-pro v9.0.0 @ github.com/GFW4Fun ##############################################
+[[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
@@ -8,42 +8,112 @@ msg_inf() { echo -e "\e[1;34m$1\e[0m";}
 echo
 msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
-msg_inf		' /\    |_| _|_   |   | \ \_/ ';
-echo
-##################################Variables#############################################################
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";INSTALL="n";PNLNUM=0;CFALLOW="off";NOPATH="";xuiVer=""
-##################################Random Port and Path #################################################
-Pak=$(command -v apt||echo dnf)
-RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)")
+msg_inf		' /\    |_| _|_   |   | \ \_/ ';echo;
+##################################Random Port and Path ###################################################
+Pak=$(command -v apt||echo dnf);RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)");
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
 	nc -z 127.0.0.1 "$PORT" &>/dev/null || break
 done
-################################Get arguments###########################################################
+##################################Variables###############################################################
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";
+################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
-    -install) INSTALL="$2"; shift 2;;
-    -panel) PNLNUM="$2"; shift 2;;
-    -xuiver) xuiVer="$2"; shift 2;;
-    -subdomain) domain="$2"; shift 2;;
-    -cdn) CFALLOW="$2"; shift 2;;
-    -uninstall) UNINSTALL="$2"; shift 2;;
+	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
+	-WarpLicKey) WarpLicKey="$2"; shift 2;;
+	-CleanKeyCfon) CleanKeyCfon="$2"; shift 2;;
+	-RandomTemplate) RNDTMPL="$2"; shift 2;;
+	-uninstall) UNINSTALL="$2"; shift 2;;
+	-panel) PNLNUM="$2"; shift 2;;
+	-subdomain) domain="$2"; shift 2;;
+	-cdn) CFALLOW="$2"; shift 2;;
     *) shift 1;;
   esac
 done
-##############################Uninstall#################################################################
+#############################################################################################################
+service_enable() {
+for service_name in "$@"; do
+	systemctl is-active --quiet "$service_name" && systemctl stop "$service_name" > /dev/null 2>&1
+	systemctl daemon-reload	> /dev/null 2>&1
+	systemctl enable "$service_name" > /dev/null 2>&1
+	systemctl start "$service_name" > /dev/null 2>&1
+done
+}
+##############################WARP/Psiphon Change Region Country ############################################
+if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
+cfonval=" --cfon --country $WarpCfonCountry";
+[[ "$WarpCfonCountry" == "XX" ]] && cfonval=" --cfon"
+[[ "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] || cfonval="";
+wrpky=" --key $WarpLicKey";[[ -n "$WarpLicKey" ]] || wrpky="";
+[[ -n "$CleanKeyCfon" ]] && { cfonval=""; wrpky=""; }
+######
+cat > /etc/systemd/system/warp-plus.service << EOF
+[Unit]
+Description=warp-plus service
+After=network.target nss-lookup.target
+
+[Service]
+WorkingDirectory=/etc/warp-plus/
+ExecStart=/etc/warp-plus/warp-plus --scan${cfonval}${wrpky}
+ExecStop=/bin/kill -TERM \$MAINPID
+ExecReload=/bin/kill -HUP \$MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+######
+rm -rf ~/.cache/warp-plus
+service_enable "warp-plus"; msg_inf "warp-plus settings changed!" && exit 1
+fi
+##############################Random Fake Site############################################################
+if [[ ${RNDTMPL} == *"y"* ]]; then
+
+cd "$HOME" || exit 1
+
+if [[ ! -d "randomfakehtml-master" ]]; then
+    wget https://github.com/GFW4Fun/randomfakehtml/archive/refs/heads/master.zip
+    unzip master.zip && rm -f master.zip
+fi
+
+cd randomfakehtml-master || exit 1
+rm -rf assets ".gitattributes" "README.md" "_config.yml"
+
+RandomHTML=$(for i in *; do echo "$i"; done | shuf -n1 2>&1)
+msg_inf "Random template name: ${RandomHTML}"
+
+if [[ -d "${RandomHTML}" && -d "/var/www/html/" ]]; then
+	rm -rf /var/www/html/*
+	cp -a "${RandomHTML}"/. "/var/www/html/"
+	msg_ok "Template extracted successfully!" && exit 1
+else
+	msg_err "Extraction error!" && exit 1
+fi
+
+fi
+##############################Uninstall##################################################################
 UNINSTALL_XUI(){
 	printf 'y\n' | x-ui uninstall
+	
 	for i in nginx python3-certbot-nginx tor; do
 		$Pak -y remove $i
 	done
+	
+	for i in tor x-ui warp-plus; do
+		 systemctl stop $i
+		 systemctl disable $i
+	done
+
+	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/
 	crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab 
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
-##############################Domain Validations########################################################
+##############################Domain Validations#########################################################
 while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
     read -rp "Enter available subdomain (sub.domain.tld): " domain
 done
@@ -56,32 +126,23 @@ if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 	MainDomain=${domain}
 fi
 ###############################Install Packages#########################################################
-if [[ ${INSTALL} == *"y"* ]]; then
-	$Pak -y update
-	for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor; do
-		$Pak -y install $i
-	done
-	systemctl daemon-reload
- 	systemctl enable nginx.service
-  	systemctl enable tor.service
-   	systemctl enable cron.service > /dev/null 2>&1
-   	systemctl enable crond.service > /dev/null 2>&1
-	systemctl restart cron crond > /dev/null 2>&1
-	systemctl start nginx
-   	systemctl start tor
-fi
-###############################Stop nginx#############################################################
+$Pak -y update
+for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor jq; do
+	$Pak -y install "$i"
+done
+service_enable "nginx" "tor" "cron" "crond"
+###############################Stop nginx################################################################
 sudo nginx -s stop 2>/dev/null
 sudo systemctl stop nginx 2>/dev/null
 sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
-##################################GET SERVER IPv4-6#####################################################
+##################################GET SERVER IPv4-6######################################################
 IP4_REGEX="^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$"
 IP6_REGEX="([a-f0-9:]+:+)+[a-f0-9]+"
 IP4=$(ip route get 8.8.8.8 2>&1 | grep -Po -- 'src \K\S*')
 IP6=$(ip route get 2620:fe::fe 2>&1 | grep -Po -- 'src \K\S*')
 [[ $IP4 =~ $IP4_REGEX ]] || IP4=$(curl -s ipv4.icanhazip.com);
 [[ $IP6 =~ $IP6_REGEX ]] || IP6=$(curl -s ipv6.icanhazip.com);
-##############################Install SSL###############################################################
+##############################Install SSL################################################################
 certbot certonly --standalone --non-interactive --force-renewal --agree-tos --register-unsafely-without-email --cert-name "$MainDomain" -d "$domain"
 if [[ ! -d "/etc/letsencrypt/live/${MainDomain}/" ]]; then
  	systemctl start nginx >/dev/null 2>&1
@@ -99,22 +160,23 @@ user $nginxusr;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
-events {worker_connections 2048;}
+events {worker_connections 3333;}
 http{
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
 	gzip on;sendfile on;tcp_nopush on;
 	types_hash_max_size 4096;
 	default_type application/octet-stream;
 	include /etc/nginx/*.types;
 	include /etc/nginx/conf.d/*.conf;
 	include /etc/nginx/sites-enabled/*;
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
 	}
 EOF
 
 rm -f "/etc/nginx/cloudflareips.sh"
 cat << 'EOF' >> /etc/nginx/cloudflareips.sh
 #!/bin/bash
+[[ $EUID -ne 0 ]] && exec sudo "$0" "$@"
 rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
 CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
 CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
@@ -132,15 +194,10 @@ echo "}" >> $CLOUDFLARE_WHITELIST_PATH
 EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
-if [[ ${CFALLOW} == *"on"* ]]; then
-	CF_IP="";
-	else	
-	CF_IP="#";
-fi
+[[ "${CFALLOW}" == *"on"* ]] && CF_IP="" || CF_IP="#"
 ######################################## add_slashes /webBasePath/ #####################################
 add_slashes() {
-    [[ "$1" =~ ^/ ]] || set -- "/$1"
-    [[ "$1" =~ /$ ]] || set -- "$1/"
+    [[ "$1" =~ ^/ ]] || set -- "/$1" ; [[ "$1" =~ /$ ]] || set -- "$1/"
     echo "$1"
 }
 ########################################Update X-UI Port/Path for first INSTALL#########################
@@ -157,17 +214,12 @@ fi
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui; then
+	[[ "$PNLNUM" =~ ^[0-1]+$ ]] || PNLNUM=1
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-	)
-
-	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}")
- 
-	if ! systemctl is-enabled --quiet x-ui; then
-		systemctl daemon-reload
-		systemctl enable x-ui.service
-	fi	
- 
+	);
+	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") ||	{ PNLNUM=$((1 - PNLNUM)); printf 'n\n' | bash <(curl -Ls "${PANEL[$PNLNUM]}"); }
+	service_enable "x-ui"
  	UPDATE_XUIDB
 fi
 ###################################Get Installed XUI Port/Path##########################################
@@ -179,15 +231,13 @@ if [[ -f $XUIDB ]]; then
 	XUIUSER=$(sqlite3 "${XUIDB}" 'SELECT "username" FROM users;' 2>&1)
 	XUIPASS=$(sqlite3 "${XUIDB}" 'SELECT "password" FROM users;' 2>&1)
 	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
-	if [ "$RNDSTR" == "/" ]; then
-		NOPATH="#"
-	fi	
+	[[ "$RNDSTR" == "/" ]] && NOPATH="#"
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
   	fi
 else
 	PORT="2053"
-	RNDSTR="/";	NOPATH="#";
+	RNDSTR="/";NOPATH="#";
 	XUIUSER="admin";XUIPASS="admin";
 fi
 #################################Nginx Config###########################################################
@@ -277,36 +327,71 @@ server {
 	$NOPATH location / { try_files \$uri \$uri/ =404; }
 }
 EOF
-##################################Check Nginx status####################################################
 if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	unlink "/etc/nginx/sites-enabled/default" >/dev/null 2>&1
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
 	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 fi
-
+##################################Check Nginx status####################################################
 if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -s reload 2>&1 | grep -q error; then
 	pkill -9 nginx || killall -9 nginx
 	nginx -c /etc/nginx/nginx.conf
 	nginx -s reload
 fi
+x-ui start > /dev/null 2>&1
+############################################Warp Plus (MOD)#############################################
+systemctl stop warp-plus > /dev/null 2>&1
+rm -rf ~/.cache/warp-plus /etc/warp-plus/
+mkdir -p /etc/warp-plus/
+chmod 777 /etc/warp-plus/
+## Download Cloudflare Warp Mod (wireguard)
+warpPlusDL="https://github.com/bepass-org/warp-plus/releases/latest/download/warp-plus_linux"
 
+case "$(uname -m | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')" in
+	x86_64 | amd64) wppDL="${warpPlusDL}-amd64.zip" ;;
+	aarch64 | arm64) wppDL="${warpPlusDL}-arm64.zip" ;;
+	armv*) wppDL="${warpPlusDL}-arm7.zip" ;;
+	mips) wppDL="${warpPlusDL}-mips.zip" ;;
+	mips64) wppDL="${warpPlusDL}-mips64.zip" ;;
+	mips64le) wppDL="${warpPlusDL}-mips64le.zip" ;;
+	mipsle*) wppDL="${warpPlusDL}-mipsle.zip" ;;
+	riscv*) wppDL="${warpPlusDL}-riscv64.zip" ;;
+	*) wppDL="${warpPlusDL}-amd64.zip" ;;
+esac  
+
+wget --quiet -P /etc/warp-plus/ "${wppDL}" || curl --output-dir /etc/warp-plus/ -LOs "${wppDL}" 
+find "/etc/warp-plus/" -name '*.zip' | xargs -I {} sh -c 'unzip -d "$0" "{}" && rm -f "{}"' "/etc/warp-plus/"
+cat > /etc/systemd/system/warp-plus.service << EOF
+[Unit]
+Description=warp-plus service
+After=network.target nss-lookup.target
+
+[Service]
+WorkingDirectory=/etc/warp-plus/
+ExecStart=/etc/warp-plus/warp-plus --scan
+ExecStop=/bin/kill -TERM \$MAINPID
+ExecReload=/bin/kill -HUP \$MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+EOF
+service_enable "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab -
-(crontab -l 2>/dev/null; echo "@daily x-ui restart > /dev/null 2>&1 && systemctl reload tor;") | crontab -
-(crontab -l 2>/dev/null; echo "@daily bash -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
-(crontab -l 2>/dev/null; echo "@weekly bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
-(crontab -l 2>/dev/null; echo '@monthly certbot renew --nginx --force-renewal --non-interactive --post-hook "nginx -s reload" > /dev/null 2>&1;') | crontab -
+(crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload warp-plus tor';") | crontab -
+(crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; };'") | crontab -
+(crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
+(crontab -l 2>/dev/null; echo "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 ##################################Show Details##########################################################
-x-ui start > /dev/null 2>&1
-
-if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then
-	clear
+if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo "Hostname: $(uname -n) | $(curl -Ls "https://ipinfo.io/json" | jq -r '.org + " [" + .country +"]"')"
 	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
@@ -319,4 +404,4 @@ else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "X-UI-PRO : Installation error..."
 fi
-#################################################N-joy##################################################
+################################################ N-joy #################################################
