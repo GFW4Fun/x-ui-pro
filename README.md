@@ -57,7 +57,7 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 ```
 
 
-**Disable WarpPsiphone and WARP CleanKey**
+**Disable WarpPsiphon and WARP CleanKey**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -CleanKeyCfon yes"
 ```
