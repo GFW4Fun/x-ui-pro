@@ -68,7 +68,7 @@ curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com
 # Your current IP from Psiphon
 curl --socks5-hostname 127.0.0.1:1081 checkip.amazonaws.com
 
-# Your current IP from CloudflareWARP
+# Your current IP from WARP
 curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
 ```
 #### If return VPS/WARP/TOR IP Means the port is active and healthy
