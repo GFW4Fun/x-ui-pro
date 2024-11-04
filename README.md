@@ -96,7 +96,7 @@ curl -s --socks5-hostname 127.0.0.1:9050 "http://ip-api.com/json/" | jq .
 curl -s --socks5-hostname 127.0.0.1:8086 "http://ip-api.com/json/" | jq .
 
 ```
-#### If return IP, The port is active and healthy📶✅
+#### If return details, The port is active and healthy📶✅
 
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
