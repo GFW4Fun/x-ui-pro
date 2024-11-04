@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.0.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -56,7 +56,7 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus --scan${cfonval}${wrpky}
+ExecStart=/etc/warp-plus/warp-plus${cfonval}${wrpky}
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-failure
