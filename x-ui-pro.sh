@@ -56,10 +56,10 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus${cfonval}${wrpky}
+ExecStart=/etc/warp-plus/warp-plus --scan${cfonval}${wrpky}
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
-Restart=on-failure
+Restart=on-abort
 
 [Install]
 WantedBy=multi-user.target
@@ -368,10 +368,10 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus --scan
+ExecStart=/etc/warp-plus/warp-plus --scan --cfon
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
-Restart=on-failure
+Restart=on-abort
 
 [Install]
 WantedBy=multi-user.target
