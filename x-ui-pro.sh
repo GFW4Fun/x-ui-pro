@@ -392,7 +392,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	echo "Hostname: $(uname -n) | $(curl -Ls "http://ip-api.com/json" | jq -r '.org + " [" + .country +"]"')"
+	echo "Hostname: $(uname -n) | $(curl -Ls "http://ip-api.com/json" | jq -r '.isp + " [" + .countryCode +"]"')"
 	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
