@@ -89,11 +89,12 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 ## Checking Config/Port inside VPS (Internal)🔄
 #### Example: Check TOR/Psiphon/WARP on your server!
 ```
-# Your current IP from TOR
-curl --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com
+#TOR
+curl -s --socks5-hostname 127.0.0.1:9050 "http://ip-api.com/json/" | jq .
 
-# Your current IP from WARP/Psiphon
-curl --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com
+#WARP/Psiphon
+curl -s --socks5-hostname 127.0.0.1:8086 "http://ip-api.com/json/" | jq .
+
 ```
 #### If return IP, The port is active and healthy📶✅
 
