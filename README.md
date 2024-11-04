@@ -1,5 +1,5 @@
 ### X-Ui-Pro (XRAY-UI + Nginx + WARP + TOR + Psiphon + WireGuard) :octocat:	:open_file_folder:	
-#### x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of xray-ui, warp, tor and nginx to offer a comprehensive solution for bypassing internet restrictions.
+x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of xray-ui, warp, tor and nginx to offer a comprehensive solution for bypassing internet restrictions.
 
 - Handle **WebSocket/GRPC/HttpUgrade/SplitHttp** via **nginx**.
 - Supports multiple users and configurations via port **443**
