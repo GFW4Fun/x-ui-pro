@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.0.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -10,11 +10,12 @@ msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
 msg_inf		' /\    |_| _|_   |   | \ \_/ ';echo;
 ##################################Random Port and Path ###################################################
-Pak=$(command -v apt||echo dnf);RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n 1)");
+Pak=$(command -v apt||echo dnf);RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
 	nc -z 127.0.0.1 "$PORT" &>/dev/null || break
 done
+Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
 WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";
@@ -44,7 +45,7 @@ done
 ##############################WARP/Psiphon Change Region Country ############################################
 if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
 cfonval=" --cfon --country $WarpCfonCountry";
-[[ "$WarpCfonCountry" == "XX" ]] && cfonval=" --cfon"
+[[ "$WarpCfonCountry" == "XX" ]] && cfonval=" --cfon --country ${Random_country}"
 [[ "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] || cfonval="";
 wrpky=" --key $WarpLicKey";[[ -n "$WarpLicKey" ]] || wrpky="";
 [[ -n "$CleanKeyCfon" ]] && { cfonval=""; wrpky=""; }
@@ -368,7 +369,7 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus --scan --cfon
+ExecStart=/etc/warp-plus/warp-plus --scan --cfon --country $Random_country
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-abort
