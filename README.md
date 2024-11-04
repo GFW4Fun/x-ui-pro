@@ -41,28 +41,28 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -Uninstall yes"
 ```
 
-**Enable Psiphon in WARP(Custome Country)**
+**Enable Psiphon in WARP(Custome Country)🌏**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpCfonCountry US"
 ```
 
-**Enable Psiphon in WARP(Auto Country)**
+**Enable Psiphon in WARP(Auto Country)🌐**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpCfonCountry XX"
 ```
 
-**Add LicenseKey to WARP**
+**Add LicenseKey to WARP🔑**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpLicKey xxxx-xxxx-xxxx"
 ```
 
 
-**Disable WarpPsiphon and WARP CleanKey**
+**Disable WarpPsiphon and WARP CleanKey❌**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -CleanKeyCfon yes"
 ```
 
-**Other arguments:**
+**Other arguments:☢️**
 
 -panel 0 > Alireza0
 
