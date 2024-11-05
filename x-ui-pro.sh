@@ -138,7 +138,7 @@ vercompare() {
     if [ "$1" = "$2" ]; then echo "E"; return; fi
     [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ] && echo "L" || echo "G"
 }
-if [ "$(vercompare ${nginx_ver} "1.25.1")" = "L" ]; then
+if [ "$(vercompare ${nginx_ver} '1.25.1')" = "L" ]; then
 	 OLD_H2=" http2";NEW_H2="#";
 else OLD_H2="";NEW_H2="";
 fi
