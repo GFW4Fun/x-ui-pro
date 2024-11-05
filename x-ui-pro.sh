@@ -133,12 +133,13 @@ for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-ngi
 done
 service_enable "nginx" "tor" "cron" "crond"
 ############################### Get nginx Ver and Stop ##################################################
-nginx_ver=$(nginx -v 2>&1 | awk -F/ '{print $2}')
-vercompare() {
-    if [ "$1" = "$2" ]; then echo "E"; return; fi
-    [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ] && echo "L" || echo "G"
+vercompare() { 
+	if [ "$1" = "$2" ]; then echo "E"; return; fi
+    [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ] && echo "L" || echo "G";
 }
-if [ "$(vercompare ${nginx_ver} '1.25.1')" = "L" ]; then
+nginx_ver=$(nginx -v 2>&1 | awk -F/ '{print $2}');
+ver_compare=$(vercompare "$nginx_ver" "1.25.1"); 
+if [ "$ver_compare" = "L" ]; then
 	 OLD_H2=" http2";NEW_H2="#";
 else OLD_H2="";NEW_H2="";
 fi
