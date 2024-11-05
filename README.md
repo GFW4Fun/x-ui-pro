@@ -72,8 +72,9 @@ bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -CleanKeyCfon
 ```
 
 **Other arguments:☢️**
-
--panel 0 > Alireza0   |   -panel 1 > MHSanaei   |   -panel 2 > FranzKafkaYu
+```
+#install command line > -panel 0 > Alireza0   |   -panel 1 > MHSanaei   |   -panel 2 > FranzKafkaYu
+```
 
 </details>
 
