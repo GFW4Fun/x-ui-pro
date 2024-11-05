@@ -33,42 +33,42 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
  
 **Random FakeSite**:earth_asia:	
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -RandomTemplate yes
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes
 ```
 
 **Uninstall X-UI-PRO**:x:
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -Uninstall yes
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -Uninstall yes
 ```
 
 **Enable Psiphon in WARP(Custom Country) <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">+<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/psiphon.gif" width="15">**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpCfonCountry US
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -WarpCfonCountry US
 ```
 
 **Enable Psiphon in WARP(Random Country)🌐🎲**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpCfonCountry XX
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -WarpCfonCountry XX
 ```
 
 **Tor Custom Country🧅🌍**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -TorCountry US
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -TorCountry US
 ```
 
 **Tor Random Country 🧅🎲**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -TorCountry XX
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -TorCountry XX
 ```
 
 **Add LicenseKey to WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">🔑**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpLicKey xxxx-xxxx-xxxx
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -WarpLicKey xxxx-xxxx-xxxx
 ```
 
 **Disable WarpPsiphon and WARP CleanKey❌**
 ```
-bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -CleanKeyCfon yes
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -CleanKeyCfon yes
 ```
 
 **Other arguments:☢️**
