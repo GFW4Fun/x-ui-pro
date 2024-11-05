@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.4.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.4.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -46,16 +46,16 @@ done
 }
 ##############################TOR Change Region Country ############################################
 if [[ -n "$TorCountry" ]]; then
-
-	country_code=$TorCountry
-	[[ "$TorCountry" == "XX" ]] || [[ ! "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] && country_code=$TorRandomCountry;
+	TorCountry=$(echo "$TorCountry" | sed 's/.*/\U&/')
+	[[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry;
+	TorCountry=$(echo "$TorCountry" | sed 's/.*/\L&/')
 	
 	sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
 	
 	if grep -q "^ExitNodes" /etc/tor/torrc; then
-		sudo sed -i "s/^ExitNodes.*/ExitNodes {$country_code}/" /etc/tor/torrc
+		sudo sed -i "s/^ExitNodes.*/ExitNodes {$TorCountry}/" /etc/tor/torrc
 	else
-		echo "ExitNodes {$country_code}" | sudo tee -a /etc/tor/torrc
+		echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc
 	fi
 
 	if grep -q "^StrictNodes" /etc/tor/torrc; then
@@ -72,6 +72,7 @@ if [[ -n "$TorCountry" ]]; then
 fi
 ##############################WARP/Psiphon Change Region Country ############################################
 if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
+WarpCfonCountry=$(echo "$WarpCfonCountry" | sed 's/.*/\U&/')
 cfonval=" --cfon --country $WarpCfonCountry";
 [[ "$WarpCfonCountry" == "XX" ]] && cfonval=" --cfon --country ${Random_country}"
 [[ "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] || cfonval="";
