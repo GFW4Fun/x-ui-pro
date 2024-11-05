@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.1.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.1.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -248,9 +248,9 @@ server {
 	server_tokens off;
 	server_name $MainDomain *.$MainDomain;
 	listen 80;
-	listen 443 ssl;
+	listen 443 ssl http2;
 	listen [::]:80;
-	listen [::]:443 ssl;
+	listen [::]:443 ssl http2;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
