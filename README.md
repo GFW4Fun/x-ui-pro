@@ -7,7 +7,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - More security and low detection with nginx
 - Auto SSL Renew, Reload Daily Services
 - Compatible with Cloudflare CDN/IP
-- Random 150+ fake HTML template!
+- Random 170 fake HTML template!
 - Debian/Ubuntu/CentOS/Fedora Linux!
 ##
 
