@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.3.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.4.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -16,12 +16,14 @@ while true; do
 	nc -z 127.0.0.1 "$PORT" &>/dev/null || break
 done
 Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
+TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
-WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
+	-TorCountry) TorCountry="$2"; shift 2;;
 	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
 	-WarpLicKey) WarpLicKey="$2"; shift 2;;
 	-CleanKeyCfon) CleanKeyCfon="$2"; shift 2;;
@@ -42,6 +44,32 @@ for service_name in "$@"; do
 	systemctl start "$service_name" > /dev/null 2>&1
 done
 }
+##############################TOR Change Region Country ############################################
+if [[ -n "$TorCountry" ]]; then
+
+	country_code=$TorCountry
+	[[ "$TorCountry" == "XX" ]] || [[ ! "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] && country_code=$TorRandomCountry;
+	
+	sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
+	
+	if grep -q "^ExitNodes" /etc/tor/torrc; then
+		sudo sed -i "s/^ExitNodes.*/ExitNodes {$country_code}/" /etc/tor/torrc
+	else
+		echo "ExitNodes {$country_code}" | sudo tee -a /etc/tor/torrc
+	fi
+
+	if grep -q "^StrictNodes" /etc/tor/torrc; then
+		sudo sed -i "s/^StrictNodes.*/StrictNodes 1/" /etc/tor/torrc
+	else
+		echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc
+	fi
+	
+	systemctl restart tor
+	echo -e "\nCheck status:\ncurl -s --socks5-hostname 127.0.0.1:9050 \"http://ip-api.com/json/\" | jq .\n"
+	msg_inf "tor settings changed!"
+	exit 1
+	
+fi
 ##############################WARP/Psiphon Change Region Country ############################################
 if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
 cfonval=" --cfon --country $WarpCfonCountry";
@@ -67,7 +95,10 @@ WantedBy=multi-user.target
 EOF
 ######
 rm -rf ~/.cache/warp-plus
-service_enable "warp-plus"; msg_inf "warp-plus settings changed!" && exit 1
+service_enable "warp-plus"; 
+echo -e "\nCheck status:\ncurl -s --socks5-hostname 127.0.0.1:8086 \"http://ip-api.com/json/\" | jq .\n"
+msg_inf "warp-plus settings changed!"
+exit 1
 fi
 ##############################Random Fake Site############################################################
 if [[ ${RNDTMPL} == *"y"* ]]; then
