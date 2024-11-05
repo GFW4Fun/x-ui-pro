@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.1.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.2.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -132,7 +132,17 @@ for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-ngi
 	$Pak -y install "$i"
 done
 service_enable "nginx" "tor" "cron" "crond"
-###############################Stop nginx################################################################
+############################### Get nginx Ver and Stop ##################################################
+nginx_ver=$(nginx -v 2>&1 | awk -F/ '{print $2}')
+vercompare() {
+    if [ "$1" = "$2" ]; then echo "E"; return; fi
+    [ "$(printf "%s\n%s" "$1" "$2" | sort -V | head -n1)" = "$1" ] && echo "L" || echo "G"
+}
+if [ "$(vercompare ${nginx_ver} "1.25.1")" = "L" ]; then
+	 OLD_H2=" http2";NEW_H2="#";
+else OLD_H2="";NEW_H2="";
+fi
+####### Stop nginx
 sudo nginx -s stop 2>/dev/null
 sudo systemctl stop nginx 2>/dev/null
 sudo fuser -k 80/tcp 80/udp 443/tcp 443/udp 2>/dev/null
@@ -249,8 +259,9 @@ server {
 	server_name $MainDomain *.$MainDomain;
 	listen 80;
  	listen [::]:80;
-	listen 443 ssl http2;
-	listen [::]:443 ssl http2;
+	listen 443 ssl${OLD_H2};
+	listen [::]:443 ssl${OLD_H2};
+	${NEW_H2}http2 on;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
