@@ -248,8 +248,8 @@ server {
 	server_tokens off;
 	server_name $MainDomain *.$MainDomain;
 	listen 80;
+ 	listen [::]:80;
 	listen 443 ssl http2;
-	listen [::]:80;
 	listen [::]:443 ssl http2;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
