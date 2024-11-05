@@ -259,7 +259,7 @@ server {
 	server_tokens off;
 	server_name $MainDomain *.$MainDomain;
 	listen 80;
- 	listen [::]:80;
+	listen [::]:80;
 	listen 443 ssl${OLD_H2};
 	listen [::]:443 ssl${OLD_H2};
 	${NEW_H2}http2 on;
