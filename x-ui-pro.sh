@@ -128,7 +128,7 @@ if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 fi
 ###############################Install Packages#########################################################
 $Pak -y update
-for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor tor-geoipdb jq openssl; do
+for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 jq openssl tor tor-geoipdb; do
 	$Pak -y install "$i"
 done
 service_enable "nginx" "tor" "cron" "crond"
