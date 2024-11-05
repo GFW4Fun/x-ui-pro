@@ -51,6 +51,16 @@ sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpCfonCountry XX"
 ```
 
+**Tor Custom Country🧅🌍**
+```
+sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -TorCountry US"
+```
+
+**Tor Random Country 🧅🎲**
+```
+sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -TorCountry XX"
+```
+
 **Add LicenseKey to WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">🔑**
 ```
 sudo su -c "bash <(wget -qO- cdn.jsdelivr.net/gh/GFW4Fun/x-ui-pro/x-ui-pro.sh) -WarpLicKey xxxx-xxxx-xxxx"
