@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.2.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.3.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -128,7 +128,7 @@ if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 fi
 ###############################Install Packages#########################################################
 $Pak -y update
-for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor jq; do
+for i in epel-release cronie psmisc unzip curl nginx certbot python3-certbot-nginx sqlite sqlite3 tor jq openssl; do
 	$Pak -y install "$i"
 done
 service_enable "nginx" "tor" "cron" "crond"
@@ -274,10 +274,12 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
-	error_page 400 401 402 403 500 501 502 503 504 =404 /404;
+	error_page 400 402 403 500 501 502 503 504 =404 /404;
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
 	location $RNDSTR {
+		auth_basic "Restricted Access";
+		auth_basic_user_file /etc/nginx/.htpasswd;
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
@@ -409,7 +411,8 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_inf "X-UI Secure Panel: https://${domain}${RNDSTR}\n"
+	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
+	msg_inf "X-UI (Double Login) Panel: https://${domain}${RNDSTR}\n"
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
