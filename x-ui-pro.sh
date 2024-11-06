@@ -204,7 +204,7 @@ worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 worker_rlimit_nofile 65535;
-events { worker_connections 8192; use epoll; }
+events { worker_connections 65535; use epoll; }
 http {
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
