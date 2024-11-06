@@ -201,10 +201,10 @@ id -u "$nginxusr" &>/dev/null || nginxusr="nginx"
 cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxusr;
 worker_processes auto;
-worker_rlimit_nofile 65536;
+worker_rlimit_nofile 2147483647;
 events {
     use epoll;
-    worker_connections 65536;
+    worker_connections 2147483647;
     multi_accept on;
 }
 pid /run/nginx.pid;
