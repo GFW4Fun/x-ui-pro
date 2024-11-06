@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.5.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.5.4 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -203,8 +203,9 @@ user $nginxusr;
 worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
-events {worker_connections 3333;}
-http{
+worker_rlimit_nofile 65535;
+events { worker_connections 8192; use epoll; }
+http {
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
 	gzip on;sendfile on;tcp_nopush on;
