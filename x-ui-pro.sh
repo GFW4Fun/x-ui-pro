@@ -65,7 +65,7 @@ if [[ -n "$TorCountry" ]]; then
 	fi
 	
 	systemctl restart tor
-	echo -e "\nCheck soon.\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
+	echo -e "\Check in a few seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
 	msg_inf "tor settings changed!"
 	exit 1
 	
@@ -97,7 +97,7 @@ EOF
 ######
 rm -rf ~/.cache/warp-plus
 service_enable "warp-plus"; 
-echo -e "\nCheck soon.\ncurl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/\n"
+echo -e "\Check in a few seconds:\ncurl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/\n"
 msg_inf "warp-plus settings changed!"
 exit 1
 fi
