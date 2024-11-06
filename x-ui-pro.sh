@@ -200,6 +200,8 @@ id -u "$nginxusr" &>/dev/null || nginxusr="nginx"
 
 cat > "/etc/nginx/nginx.conf" << EOF
 user $nginxusr;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
 worker_processes auto;
 worker_rlimit_nofile 2147483647;
 events {
@@ -207,18 +209,16 @@ events {
     worker_connections 2147483647;
     multi_accept on;
 }
-pid /run/nginx.pid;
-include /etc/nginx/modules-enabled/*.conf;
 http {
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
-	gzip on;sendfile on;tcp_nopush on;
-	types_hash_max_size 4096;
-	default_type application/octet-stream;
-	include /etc/nginx/*.types;
-	include /etc/nginx/conf.d/*.conf;
-	include /etc/nginx/sites-enabled/*;
-	}
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+        gzip on;sendfile on;tcp_nopush on;
+        types_hash_max_size 4096;
+        default_type application/octet-stream;
+        include /etc/nginx/*.types;
+        include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/sites-enabled/*;
+}
 EOF
 
 rm -f "/etc/nginx/cloudflareips.sh"
