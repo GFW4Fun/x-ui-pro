@@ -46,23 +46,28 @@ done
 }
 ##############################TOR Change Region Country ############################################
 if [[ -n "$TorCountry" ]]; then
-  TorCountry=$(echo "$TorCountry" | tr '[:lower:]' '[:upper:]')
-  [[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry
-  TorCountry=$(echo "$TorCountry" | tr '[:upper:]' '[:lower:]')
+	TorCountry=$(echo "$TorCountry" | tr '[:lower:]' '[:upper:]')
+	[[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry
+	TorCountry=$(echo "$TorCountry" | tr '[:upper:]' '[:lower:]')
 
-  sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
+	sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
+	
+	if grep -q "^ExitNodes" /etc/tor/torrc; then
+		sudo sed -i "s/^ExitNodes.*/ExitNodes {$TorCountry}/" /etc/tor/torrc
+	else
+		echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc
+	fi
 
-  sudo sed -i.bak -E "/^ExitNodes/ s/.*/ExitNodes {$TorCountry}/" /etc/tor/torrc
-  grep -q "^ExitNodes" /etc/tor/torrc || echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc > /dev/null
-
-  sudo sed -i.bak -E "/^StrictNodes/ s/.*/StrictNodes 1/" /etc/tor/torrc
-  grep -q "^StrictNodes" /etc/tor/torrc || echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc > /dev/null
-
-  sudo systemctl unmask tor
-  sudo systemctl restart tor
-  echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
-  echo "Tor settings changed!"
-  exit 1
+	if grep -q "^StrictNodes" /etc/tor/torrc; then
+		sudo sed -i "s/^StrictNodes.*/StrictNodes 1/" /etc/tor/torrc
+	else
+		echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc
+	fi
+	
+	systemctl restart tor
+	echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
+	msg_inf "Tor settings changed!"
+	exit 1
 fi
 ##############################WARP/Psiphon Change Region Country ############################################
 if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
