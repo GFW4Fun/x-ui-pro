@@ -9,7 +9,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - Compatible with Cloudflare CDN/IP
 - Random 170 fake HTML template!
 - Tor/Psiphon country changer
-- Only server with LinuxOS
+- Only Linux server
 ##
 
 **Install X-UI-PRO**:dvd::package:
