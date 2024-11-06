@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.5.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.5.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -46,33 +46,23 @@ done
 }
 ##############################TOR Change Region Country ############################################
 if [[ -n "$TorCountry" ]]; then
-	TorCountry=$(echo "$TorCountry" | sed 's/.*/\U&/')
-	[[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry;
-	TorCountry=$(echo "$TorCountry" | sed 's/.*/\L&/')
-	
-	sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
-	
-	if grep -q "^ExitNodes" /etc/tor/torrc; then
-		sudo sed -i "s/^ExitNodes.*/ExitNodes {$TorCountry}/" /etc/tor/torrc
-	else
-		echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc
-	fi
+  TorCountry=$(echo "$TorCountry" | tr '[:lower:]' '[:upper:]')
+  [[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry
+  TorCountry=$(echo "$TorCountry" | tr '[:upper:]' '[:lower:]')
 
-	if grep -q "^StrictNodes" /etc/tor/torrc; then
-		sudo sed -i "s/^StrictNodes.*/StrictNodes 1/" /etc/tor/torrc
-	else
-		echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc
-	fi
-	
-	systemctl restart tor
-	echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
-	msg_inf "tor settings changed!"
-	exit 1
-	
+  sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
+  sudo sed -i.bak -E "/^ExitNodes/ s/.*/ExitNodes {$TorCountry}/" -e "/^StrictNodes/ s/.*/StrictNodes 1/" /etc/tor/torrc
+  grep -q "^ExitNodes" /etc/tor/torrc || echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc
+  grep -q "^StrictNodes" /etc/tor/torrc || echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc
+
+  sudo systemctl restart tor
+  echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
+  echo "Tor settings changed!"
+  exit 1
 fi
 ##############################WARP/Psiphon Change Region Country ############################################
 if [[ -n "$WarpCfonCountry" || -n "$WarpLicKey" || -n "$CleanKeyCfon" ]]; then
-WarpCfonCountry=$(echo "$WarpCfonCountry" | sed 's/.*/\U&/')
+WarpCfonCountry=$(echo "$WarpCfonCountry" | tr '[:lower:]' '[:upper:]')
 cfonval=" --cfon --country $WarpCfonCountry";
 [[ "$WarpCfonCountry" == "XX" ]] && cfonval=" --cfon --country ${Random_country}"
 [[ "$WarpCfonCountry" =~ ^[A-Z]{2}$ ]] || cfonval="";
@@ -440,7 +430,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
-	echo "Hostname: $(uname -n) | $(echo $IPInfo | jq -r '.org, .country' | paste -sd' | ')"
+	echo "Hostname: $(uname -n) | $(echo "$IPInfo" | jq -r '.org, .country' | paste -sd' | ')"
 	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
