@@ -76,7 +76,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 # Install xui type: -panel 0 > Alireza0  1 > MHSanaei 2 > FranzKafkaYu
 ```
 
-Valid Country🌍: [AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP LV NL NO PL PT RO RS SE SG SK UA US]
+Valid🚩Country🌍[AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP LV NL NO PL PT RO RS SE SG SK UA US]
 
 </details>
 
