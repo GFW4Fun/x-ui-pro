@@ -100,10 +100,10 @@ Valid Country🌍: [AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP 
 #### Example: Check TOR/Psiphon/WARP on your server!
 ```
 #TOR
-curl --socks5-hostname 127.0.0.1:9050 "http://ip-api.com/json/" | jq .
+curl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/
 
 #WARP/Psiphon
-curl --socks5-hostname 127.0.0.1:8086 "http://ip-api.com/json/" | jq .
+curl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/
 
 ```
 #### If return details, The port is active and healthy📶✅
