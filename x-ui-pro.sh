@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.4.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.4.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -65,8 +65,7 @@ if [[ -n "$TorCountry" ]]; then
 	fi
 	
 	systemctl restart tor
-	echo "Press any key to continue..." && read -n 1 -s
-	curl --socks5 127.0.0.1:9050 https://ipapi.co/json/
+	echo -e "\nCheck status:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
 	msg_inf "tor settings changed!"
 	exit 1
 	
@@ -98,8 +97,7 @@ EOF
 ######
 rm -rf ~/.cache/warp-plus
 service_enable "warp-plus"; 
-echo "Press any key to continue..." && read -n 1 -s
-curl --socks5 127.0.0.1:8086 https://ipapi.co/json/
+echo -e "\nCheck status:\ncurl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/\n"
 msg_inf "warp-plus settings changed!"
 exit 1
 fi
