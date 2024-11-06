@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.5.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.5.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -51,10 +51,14 @@ if [[ -n "$TorCountry" ]]; then
   TorCountry=$(echo "$TorCountry" | tr '[:upper:]' '[:lower:]')
 
   sudo cp -f /etc/tor/torrc /etc/tor/torrc.bak
-  sudo sed -i.bak -E "/^ExitNodes/ s/.*/ExitNodes {$TorCountry}/" -e "/^StrictNodes/ s/.*/StrictNodes 1/" /etc/tor/torrc
-  grep -q "^ExitNodes" /etc/tor/torrc || echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc
-  grep -q "^StrictNodes" /etc/tor/torrc || echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc
 
+  sudo sed -i.bak -E "/^ExitNodes/ s/.*/ExitNodes {$TorCountry}/" /etc/tor/torrc
+  grep -q "^ExitNodes" /etc/tor/torrc || echo "ExitNodes {$TorCountry}" | sudo tee -a /etc/tor/torrc > /dev/null
+
+  sudo sed -i.bak -E "/^StrictNodes/ s/.*/StrictNodes 1/" /etc/tor/torrc
+  grep -q "^StrictNodes" /etc/tor/torrc || echo "StrictNodes 1" | sudo tee -a /etc/tor/torrc > /dev/null
+
+  sudo systemctl unmask tor
   sudo systemctl restart tor
   echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
   echo "Tor settings changed!"
