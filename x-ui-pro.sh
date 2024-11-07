@@ -283,7 +283,7 @@ if [[ -f $XUIDB ]]; then
 else
 	PORT="2053"
 	RNDSTR="/";NOPATH="#";
-	XUIUSER="admin";XUIPASS="admin";t
+	XUIUSER="admin";XUIPASS="admin";
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
