@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.6.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.6.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -425,6 +425,7 @@ Restart=on-abort
 WantedBy=multi-user.target
 EOF
 service_enable "warp-plus"
+systemctl restart tor
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload warp-plus tor';") | crontab -
