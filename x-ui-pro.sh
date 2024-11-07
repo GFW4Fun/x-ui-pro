@@ -214,7 +214,7 @@ http {
 	include /etc/nginx/*.types;
 	include /etc/nginx/conf.d/*.conf;
 	include /etc/nginx/sites-enabled/*;
-	}
+}
 EOF
 
 rm -f "/etc/nginx/cloudflareips.sh"
