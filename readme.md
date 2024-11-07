@@ -18,7 +18,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -cdn off"
 ```
 
-<details><summary>Cloudflare users :small_red_triangle_down:</summary>
+<details><summary>:arrow_heading_down:Cloudflare users :point_left:</summary>
  
  ##
  
@@ -28,7 +28,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 
 **For add new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!**
 </details>
-<details><summary>Installation arguments :small_red_triangle_down:</summary>
+<details><summary>:arrow_heading_down:Installation arguments :point_left:</summary>
  
 ##
  
