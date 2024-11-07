@@ -72,6 +72,13 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -CleanKeyCfon yes
 ```
 
+
+**Only > Optimize the Network, SSH & System Limits!🚀🔥🛠️**
+```
+bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-optimizer.sh)
+```
+
+
 **Other arguments:☢️**
 ```
 # Install xui type: -panel 0 > Alireza0  1 > MHSanaei 2 > FranzKafkaYu
