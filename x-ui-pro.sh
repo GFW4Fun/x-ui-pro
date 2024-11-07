@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.5.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.6.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -204,7 +204,7 @@ worker_processes auto;
 pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 worker_rlimit_nofile 65535;
-events { worker_connections 65535; use epoll; }
+events { worker_connections 65535; use epoll; multi_accept on; }
 http {
 	access_log /var/log/nginx/access.log;
 	error_log /var/log/nginx/error.log;
@@ -283,7 +283,7 @@ if [[ -f $XUIDB ]]; then
 else
 	PORT="2053"
 	RNDSTR="/";NOPATH="#";
-	XUIUSER="admin";XUIPASS="admin";
+	XUIUSER="admin";XUIPASS="admin";t
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -294,7 +294,7 @@ server {
 	listen [::]:80;
 	listen 443 ssl${OLD_H2};
 	listen [::]:443 ssl${OLD_H2};
-	${NEW_H2}http2 on;
+	${NEW_H2}http2 on; http3 on;
 	index index.html index.htm index.php index.nginx-debian.html;
 	root /var/www/html/;
 	ssl_protocols TLSv1.2 TLSv1.3;
@@ -341,7 +341,7 @@ server {
 	}
 	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
-	$CF_IP if (\$cloudflare_ip != 1) {return 404;}
+$CF_IP	if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
 		client_max_body_size 0;
 		client_body_timeout 1d;
