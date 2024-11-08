@@ -119,7 +119,7 @@ for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.c
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
 ```
-sudo $(command -v apt || echo dnf) -y install ufw && echo ssh ftp http https | xargs -n 1 sudo ufw allow && sudo ufw enable
+sudo $(command -v apt || echo dnf) -y install ufw && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
 ```
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
