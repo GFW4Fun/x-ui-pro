@@ -124,9 +124,7 @@ curl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
 ```
-apt update && apt install ufw
-ufw reset && ufw allow ssh && ufw allow ftp && ufw allow http && ufw allow https
-ufw enable && ufw reload && ufw status
+apt update && apt install -y ufw && ufw allow ssh ftp http https && ufw enable
 ```
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
