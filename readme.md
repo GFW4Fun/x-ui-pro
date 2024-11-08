@@ -107,12 +107,7 @@ Valid🚩Country🌍 AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP
 ## Checking Config/Port inside VPS (Internal)🔄
 #### Example: Check TOR/Psiphon/WARP on your server!
 ```
-#TOR
-curl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/
-
-#WARP/Psiphon
-curl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/
-
+for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
 ```
 #### If return details, The port is active and healthy📶✅
 
