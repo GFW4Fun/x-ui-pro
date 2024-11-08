@@ -1,7 +1,7 @@
 ### X-Ui-Pro (XRAY-UI + Nginx + WARP + TOR + Psiphon + WireGuard) :rocket:
-x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of xray-ui, warp, tor and nginx to offer a comprehensive solution for bypassing internet restrictions.
+x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of xray-ui, warp, psiphon tor and nginx to offer a comprehensive solution for bypassing internet restrictions.
 
-- Handle **WebSocket/GRPC/HttpUgrade/SplitHttp** via **nginx**.
+- Handle **WebSocket/GRPC/HttpUgrade** via **nginx**.
 - Supports multiple users and configurations via port **443**
 - Install multiple domains with one a server/panel
 - More security and low detection with nginx
@@ -18,7 +18,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -cdn off"
 ```
 
-<details><summary>:arrow_heading_down:Cloudflare users :point_left:</summary>
+<details><summary>:point_right:Cloudflare users :arrow_heading_down:</summary>
  
  ##
  
@@ -28,7 +28,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 
 **For add new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!**
 </details>
-<details><summary>:arrow_heading_down:Installation arguments :point_left:</summary>
+<details><summary>:point_right:Installation arguments :arrow_heading_down:</summary>
  
 ##
  
