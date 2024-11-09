@@ -139,7 +139,7 @@ UNINSTALL_XUI(){
 	done
 
 	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/
-	crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab 
+	crontab -l | grep -v "nginx\|systemctl\|x-ui" | crontab -
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
