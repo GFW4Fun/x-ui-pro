@@ -426,7 +426,7 @@ WantedBy=multi-user.target
 EOF
 service_enable "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
-crontab -l | grep -v "nginx\|certbot\|x-ui\|cloudflareips" | crontab -
+crontab -l | grep -v "nginx\|systemctl" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload warp-plus tor';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
