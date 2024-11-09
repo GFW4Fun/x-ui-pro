@@ -108,7 +108,6 @@ Valid🚩Country🌍 AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP
 ```
 for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
 ```
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
@@ -118,7 +117,6 @@ for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.c
 ```
 sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
 ```
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
