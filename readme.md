@@ -104,13 +104,10 @@ Valid🚩Country🌍 AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Checking Config/Port inside VPS (Internal)🔄
-#### Example: Check TOR/Psiphon/WARP on your server!
+## Checking TOR/Psiphon/WARP on your server (Internal)🔄
 ```
 for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
 ```
-#### If return details, The port is active and healthy📶✅
-
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
@@ -119,7 +116,7 @@ for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.c
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
 ```
-sudo $(command -v apt || echo dnf) -y install ufw && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
+sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
 ```
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
