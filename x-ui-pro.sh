@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.7.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v9.7.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -430,8 +430,8 @@ crontab -l | grep -v "nginx\|systemctl" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload warp-plus tor';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^(\d{1,3}\.){3}\d{1,3}\$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\$ ]] || systemctl restart tor';") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^(\d{1,3}\.){3}\d{1,3}\$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\$ ]] || systemctl restart warp-plus';") | crontab -
+#(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^(\d{1,3}\.){3}\d{1,3}\$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\$ ]] || systemctl restart tor';") | crontab -
+#(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^(\d{1,3}\.){3}\d{1,3}\$|^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\$ ]] || systemctl restart warp-plus';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
