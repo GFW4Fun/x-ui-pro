@@ -472,10 +472,11 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
-	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}"
-	msg_inf "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/\n"
+	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}\n"
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
+   	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+  	msg_inf "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/\n"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "Please Save this Screen!!"	
 else
