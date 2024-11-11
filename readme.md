@@ -101,13 +101,15 @@ Valid🚩Country🌍 AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
 #### WARP-Plus☁️> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:warp+ > Address:Port 127.0.0.1:8086 > Add > Save Restart!
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
+#### v2rayA⚡🇻> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:v2rayA > Address:Port 127.0.0.1:20170 > Add > Save Restart!
+
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Checking TOR/Psiphon/WARP on your server (Internal)🔄
+## Checking TOR/Psiphon/WARP/v2rayA on your server (Internal)🔄
 ```
-for port in 9050 8086; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
+for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
 ```
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
