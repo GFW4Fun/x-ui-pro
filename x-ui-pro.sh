@@ -476,7 +476,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
    	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-  	msg_inf "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/\n"
+  	echo -e "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/\n"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_inf "Please Save this Screen!!"	
 else
