@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v9.7.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v10.0.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -10,7 +10,9 @@ msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
 msg_inf		' /\    |_| _|_   |   | \ \_/ ';echo;
 ##################################Random Port and Path ###################################################
-Pak=$(command -v apt||echo dnf);RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
+Pak=$(command -v apt||echo dnf);
+RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
+RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 while true; do 
     PORT=$(( ((RANDOM<<15)|RANDOM) % 49152 + 10000 ))
 	nc -z 127.0.0.1 "$PORT" &>/dev/null || break
@@ -129,7 +131,7 @@ fi
 UNINSTALL_XUI(){
 	printf 'y\n' | x-ui uninstall
 	
-	for i in nginx python3-certbot-nginx tor; do
+	for i in nginx python3-certbot-nginx tor v2ray v2raya; do
 		$Pak -y remove $i
 	done
 	
@@ -139,7 +141,7 @@ UNINSTALL_XUI(){
 	done
 
 	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/
-	crontab -l | grep -v "nginx\|systemctl\|x-ui" | crontab -
+	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
 	UNINSTALL_XUI	
@@ -319,6 +321,17 @@ server {
 		proxy_pass http://127.0.0.1:$PORT;
 		break;
 	}
+	#v2ray-ui
+	location /${RNDSTR2}/ {
+		auth_basic "Restricted Access";
+		auth_basic_user_file /etc/nginx/.htpasswd;
+		proxy_redirect off;
+		proxy_set_header Host \$host;
+		proxy_set_header X-Real-IP \$remote_addr;
+		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+		proxy_pass http://127.0.0.1:2017;
+		break;
+	}
 	#Subscription Path (simple/encode)
 	location ~ ^/(?<fwdport>\d+)/sub/(?<fwdpath>.*)\$ {
 		if (\$hack = 1) {return 404;}
@@ -341,7 +354,7 @@ server {
 	}
 	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
-$CF_IP	if (\$cloudflare_ip != 1) {return 404;}
+		${CF_IP}if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
 		client_max_body_size 0;
 		client_body_timeout 1d;
@@ -425,9 +438,20 @@ Restart=on-abort
 WantedBy=multi-user.target
 EOF
 service_enable "warp-plus"
+##########################################Install v2ray-core + v2rayA-webui#############################
+if [[ "$Pak" = "dnf" ]]; then
+	sudo dnf copr enable zhullyb/v2rayA
+else
+	wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc
+	echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
+fi
+$Pak -y update
+$Pak -y install v2ray
+$Pak -y install v2raya
+service_enable "v2ray" "v2raya"
 ######################cronjob for ssl/reload service/cloudflareips######################################
-crontab -l | grep -v "nginx\|systemctl" | crontab -
-(crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload warp-plus tor';") | crontab -
+crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
+(crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart tor';") | crontab -
@@ -447,7 +471,8 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
-	msg_inf "X-UI (Double Login) Panel: https://${domain}${RNDSTR}\n"
+	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}"
+	msg_inf "v2rayA <Double Login Panel> https://${domain}${RNDSTR2}\n"
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
