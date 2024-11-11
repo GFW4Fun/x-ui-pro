@@ -140,7 +140,7 @@ UNINSTALL_XUI(){
 		 systemctl disable $i
 	done
 
-	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/
+	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 }
 if [[ ${UNINSTALL} == *"y"* ]]; then
