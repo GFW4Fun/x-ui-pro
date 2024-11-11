@@ -323,8 +323,8 @@ server {
 	}
 	#v2ray-ui
 	location /${RNDSTR2}/ {
-		auth_basic "Restricted Access";
-		auth_basic_user_file /etc/nginx/.htpasswd;
+		#auth_basic "Restricted Access";
+		#auth_basic_user_file /etc/nginx/.htpasswd;
 		#proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
@@ -473,7 +473,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
 	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}"
-	msg_inf "v2rayA <Double Login Panel> https://${domain}/${RNDSTR2}/\n"
+	msg_inf "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/\n"
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
