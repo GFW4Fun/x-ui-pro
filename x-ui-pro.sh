@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v10.0.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v10.0.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -473,7 +473,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
 	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}"
-	msg_inf "v2rayA <Double Login Panel> https://${domain}${RNDSTR2}\n"
+	msg_inf "v2rayA <Double Login Panel> https://${domain}/${RNDSTR2}/\n"
 	echo "Username: $XUIUSER"
 	echo "Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
