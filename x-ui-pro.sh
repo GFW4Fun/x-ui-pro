@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v10.0.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v10.0.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 ##############################INFO######################################################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
@@ -329,7 +329,7 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-		proxy_pass http://127.0.0.1:2017;
+		proxy_pass http://127.0.0.1:2017/;
 		break;
 	}
 	#Subscription Path (simple/encode)
