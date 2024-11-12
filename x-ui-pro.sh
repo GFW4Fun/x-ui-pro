@@ -21,7 +21,7 @@ WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
-	-Secure) Secure="$2"; shift 2;;
+	-secure) Secure="$2"; shift 2;;
 	-TorCountry) TorCountry="$2"; shift 2;;
 	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
 	-WarpLicKey) WarpLicKey="$2"; shift 2;;
