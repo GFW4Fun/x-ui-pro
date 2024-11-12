@@ -111,6 +111,8 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
+#### v2rayA Panel Settings:⚙️
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Checking TOR/Psiphon/WARP/v2rayA on your server (Internal)🔄
 ```
