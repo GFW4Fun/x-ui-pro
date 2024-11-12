@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.0.1 @ github.com/GFW4Fun ##############################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
 msg_inf() { echo -e "\e[1;34m$1\e[0m";}
@@ -17,11 +17,11 @@ Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESG
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
-WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";BlockBadUA="no";
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
-	-BlockBadUA) BlockBadUA="$2"; shift 2;;
+	-Secure) Secure="$2"; shift 2;;
 	-TorCountry) TorCountry="$2"; shift 2;;
 	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
 	-WarpLicKey) WarpLicKey="$2"; shift 2;;
@@ -238,7 +238,7 @@ EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
 [[ "${CFALLOW}" == *"on"* ]] && CF_IP="" || CF_IP="#"
-[[ "${BlockBadUA}" == *"yes"* ]] && BadUA="" || BadUA="#"
+[[ "${Secure}" == *"yes"* ]] && Secure="" || Secure="#"
 ######################################## add_slashes /webBasePath/ #####################################
 add_slashes() {
     [[ "$1" =~ ^/ ]] || set -- "/$1" ; [[ "$1" =~ /$ ]] || set -- "$1/"
@@ -310,8 +310,8 @@ server {
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
 	location $RNDSTR {
-		#auth_basic "Restricted Access";
-		#auth_basic_user_file /etc/nginx/.htpasswd;
+		${Secure}auth_basic "Restricted Access";
+		${Secure}auth_basic_user_file /etc/nginx/.htpasswd;
 		proxy_redirect off;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
@@ -321,8 +321,8 @@ server {
 	}
 	#v2ray-ui
 	location /${RNDSTR2}/ {
-		#auth_basic "Restricted Access";
-		#auth_basic_user_file /etc/nginx/.htpasswd;
+		${Secure}auth_basic "Restricted Access";
+		${Secure}auth_basic_user_file /etc/nginx/.htpasswd;
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -353,7 +353,7 @@ server {
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 		${CF_IP}if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
-		${BadUA}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
+		${Secure}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
 		client_max_body_size 0;
 		client_body_timeout 1d;
 		grpc_read_timeout 1d;
