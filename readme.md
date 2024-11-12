@@ -87,10 +87,10 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 
 **Other arguments:☢️**
 ```
- -panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
+-panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
 ```
 ```
- -Secure yes   # Enable Nginx auth + Block Bad UA
+-Secure yes   # Enable Nginx auth + Block Bad UA
 ```
 </details>
 
