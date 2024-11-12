@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v10.0.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.0.0 @ github.com/GFW4Fun ##############################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
 msg_inf() { echo -e "\e[1;34m$1\e[0m";}
@@ -17,10 +17,11 @@ Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESG
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
-WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";BlockBadUA="no";
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
+	-BlockBadUA) BlockBadUA="$2"; shift 2;;
 	-TorCountry) TorCountry="$2"; shift 2;;
 	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
 	-WarpLicKey) WarpLicKey="$2"; shift 2;;
@@ -237,6 +238,7 @@ EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
 [[ "${CFALLOW}" == *"on"* ]] && CF_IP="" || CF_IP="#"
+[[ "${BlockBadUA}" == *"yes"* ]] && BadUA="" || BadUA="#"
 ######################################## add_slashes /webBasePath/ #####################################
 add_slashes() {
     [[ "$1" =~ ^/ ]] || set -- "/$1" ; [[ "$1" =~ /$ ]] || set -- "$1/"
@@ -352,6 +354,7 @@ server {
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
 		${CF_IP}if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
+		${BadUA}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
 		client_max_body_size 0;
 		client_body_timeout 1d;
 		grpc_read_timeout 1d;
@@ -463,18 +466,15 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
-	echo "Hostname: $(uname -n) | $(echo "$IPInfo" | jq -r '.org, .country' | paste -sd' | ')"
-	[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
-	[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
+	echo "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
+	#[[ -n $IP4 ]] && [[ "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
+	#[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
-	msg_inf "X-UI <Double Login Panel> https://${domain}${RNDSTR}\n"
-	echo "Username: $XUIUSER"
-	echo "Password: $XUIPASS"
-   	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-  	echo -e "v2rayA <Login Panel> https://${domain}/${RNDSTR2}/"
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_inf "Please Save this Screen!!"	
+	msg_inf "XrayUI <Double Login> https://${domain}${RNDSTR}"
+	msg_inf "v2rayA <Double Login> https://${domain}/${RNDSTR2}/\n"
+	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n\n"
+	msg_ok "Note: Save This Screen!!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "X-UI-PRO : Installation error..."
