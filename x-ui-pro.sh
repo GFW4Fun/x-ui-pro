@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.0.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.0.2 @ github.com/GFW4Fun ##############################################
 msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
 msg_err() { echo -e "\e[1;41m $1 \e[0m";}
 msg_inf() { echo -e "\e[1;34m$1\e[0m";}
@@ -452,10 +452,10 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
-(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart tor';") | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
-#(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:20170 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
+#(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart tor';") | crontab -
+#(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:20170 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':'
