@@ -470,7 +470,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	#[[ -n $IP6 ]] && [[ "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
-	msg_inf "XrayUI: https://${domain}${RNDSTR}"
+	msg_inf "\nXrayUI: https://${domain}${RNDSTR}"
 	msg_inf "v2rayA: https://${domain}/${RNDSTR2}/\n"
 	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
