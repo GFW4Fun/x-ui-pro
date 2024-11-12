@@ -84,7 +84,9 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 ```
 # Install xui type: -panel 0 > Alireza0  1 > MHSanaei 2 > FranzKafkaYu
 ```
-
+```
+ -BlockBadUA yes  # Block Bad User-agent client 
+```
 Valid🚩Country🌍 AT BE BG BR CA CH CZ DE DK EE ES FI FR GB HR HU IE IN IT JP LV NL NO PL PT RO RS SE SG SK UA US
 
 </details>
