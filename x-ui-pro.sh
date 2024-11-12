@@ -473,7 +473,8 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
 	msg_inf "XrayUI <Double Login> https://${domain}${RNDSTR}"
 	msg_inf "v2rayA <Double Login> https://${domain}/${RNDSTR2}/\n"
-	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n\n"
+	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n"
+	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	msg_ok "Note: Save This Screen!!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
