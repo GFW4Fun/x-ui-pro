@@ -1,12 +1,15 @@
 #!/bin/bash
-#################### x-ui-pro v11.0.4 @ github.com/GFW4Fun ##############################################
-msg_ok() { echo -e "\e[1;42m $1 \e[0m";}
-msg_err() { echo -e "\e[1;41m $1 \e[0m";}
-msg_inf() { echo -e "\e[1;34m$1\e[0m";}
+#################### x-ui-pro v11.1.0 @ github.com/GFW4Fun ##############################################
+msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
+msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
+msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
+msg_inf() { echo -e "\e[1;36;40m $1 \e[0m";}
+msg_war() { echo -e "\e[1;33;40m $1 \e[0m";}
 echo
 msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
-msg_inf		' /\    |_| _|_   |   | \ \_/ ';echo;
+msg_inf		' /\    |_| _|_   |   | \ \_/ ';
+echo
 ##################################Random Port and Path ###################################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 Pak=$(command -v apt||echo dnf);
@@ -64,7 +67,7 @@ if [[ -n "$TorCountry" ]]; then
 	fi
 	
 	systemctl restart tor
-	echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
+	msg "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:9050 https://ipapi.co/json/\n"
 	msg_inf "Tor settings changed!"
 	exit 1
 fi
@@ -95,7 +98,7 @@ EOF
 ######
 rm -rf ~/.cache/warp-plus
 service_enable "warp-plus"; 
-echo -e "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/\n"
+msg "\nEnter after 10 seconds:\ncurl --socks5-hostname 127.0.0.1:8086 https://ipapi.co/json/\n"
 msg_inf "warp-plus settings changed!"
 exit 1
 fi
@@ -146,7 +149,7 @@ if [[ ${UNINSTALL} == *"y"* ]]; then
 fi
 ##############################Domain Validations#########################################################
 while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
-    read -rp "Enter available subdomain (sub.domain.tld): " domain
+	read -rp $'\e[1;32;40mEnter available subdomain (sub.domain.tld): \e[0m' domain
 done
 
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
@@ -457,30 +460,31 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 #(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart tor';") | crontab -
 #(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:20170 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
-	printf '0\n' | x-ui | grep --color=never -i ':'
+if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then
+	clear
+	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key'
+	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:'
+	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
-	echo "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
+	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
  	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-  	echo  "XrayUI Panel [IP:PORT]"
+  	msg_err  "XrayUI Panel [IP:PORT]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
- 	echo -e "\nV2rayA Panel [IP:PORT]"
+ 	msg_err "\n V2rayA Panel [IP:PORT]"
   	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:2017/"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:2017/"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
- 	echo -e "Admin Panel [SSL]:\n"
+ 	msg_ok "Admin Panel [SSL]:\n"
 	msg_inf "XrayUI: https://${domain}${RNDSTR}"
 	msg_inf "V2rayA: https://${domain}/${RNDSTR2}/\n"
-	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n"
+	msg "Username: $XUIUSER\n Password: $XUIPASS"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_ok "Note: Save This Screen!"	
+	msg_war "Note: Save This Screen!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "X-UI-PRO : Installation error..."
