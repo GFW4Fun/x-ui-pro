@@ -460,8 +460,7 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 #(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:9050 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart tor';") | crontab -
 #(crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:20170 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then
-	clear
+if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	nginx -T | grep -i 'ssl_certificate\|ssl_certificate_key' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
