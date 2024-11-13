@@ -480,7 +480,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	msg_inf "V2rayA: https://${domain}/${RNDSTR2}/\n"
 	echo -e "Username: $XUIUSER\nPassword: $XUIPASS\n"
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
-	msg_ok "Note: Save This Screen!!"	
+	msg_ok "Note: Save This Screen!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "X-UI-PRO : Installation error..."
