@@ -1,4 +1,4 @@
-### X-Ui-Pro (XrayWebUI + v2rayWebUI + Nginx + WARP + TOR + Psiphon) :rocket:
+### X-Ui-Pro (X-UI + v2rayA-UI + Nginx + WARP + TOR + Psiphon) :rocket:
 x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of x-ui, v2rayA, warp, psiphon tor and nginx to offer a comprehensive solution (Many protocols and tools) for bypassing internet restrictions.
 
 - Handle **WebSocket/GRPC/HttpUgrade** via **nginx**.
@@ -7,8 +7,8 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - More security and low detection with nginx
 - Auto SSL Renew, Reload Daily Services
 - Compatible with Cloudflare CDN/IP
+- Xray Web Pnael + v2rayA Web Panel :new:
 - Random 170 fake HTML template!
-- Xray Web UI + v2rayA Web UI :new:
 - Tor/Psiphon country changer
 - Only Linux Server
 ##
@@ -106,7 +106,7 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 #### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
 #### WARP-Plus☁️> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:warp+ > Address:Port 127.0.0.1:8086 > Add > Save Restart!
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
-#### v2rayA⚡🇻> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:v2rayA > Address:Port 127.0.0.1:20170 > Add > Save Restart!
+#### v2rayA⚡> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:v2rayA > Address:Port 127.0.0.1:20170 > Add > Save Restart!
 
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
 #### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
