@@ -108,8 +108,8 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 #### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
 #### v2rayA⚡> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:v2rayA > Address:Port 127.0.0.1:20170 > Add > Save Restart!
 
-![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor.jpg)
-#### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon(Outbound): :link:
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor01.jpg)
+#### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon/v2rayA (Outbound): :link:
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 #### v2rayA Panel Settings:⚙️ (v2rayA suggested as Outbound and supports the subscription links)
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
