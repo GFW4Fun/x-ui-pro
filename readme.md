@@ -123,7 +123,7 @@ for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://i
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  ` ✏️
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Enable UFW :no_entry_sign: Firewall (Prevent direct access to x-ui-xray ports)
+## Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)
 ```
 sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
 ```
