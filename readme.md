@@ -114,7 +114,7 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Checking TOR/Psiphon/WARP/v2rayA on your server (Internal)🔄
+## Checking TOR/Psiphon/WARP/v2rayA on your server (Internal)♻️
 ```
 for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
 ```
