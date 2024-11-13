@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.1.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.1.4 @ github.com/GFW4Fun ##############################################
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
@@ -456,27 +456,27 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
  	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
- 	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
   	msg_err  "XrayUI Panel [IP:PORT/PATH]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
  	msg_err "\n V2rayA Panel [IP:PORT]"
   	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:2017/"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:2017/"
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
 	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
  	msg_ok "Admin Panel [SSL]:\n"
 	msg_inf "XrayUI: https://${domain}${RNDSTR}"
 	msg_inf "V2rayA: https://${domain}/${RNDSTR2}/\n"
 	msg "Username: $XUIUSER\n Password: $XUIPASS"
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
 	msg_war "Note: Save This Screen!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
