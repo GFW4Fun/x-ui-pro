@@ -125,7 +125,7 @@ for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://i
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)
 ```
-sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql dns | xargs -n 1 sudo ufw allow && sudo ufw enable
+sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 | xargs -n 1 sudo ufw allow && sudo ufw enable
 ```
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
