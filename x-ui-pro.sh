@@ -460,7 +460,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
  	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
 	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
-	msg_inf "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
 	echo -e "\e[1;35;40m- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\e[0m"
