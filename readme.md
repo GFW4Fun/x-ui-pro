@@ -132,5 +132,5 @@ Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
 Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/) | [drunkleen](https://drunkleen.github.io/ip-scanner/) | [cloudflare-v2ray-scanner](https://cloudflare-v2ray.vercel.app/)
 ##
-### Special thanks to xray and xui developers :heart:
+### Special thanks to xray/xui/v2ray developers :heart:
 
