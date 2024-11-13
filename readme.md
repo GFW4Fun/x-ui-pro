@@ -85,7 +85,7 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 ```
 
 
-**Other arguments:☢️**
+**Other install arguments:☢️**
 ```
 -panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
 ```
