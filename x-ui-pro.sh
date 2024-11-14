@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.2.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.3.0 @ github.com/GFW4Fun ##############################################
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
@@ -375,14 +375,8 @@ server {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
 		}
-		if (\$http_upgrade ~* "(WEBSOCKET|WS)") {
-			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
-			break;
-		}
-		if (\$request_method ~* ^(PUT|POST|GET)\$) {
-			proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
-			break;
-		}
+		proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
+		break;
 	}
 	$NOPATH location / { try_files \$uri \$uri/ =404; }
 }
