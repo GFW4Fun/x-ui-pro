@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.1.6 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.1.7 @ github.com/GFW4Fun ##############################################
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
@@ -10,7 +10,7 @@ echo
 msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
 msg_inf		' /\    |_| _|_   |   | \ \_/ ';
-echo
+msg_in		'                             ';
 hrline
 ##################################Random Port and Path ###################################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
@@ -147,7 +147,7 @@ if [[ ${UNINSTALL} == *"y"* ]]; then
 fi
 ##############################Domain Validations#########################################################
 while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
-	read -rp $'\n\e[1;32;40m Enter available subdomain (sub.domain.tld): \e[0m' domain
+	read -rp $'\e[1;32;40m Enter available subdomain (sub.domain.tld): \e[0m' domain
 done
 
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
