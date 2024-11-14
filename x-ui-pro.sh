@@ -5,7 +5,7 @@ msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
 msg_inf() { echo -e "\e[1;36;40m $1 \e[0m";}
 msg_war() { echo -e "\e[1;33;40m $1 \e[0m";}
-hrline()  { printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' - |  awk '{print "\033[1;35;40m" $0 "\033[0m"}'; }
+hrline() { printf '\033[1;35;40m%s\033[0m\n' "$(printf '%*s' "${COLUMNS:-$(tput cols)}" '' | tr ' ' "${1:--}")"; }
 echo
 msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
