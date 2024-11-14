@@ -147,7 +147,7 @@ if [[ ${UNINSTALL} == *"y"* ]]; then
 fi
 ##############################Domain Validations#########################################################
 while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
-	read -rp $'\n\e[1;32;40mEnter available subdomain (sub.domain.tld): \e[0m' domain
+	read -rp $'\n\e[1;32;40m Enter available subdomain (sub.domain.tld): \e[0m' domain
 done
 
 domain=$(echo "$domain" 2>&1 | tr -d '[:space:]' )
