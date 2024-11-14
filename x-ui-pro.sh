@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.2.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.2.1 @ github.com/GFW4Fun ##############################################
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
@@ -465,11 +465,10 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	hrline
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
-	printf " CPU: %s/%sCore | RAM: %s | HDD: %s | OS: %s\n" \
+	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | HDD: %s | OS: %s\033[0m\n" \
 	"$(uname -i)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
 	"$(lsblk -d -o SIZE --noheadings | tr '\n' ', ' | sed 's/, $//')" \
-	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)" \
-	| awk '{print "\033[1;37;40m" $0 "\033[0m"}'
+	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
 	hrline
   	msg_err  "XrayUI Panel [IP:PORT/PATH]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
