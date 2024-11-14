@@ -11,7 +11,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - Random 170 fake HTML template!
 - Tor/Psiphon country changer
 - Only Linux Server
-- 🔜 Sing-Box-UI (S-UI)
+- 🔜 SingBox-UI (S-UI)
   
 ##
 
