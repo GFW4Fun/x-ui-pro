@@ -10,7 +10,7 @@ echo
 msg_inf		'           ___    _   _   _  ';
 msg_inf		' \/ __ | |  | __ |_) |_) / \ ';
 msg_inf		' /\    |_| _|_   |   | \ \_/ ';
-msg_in		'                             ';
+msg_inf		'                             ';
 hrline
 ##################################Random Port and Path ###################################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
