@@ -7,7 +7,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - More security and low detection with nginx
 - Auto SSL Renew, Reload Daily Services
 - Compatible with Cloudflare CDN/IP
-- Xray Web Panel/v2rayA Web Panel :new:
+- Xray Web Panel/v2rayA Web Panel
 - Random 170 fake HTML template!
 - Tor/Psiphon country changer
 - Only Linux Server
