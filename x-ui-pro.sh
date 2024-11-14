@@ -465,7 +465,7 @@ if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; 
 	hrline
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
-	printf "CPU: %s/%sCore | RAM: %s | HDD: %s | OS: %s\n" \
+	printf " CPU: %s/%sCore | RAM: %s | HDD: %s | OS: %s\n" \
 	"$(uname -i)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
 	"$(lsblk -d -o SIZE --noheadings | tr '\n' ', ' | sed 's/, $//')" \
 	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)" \
