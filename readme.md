@@ -6,7 +6,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - Install multiple domains with one a server/panel
 - More security and low detection with nginx
 - Auto SSL Renew, Reload Daily Services
-- Xray / v2rayA / 🔜 SingBox Web Panel
+- X-UI / v2rayA / 🔜 SingBox Web Panel
 - Compatible with Cloudflare CDN/IP
 - Random 170 fake HTML template!
 - Tor/Psiphon country changer
