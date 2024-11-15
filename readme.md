@@ -103,13 +103,10 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_CONFIG_XRAY_CLIENT_EDIT2.png)
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> TOR 🧅 (Fix Google&ChatGPT Forbidden/Hide VPS IP)
-#### WARP☁️> XUI > Xray Configs > Outbounds > WARP > Create > Add > Save Restart!
-#### WARP-Plus☁️> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:warp+ > Address:Port 127.0.0.1:8086 > Add > Save Restart!
-#### TOR 🧅> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:tor > Address:Port 127.0.0.1:9050 > Add > Save Restart!
-#### v2rayA⚡> XUI > Xray Configs > Outbounds > Add Outbound > Protocol:Socks > Tag:v2rayA > Address:Port 127.0.0.1:20170 > Add > Save Restart!
-➕💾👇
+#### XUI > Xray Configs > Outbounds > Add Outbound ➕💾👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor02.jpg)
-#### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon/v2rayA (Outbound): :link:👇
+#### Connect Config(Inbound) to WARP/WARP+/TOR/Psiphon/v2rayA (Outbound): :link:
+#### XUI > Xray Configs > Routing Rules > Add Rule ➕💾👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
