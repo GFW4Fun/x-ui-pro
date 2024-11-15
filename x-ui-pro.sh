@@ -1,6 +1,6 @@
 #!/bin/bash
-[[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 #################### x-ui-pro v11.3.3 @ github.com/GFW4Fun ##############################################
+[[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
 msg_err() { echo -e "\e[1;31;40m $1 \e[0m";}
