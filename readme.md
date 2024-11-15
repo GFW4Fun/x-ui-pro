@@ -113,16 +113,10 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Checking TOR/Psiphon/WARP/v2rayA on your server (Internal)♻️📶
-```
-for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://ipapi.co/json/; done
-```
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  ` ✏️
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
