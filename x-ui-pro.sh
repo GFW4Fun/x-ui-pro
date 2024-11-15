@@ -52,8 +52,7 @@ done
 ####################################UFW Rules################################################################
 if [[ -n "$ENABLEUFW" ]]; then
 	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 | xargs -n 1 sudo ufw allow && sudo ufw enable
-	msg_inf "UFW settings changed!"
- 	exit 1
+	msg_inf "UFW settings changed!"; exit 1
 fi
 ##############################TOR Change Region Country #####################################################
 if [[ -n "$TorCountry" ]]; then
