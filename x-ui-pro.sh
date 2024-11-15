@@ -1,4 +1,5 @@
 #!/bin/bash
+[[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 #################### x-ui-pro v11.3.3 @ github.com/GFW4Fun ##############################################
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -11,7 +12,6 @@ msg_inf ' _     _ _     _ _____      _____   ______   _____ '
 msg_inf '  \___/  |     |   |   ___ |_____] |_____/  |     |'
 msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|'; hrline
 ##################################Random Port and Path ###################################################
-[[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 Pak=$(command -v apt||echo dnf);
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
