@@ -33,7 +33,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 <details><summary>:point_right:Installation arguments :arrow_heading_down:</summary>
  
 ##
- 
+
 **Random FakeSite**:earth_asia:	
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes
@@ -79,12 +79,15 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -CleanKeyCfon yes
 ```
 
-
 **Only > Optimize the Network, SSH & System Limits!🚀🔥🛠️**
 ```
 bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-optimizer.sh)
 ```
 
+**Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)**
+```
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
+```
 
 **Other install arguments:☢️**
 ```
@@ -120,10 +123,6 @@ for port in 9050 8086 20170; do curl --socks5-hostname 127.0.0.1:$port https://i
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  ` ✏️
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
-## Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)
-```
-sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 | xargs -n 1 sudo ufw allow && sudo ufw enable
-```
 ## Cloudflare Find Good IP (VPN off❗ during scanning)
 Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
