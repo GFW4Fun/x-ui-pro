@@ -22,10 +22,11 @@ Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESG
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
 XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
-WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";ENABLEUFW="";
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
+  	-ufw) ENABLEUFW="$2"; shift 2;;
 	-secure) Secure="$2"; shift 2;;
 	-TorCountry) TorCountry="$2"; shift 2;;
 	-WarpCfonCountry) WarpCfonCountry="$2"; shift 2;;
@@ -48,7 +49,13 @@ for service_name in "$@"; do
 	systemctl start "$service_name" > /dev/null 2>&1
 done
 }
-##############################TOR Change Region Country ############################################
+####################################UFW Rules################################################################
+if [[ -n "$ENABLEUFW" ]]; then
+	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 | xargs -n 1 sudo ufw allow && sudo ufw enable
+	msg_inf "UFW settings changed!"
+ 	exit 1
+fi
+##############################TOR Change Region Country #####################################################
 if [[ -n "$TorCountry" ]]; then
 	TorCountry=$(echo "$TorCountry" | tr '[:lower:]' '[:upper:]')
 	[[ "$TorCountry" == "XX" ]] || [[ ! "$TorCountry" =~ ^[A-Z]{2}$ ]] && TorCountry=$TorRandomCountry
