@@ -9,7 +9,7 @@ hrline() { printf '\033[1;35;40m%s\033[0m\n' "$(printf '%*s' "${COLUMNS:-$(tput 
 echo; ############## Asciiart.eu@Cyberlarge ################
 msg_inf ' _     _ _     _ _____      _____   ______  _____ '
 msg_inf '  \___/  |     |   |   ___ |_____] |_____/ |     |'
-msg_inf ' _/   \_ |_____| __|__     |       |    \_ |_____|';hrline
+msg_inf ' _/   \_ |_____| __|__     |       |    \_ |_____|'; hrline
 ##################################Random Port and Path ###################################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 Pak=$(command -v apt||echo dnf);
