@@ -17,7 +17,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 **Install XUI-PRO**:dvd::package:
 
 ```
-sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -cdn off"
+sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -xuiver last -cdn off"
 ```
 
 <details><summary>:point_right:Cloudflare users :arrow_heading_down:</summary>
