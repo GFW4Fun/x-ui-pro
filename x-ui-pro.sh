@@ -266,7 +266,7 @@ fi
 if ! systemctl is-active --quiet x-ui; then
 	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1	
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
-	if [[ -z "$VERSION" || "$VERSION" != *.* || "$VERSION" = "last" ]]; then VERSION="master"
+	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
 	else [[ $PNLNUM = "1" ]] && VERSION="v${VERSION#v}" || VERSION="${VERSION#v}" ; fi	
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/${VERSION}/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/${VERSION}/install.sh"
