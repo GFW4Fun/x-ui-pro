@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.3.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.3.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -265,11 +265,13 @@ fi
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui; then
 	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1
-	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh"
-		"https://raw.githubusercontent.com/mhsanaei/3x-ui/master/install.sh"
-  		"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/master/install_en.sh"
+	[[ -n "$VERSION" ]] || VERSION="master"
+	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/$VERSION/install.sh"
+			"https://raw.githubusercontent.com/mhsanaei/3x-ui/$VERSION/install.sh"
+			"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/$VERSION/install_en.sh"
 	);
-	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") ||	{ printf 'n\n' | bash <(curl -Ls "${PANEL[$PNLNUM]}"); }
+	[[ "$VERSION" = "master" ]] && VERSION=""
+	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") $VERSION ||	{ printf 'n\n' | bash <(curl -Ls "${PANEL[$PNLNUM]}") $VERSION;}
 	service_enable "x-ui"
  	UPDATE_XUIDB
 fi
