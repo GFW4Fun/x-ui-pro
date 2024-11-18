@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.3.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.3.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -106,16 +106,20 @@ exit 1
 fi
 ##############################Random Fake Site############################################################
 if [[ ${RNDTMPL} == *"y"* ]]; then
+
 cd "$HOME" || exit 1
+
 if [[ ! -d "randomfakehtml-master" ]]; then
     wget https://github.com/GFW4Fun/randomfakehtml/archive/refs/heads/master.zip
     unzip master.zip && rm -f master.zip
 fi
+
 cd randomfakehtml-master || exit 1
 rm -rf assets ".gitattributes" "README.md" "_config.yml"
 
 RandomHTML=$(for i in *; do echo "$i"; done | shuf -n1 2>&1)
 msg_inf "Random template name: ${RandomHTML}"
+
 if [[ -d "${RandomHTML}" && -d "/var/www/html/" ]]; then
 	rm -rf /var/www/html/*
 	cp -a "${RandomHTML}"/. "/var/www/html/"
@@ -123,17 +127,21 @@ if [[ -d "${RandomHTML}" && -d "/var/www/html/" ]]; then
 else
 	msg_err "Extraction error!" && exit 1
 fi
+
 fi
 ##############################Uninstall##################################################################
 UNINSTALL_XUI(){
-	printf 'y\n' | x-ui uninstall	
+	printf 'y\n' | x-ui uninstall
+	
 	for i in nginx python3-certbot-nginx tor v2ray v2raya; do
 		$Pak -y remove $i
-	done	
+	done
+	
 	for i in tor x-ui warp-plus; do
 		 systemctl stop $i
 		 systemctl disable $i
 	done
+
 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 }
@@ -435,7 +443,8 @@ else
 	echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
 fi
 $Pak -y update
-$Pak -y install v2ray && $Pak -y install v2raya
+$Pak -y install v2ray
+$Pak -y install v2raya
 service_enable "v2ray" "v2raya"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
@@ -447,25 +456,31 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
-	hrline;	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
-	hrline;	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
-	hrline;	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
+	hrline
+ 	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
+	hrline
+	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
+	hrline
+	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
 	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | OS: %s\033[0m\n" \
 	"$(uname -i)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
 	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
-	hrline;	msg_err  "XrayUI Panel [IP:PORT/PATH]"
+	hrline
+  	msg_err  "XrayUI Panel [IP:PORT/PATH]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:$PORT$RNDSTR"
  	msg_err "\n V2rayA Panel [IP:PORT]"
   	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:2017/"
 	[[ -n "$IP6" && "$IP6" =~ $IP6_REGEX ]] && msg_inf "IPv6: http://[$IP6]:2017/"
-	hrline;	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
+	hrline
+	sudo sh -c "echo -n '${XUIUSER}:' >> /etc/nginx/.htpasswd && openssl passwd -apr1 '${XUIPASS}' >> /etc/nginx/.htpasswd"
  	msg_ok "Admin Panel [SSL]:\n"
 	msg_inf "XrayUI: https://${domain}${RNDSTR}"
 	msg_inf "V2rayA: https://${domain}/${RNDSTR2}/\n"
 	msg "Username: $XUIUSER\n Password: $XUIPASS"
-	hrline;	msg_war "Note: Save This Screen!"	
+	hrline
+	msg_war "Note: Save This Screen!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
 	msg_err "X-UI-PRO : Installation error..."
