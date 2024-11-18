@@ -1,4 +1,4 @@
-### XUI-PRO (Xray-UI/v2ray-UI/Nginx/WARP/TOR/Psiphon) :rocket:
+### XUI-PRO (Xray-UI/v2rayA-UI/Nginx/WARP/TOR/Psiphon) :rocket:
 x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of x-ui, v2rayA, warp, psiphon tor and nginx to offer a comprehensive solution (Many protocols and tools) for bypassing internet restrictions.
 
 - Handle **WebSocket/GRPC/HttpUgrade** via **nginx**.
