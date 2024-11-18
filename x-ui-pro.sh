@@ -267,12 +267,12 @@ if ! systemctl is-active --quiet x-ui; then
 	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1	
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
 	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
-	else [[ $PNLNUM = "1" ]] && VERSION="v${VERSION#v}" || VERSION="${VERSION#v}" ; fi	
+	else [[ $PNLNUM == "1" ]] && VERSION="v${VERSION#v}" || VERSION="${VERSION#v}" ; fi	
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/${VERSION}/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/${VERSION}/install.sh"
 		"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/${VERSION}/install_en.sh"
 	);
-	[[ "$VERSION" = "master" ]] && VERSION=""
+	[[ "$VERSION" == "master" ]] && VERSION=""
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") "$VERSION" ||  { printf 'n\n' | bash <(curl -Ls "${PANEL[$PNLNUM]}") "$VERSION"; }
 	service_enable "x-ui"
  	UPDATE_XUIDB
