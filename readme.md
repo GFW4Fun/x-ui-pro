@@ -94,7 +94,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 -panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
 ```
 ```
--xuiver v2.4.7  # XUI MHSanaei version | -xuiver v1.8.8 Alireza0
+-xuiver v2.4.7  # XUI MHSanaei version | -xuiver 1.8.8 # XUI Alireza0 version
 ```
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
