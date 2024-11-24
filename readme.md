@@ -118,7 +118,7 @@ Or to clean|change this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 #### XUI > Xray Configs > Routing Rules > Add Rule ➕💾👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
-![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel.jpg)
+![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayApanel2.jpg)
 ## Enable Subscription :link:
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
