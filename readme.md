@@ -99,6 +99,9 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
 ```
+Secure mode only works with [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG)
+
+Or to clean this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 </details>
 
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
