@@ -101,7 +101,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 Secure mode only works with [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG)
 
-Or to clean this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
+Or to clean|change this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 </details>
 
 ➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
