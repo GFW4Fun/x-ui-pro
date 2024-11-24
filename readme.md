@@ -123,24 +123,35 @@ Or to clean|change this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 #### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
 #### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 #### In the displayed address, change `  :  to  /  ` ✏️
-## Cloudflare Find Good IP (VPN off❗ during scanning)
-Cloudflare IP Ranges: https://www.cloudflare.com/ips/
 
-Cloudflare IP Scanner: [vfarid](https://vfarid.github.io/cf-ip-scanner/) | [goldsrc](https://cloudflare-scanner.vercel.app) | [ircfspace](https://ircfspace.github.io/scanner/) | [drunkleen](https://drunkleen.github.io/ip-scanner/) | [cloudflare-v2ray-scanner](https://cloudflare-v2ray.vercel.app/)
-## Free Subscription Links for v2rayA 🆓🔗
-[telegram-configs-collector](https://github.com/soroushmirzaei/telegram-configs-collector)
-
-[mermeroo/V2RAY](https://raw.githubusercontent.com/mermeroo/V2RAY-and-CLASH-Subscription-Links/refs/heads/main/SUB%20LINKS)
-
-[NiREvil/vless](https://github.com/NiREvil/vless)
-
-[barry-far/V2ray-Configs](https://github.com/barry-far/V2ray-Configs)
-
-[Pawdroid/Free-servers](https://github.com/Pawdroid/Free-servers)
-
-[ripaojiedian/freenode](https://github.com/ripaojiedian/freenode)
-
-[snakem982/proxypool](https://github.com/snakem982/proxypool)
+## Useful Links :fire: :link:
+```
+________________________________________________________________ IP Tools
+https://www.cloudflare.com/ips/
+https://vfarid.github.io/cf-ip-scanner/
+https://cloudflare-scanner.vercel.app
+https://ircfspace.github.io/scanner/
+https://drunkleen.github.io/ip-scanner/
+https://cloudflare-v2ray.vercel.app/
+https://www.ipaddressguide.com/cidr
+https://codifyformatter.org/random-ip
+https://github.com/ircfspace/tester
+_____________________________________________________________ Config Tools
+https://github.com/MrMohebi/xray-proxy-grabber-telegram
+https://github.com/lilendian0x00/xray-knife
+https://github.com/mheidari98/proxyUtil
+https://github.com/RealCuf/VCG-Script
+https://github.com/shabane/kamaji
+______________________________________________________________ Free Config
+https://github.com/mermeroo/V2RAY-and-CLASH-Subscription-Links
+https://github.com/soroushmirzaei/telegram-configs-collector
+https://github.com/mahdibland/V2RayAggregator/tree/master
+https://github.com/barry-far/V2ray-Configs
+https://github.com/ripaojiedian/freenode
+https://github.com/Pawdroid/Free-servers
+https://github.com/snakem982/proxypool
+https://github.com/NiREvil/vless
+```
 
 ##
 ### Special thanks to xray/xui/v2ray/singbox developers :heart:
