@@ -99,7 +99,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
 ```
-Secure mode only works with [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG)
+Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) | [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG)
 
 Or to clean|change this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 </details>
@@ -120,9 +120,11 @@ Or to clean|change this phrase "Go-http-client/x" from the xray/v2ray/v2fly core
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayadminpanel2.jpg)
 ## Enable Subscription :link:
-#### XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
-#### XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
-#### In the displayed address, change `  :  to  /  ` ✏️
+XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /json/)
+
+XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
+
+In the displayed address, change `  :  to  /  ` ✏️
 
 ## Useful Links :fire: :link:
 ```
