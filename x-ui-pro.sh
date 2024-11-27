@@ -292,7 +292,7 @@ if [[ -f $XUIDB ]]; then
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
   	fi
-elseW
+else
 	PORT="2053"
 	RNDSTR="/";NOPATH="#";
 	XUIUSER="admin";XUIPASS="admin";
