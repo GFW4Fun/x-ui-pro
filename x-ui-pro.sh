@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.4.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.5.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -10,7 +10,8 @@ hrline() { printf '\033[1;35;40m%s\033[0m\n' "$(printf '%*s' "${COLUMNS:-$(tput 
 echo; ############## Asciiart.eu@Cyberlarge ################
 msg_inf ' _     _ _     _ _____      _____   ______   _____ '
 msg_inf '  \___/  |     |   |   ___ |_____] |_____/  |     |'
-msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|'; hrline
+msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|';
+hrline
 ##################################Random Port and Path ###################################################
 Pak=$(command -v apt||echo dnf);
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
@@ -19,11 +20,12 @@ while true; do PORT=$((RANDOM%30000+30000)); nc -z 127.0.0.1 "$PORT" &>/dev/null
 Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 ##################################Variables###############################################################
-XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";
-WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";ENABLEUFW="";VERSION="last";
+XUIDB="/etc/x-ui/x-ui.db";domain="";UNINSTALL="x";PNLNUM=1;CFALLOW="off";NOPATH="";RNDTMPL="n";CLIMIT="#"
+WarpCfonCountry="";WarpLicKey="";CleanKeyCfon="";TorCountry="";Secure="no";ENABLEUFW="";VERSION="last";CountryAllow="XX"
 ################################Get arguments#############################################################
 while [ "$#" -gt 0 ]; do
   case "$1" in
+  	-country) CountryAllow="$2"; shift 2;;
   	-xuiver) VERSION="$2"; shift 2;;
   	-ufw) ENABLEUFW="$2"; shift 2;;
 	-secure) Secure="$2"; shift 2;;
@@ -50,7 +52,7 @@ done
 }
 ####################################UFW Rules################################################################
 if [[ -n "$ENABLEUFW" ]]; then
-	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 | xargs -n 1 sudo ufw allow && sudo ufw enable
+	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 3389 8443 5900 | xargs -n 1 sudo ufw allow && sudo ufw enable
 	msg_inf "UFW settings changed!"; exit 1
 fi
 ##############################TOR Change Region Country #####################################################
@@ -290,10 +292,15 @@ if [[ -f $XUIDB ]]; then
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
 		PORT="2053"
   	fi
-else
+elseW
 	PORT="2053"
 	RNDSTR="/";NOPATH="#";
 	XUIUSER="admin";XUIPASS="admin";
+fi
+#######################################################################################################
+CountryAllow=$(echo "$CountryAllow" | tr ',' '|' | tr -cd 'A-Za-z|' | awk '{print toupper($0)}')
+if echo "$CountryAllow" | grep -Eq '^[A-Z]{2}(\|[A-Z]{2})*$'; then
+	CLIMIT=$( [[ "$CountryAllow" == "XX" ]] && echo "#" || echo "" )
 fi
 #################################Nginx Config###########################################################
 cat > "/etc/nginx/sites-available/$MainDomain" << EOF
@@ -361,8 +368,9 @@ server {
 	}
 	#Xray Config Path
 	location ~ ^/(?<fwdport>\d+)/(?<fwdpath>.*)\$ {
-		${CF_IP}if (\$cloudflare_ip != 1) {return 404;}
 		if (\$hack = 1) {return 404;}
+		${CF_IP}if (\$cloudflare_ip != 1) {return 404;}
+		${CLIMIT}if (\$http_cf_ipcountry !~* "${CountryAllow}"){ return 404; }
 		${Secure}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
 		client_max_body_size 0;
 		client_body_timeout 1d;
@@ -378,8 +386,13 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-		#proxy_set_header CF-IPCountry \$http_cf_ipcountry;
-		#proxy_set_header CF-IP \$realip_remote_addr;
+		if (\$cloudflare_ip = 1) {
+			proxy_set_header CF-IP \$realip_remote_addr;
+			proxy_set_header CF-Connecting-IP \$http_cf_connecting_ip;
+			proxy_set_header CF-IPCountry \$http_cf_ipcountry;
+			proxy_set_header CF-Ray \$http_cf_ray;
+			proxy_set_header CF-Visitor \$http_cf_visitor;
+		}
 		if (\$content_type ~* "GRPC") {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
