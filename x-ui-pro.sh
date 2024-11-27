@@ -386,13 +386,13 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-		if (\$cloudflare_ip = 1) {
-			proxy_set_header CF-IP \$realip_remote_addr;
-			proxy_set_header CF-Connecting-IP \$http_cf_connecting_ip;
-			proxy_set_header CF-IPCountry \$http_cf_ipcountry;
-			proxy_set_header CF-Ray \$http_cf_ray;
-			proxy_set_header CF-Visitor \$http_cf_visitor;
-		}
+
+		#proxy_set_header CF-IP \$realip_remote_addr;
+		#proxy_set_header CF-Connecting-IP \$http_cf_connecting_ip;
+		#proxy_set_header CF-IPCountry \$http_cf_ipcountry;
+		#proxy_set_header CF-Ray \$http_cf_ray;
+		#proxy_set_header CF-Visitor \$http_cf_visitor;
+  
 		if (\$content_type ~* "GRPC") {
 			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
 			break;
