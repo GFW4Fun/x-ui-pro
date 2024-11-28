@@ -94,7 +94,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 -panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
 ```
 ```
--xuiver v2.4.7  # XUI Panel version (default is 'last' version)
+-xuiver 2.4.7  # XUI Panel version (default is 'last' version)
 ```
 ```
 -country ru,cn,de,fi,us (Only users from these countries are allowed to connect) ## -country xx (All countries are allowed) 
