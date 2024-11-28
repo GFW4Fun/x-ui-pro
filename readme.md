@@ -97,7 +97,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 -xuiver 2.4.7  # XUI Panel version (default is 'last' version)
 ```
 ```
--country ru,cn,de,fi,us (Only users from these countries are allowed to connect) ## -country xx (All countries are allowed) 
+-country ru,cn,de,fi,us (Only users from these countries are allowed to connect) ## -country xx (All countries are allowed) !works with -cdn on!
 ```
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
