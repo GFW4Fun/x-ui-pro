@@ -97,6 +97,9 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 -xuiver v2.4.7  # XUI Panel version (default is 'last' version)
 ```
 ```
+-country ru,cn,de,fi,us (Only users from these countries are allowed to connect) ## -country xx (All countries are allowed) 
+```
+```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
 ```
 Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) for client!
