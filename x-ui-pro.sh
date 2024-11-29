@@ -409,6 +409,7 @@ if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 fi
 sudo rm -f /etc/nginx/sites-enabled/*{save,~,bak,backup}
+#grep -r "server_name .*\.udomain\.com" /etc/nginx/
 ##################################Check Nginx status####################################################
 if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -s reload 2>&1 | grep -q error; then
 	pkill -9 nginx || killall -9 nginx
