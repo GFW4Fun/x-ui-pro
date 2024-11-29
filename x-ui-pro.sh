@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.5.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.5.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -408,6 +408,7 @@ if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	rm -f "/etc/nginx/sites-enabled/default" "/etc/nginx/sites-available/default"
 	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 fi
+sudo rm -f /etc/nginx/sites-enabled/*{save,~,bak,backup}
 ##################################Check Nginx status####################################################
 if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -s reload 2>&1 | grep -q error; then
 	pkill -9 nginx || killall -9 nginx
