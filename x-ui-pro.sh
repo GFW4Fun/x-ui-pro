@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.5.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.6.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -133,23 +133,18 @@ fi
 
 fi
 ##############################Uninstall##################################################################
-UNINSTALL_XUI(){
-	printf 'y\n' | x-ui uninstall
-	
-	for i in nginx python3-certbot-nginx tor v2ray v2raya; do
-		$Pak -y remove $i
-	done
-	
-	for i in tor x-ui warp-plus; do
-		 systemctl stop $i
-		 systemctl disable $i
+if [[ "${UNINSTALL}" == *"y"* ]]; then
+	echo "nginx python3-certbot-nginx tor v2ray v2raya" | xargs -n 1 $Pak -y remove
+
+	for service in tor x-ui warp-plus; do
+		systemctl stop "$service" && systemctl disable "$service"
 	done
 
 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
-}
-if [[ ${UNINSTALL} == *"y"* ]]; then
-	UNINSTALL_XUI	
+	
+	printf 'y\n' | x-ui uninstall
+	
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations#########################################################
@@ -374,8 +369,8 @@ server {
 		${Secure}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
 		client_max_body_size 0;
 		client_body_timeout 1d;
-		grpc_read_timeout 1d;
 		grpc_socket_keepalive on;
+		grpc_read_timeout 1d;
 		proxy_read_timeout 1d;
 		proxy_http_version 1.1;
 		proxy_buffering off;
@@ -386,17 +381,7 @@ server {
 		proxy_set_header Host \$host;
 		proxy_set_header X-Real-IP \$remote_addr;
 		proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-
-		#proxy_set_header CF-IP \$realip_remote_addr;
-		#proxy_set_header CF-Connecting-IP \$http_cf_connecting_ip;
-		#proxy_set_header CF-IPCountry \$http_cf_ipcountry;
-		#proxy_set_header CF-Ray \$http_cf_ray;
-		#proxy_set_header CF-Visitor \$http_cf_visitor;
-  
-		if (\$content_type ~* "GRPC") {
-			grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args;
-			break;
-		}
+		if (\$content_type ~* "GRPC") { grpc_pass grpc://127.0.0.1:\$fwdport\$is_args\$args; break; }
 		proxy_pass http://127.0.0.1:\$fwdport\$is_args\$args;
 		break;
 	}
@@ -409,7 +394,6 @@ if [[ -f "/etc/nginx/sites-available/$MainDomain" ]]; then
 	ln -fs "/etc/nginx/sites-available/$MainDomain" "/etc/nginx/sites-enabled/" 2>/dev/null
 fi
 sudo rm -f /etc/nginx/sites-enabled/*{~,bak,backup,save,swp,tmp}
-#grep -r "server_name .*\.udomain\.com" /etc/nginx/
 ##################################Check Nginx status####################################################
 if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -s reload 2>&1 | grep -q error; then
 	pkill -9 nginx || killall -9 nginx
