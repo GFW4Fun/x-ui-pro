@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.6.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.6.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -488,6 +488,6 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then
 	msg_war "Note: Save This Screen!"	
 else
 	nginx -t && printf '0\n' | x-ui | grep --color=never -i ':'
-	msg_err "X-UI-PRO : Installation error..."
+	msg_err "XUI-PRO : Installation error..."
 fi
 ################################################ N-joy #################################################
