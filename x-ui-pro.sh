@@ -136,7 +136,7 @@ fi
 if [[ "${UNINSTALL}" == *"y"* ]]; then
 	echo "nginx python3-certbot-nginx tor v2ray v2raya" | xargs -n 1 $Pak -y remove
 
-	for service in tor x-ui warp-plus; do
+	for service in nginx tor x-ui warp-plus v2ray v2raya; do
 		systemctl stop "$service" && systemctl disable "$service"
 	done
 
