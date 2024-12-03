@@ -261,7 +261,7 @@ EOF
 fi
 }
 ###################################Install X-UI#########################################################
-if ! systemctl is-active --quiet x-ui; then
+if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
 	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1	
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
 	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
@@ -459,7 +459,7 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
+if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	hrline
  	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
