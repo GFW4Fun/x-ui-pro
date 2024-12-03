@@ -137,7 +137,8 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 	echo "python3-certbot-nginx nginx tor v2ray v2raya" | xargs -n 1 $Pak -y remove
 
 	for service in nginx tor x-ui warp-plus v2ray v2raya; do
-		systemctl stop "$service" && systemctl disable "$service"
+		systemctl stop "$service" 
+		systemctl disable "$service"
 	done
 
 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/
