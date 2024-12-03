@@ -141,7 +141,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 		systemctl disable "$service" > /dev/null 2>&1
 	done
 
-	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/
+	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 	
 	command -v x-ui &> /dev/null && printf 'y\n' | x-ui uninstall
