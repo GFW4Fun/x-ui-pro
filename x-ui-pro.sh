@@ -469,8 +469,7 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
 	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | OS: %s\033[0m\n" \
-	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
-	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
+	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" "$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
 	hrline
   	msg_err  "XrayUI Panel [IP:PORT/PATH]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
