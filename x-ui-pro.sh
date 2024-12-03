@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.6.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.6.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -442,7 +442,7 @@ EOF
 service_enable "warp-plus"
 ##########################################Install v2ray-core + v2rayA-webui#############################
 if [[ "$Pak" = "dnf" ]]; then
-	sudo dnf copr enable zhullyb/v2rayA
+	sudo dnf -y copr enable zhullyb/v2rayA
 else
 	wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc
 	echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
@@ -469,7 +469,7 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
 	msg "Server: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
 	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | OS: %s\033[0m\n" \
-	"$(uname -i)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
+	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" \
 	"$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
 	hrline
   	msg_err  "XrayUI Panel [IP:PORT/PATH]"
