@@ -146,7 +146,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 	
 	printf 'y\n' | x-ui uninstall
 	
-	clear && msg_ok "Completely Uninstalled!" && exit 1
+	msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations#########################################################
 while [[ -z $(echo "$domain" | tr -d '[:space:]') ]]; do
