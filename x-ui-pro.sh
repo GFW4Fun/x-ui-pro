@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.6.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.6.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -261,7 +261,7 @@ EOF
 fi
 }
 ###################################Install X-UI#########################################################
-if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
+if ! systemctl is-active --quiet x-ui; then
 	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1	
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
 	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
@@ -370,8 +370,8 @@ server {
 		${Secure}if (\$http_user_agent ~* "(bot|clash|fair|go-http|hiddify|java|neko|node|proxy|python|ray|sager|sing|tunnel|v2box|vpn)") { return 404; }
 		client_max_body_size 0;
 		client_body_timeout 1d;
-		grpc_socket_keepalive on;
 		grpc_read_timeout 1d;
+		grpc_socket_keepalive on;
 		proxy_read_timeout 1d;
 		proxy_http_version 1.1;
 		proxy_buffering off;
@@ -459,7 +459,7 @@ crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 (crontab -l 2>/dev/null; echo "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1;") | crontab -
 ##################################Show Details##########################################################
-if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then
+if systemctl is-active --quiet x-ui || [ -e /etc/systemd/system/x-ui.service ]; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	hrline
  	nginx -T | grep -i 'configuration file /etc/nginx/sites-enabled/'  | sed 's/.*configuration file //'  | tr -d ':' | awk '{print "\033[1;32;40m" $0 "\033[0m"}'
