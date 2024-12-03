@@ -142,7 +142,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 	done
 
 	#rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx
- 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled
+ 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/*
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 	
 	command -v x-ui &> /dev/null && printf 'y\n' | x-ui uninstall
