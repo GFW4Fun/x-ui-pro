@@ -28,7 +28,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
 
 **🔒SSL Support** (yourdomain.com, *.yourdomain.com)
 
-**For add new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!**
+**To add a new subdomain, just create a new A or AAAA record in your domain's DNS management. There's no need to reinstall the panel!**
 </details>
 <details><summary>:point_right:Installation arguments :arrow_heading_down:</summary>
 
