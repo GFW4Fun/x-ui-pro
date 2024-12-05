@@ -26,7 +26,7 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
  
 **<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">(-cdn on ) Access is only possible from the CDN IP.**
 
-**🌍(-country cn,ru,us,de) Only connections from these countries are allowed [xx = all].**
+**🌍(-country cn,ru,us,de) Only connections from these countries are allowed. [xx = all]**
 
 **🔒SSL Support:** (yourdomain.com, *.yourdomain.com) **To add a new subdomain, just create a new A record in your domain's DNS management. no need to reinstall the panel!**
 </details>
