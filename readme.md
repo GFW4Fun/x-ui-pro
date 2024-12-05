@@ -24,13 +24,14 @@ sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.git
  
  ##
  
-**Cloudflare users > -cdn on > Domain<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">ON**
- 
-**SSL Support** (yourdomain.com, *.yourdomain.com)
+**<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34">(-cdn on ) Access is only possible from the CDN IP.**
+
+**🔒SSL Support** (yourdomain.com, *.yourdomain.com)
 
 **For add new subdomain, just add a new record A,AAAA[IP] in domain dns management! no need to reinstall the panel!**
 </details>
 <details><summary>:point_right:Installation arguments :arrow_heading_down:</summary>
+
  
 ##
 
