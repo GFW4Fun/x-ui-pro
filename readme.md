@@ -143,9 +143,7 @@ https://www.ipaddressguide.com/cidr
 https://codifyformatter.org/random-ip
 https://github.com/ircfspace/tester
 __________________________________________________________ Config Fragment
-https://fragment.github1.cloud/
 https://misaturo.github.io/Xray-Fragment-Configurator/
-https://github.com/GFW-knocker/gfw_resist_tls_proxy
 _____________________________________________________________ Config Tools
 https://github.com/MrMohebi/xray-proxy-grabber-telegram
 https://github.com/lilendian0x00/xray-knife
