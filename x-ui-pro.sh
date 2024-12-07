@@ -401,7 +401,7 @@ if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -
 	nginx -c /etc/nginx/nginx.conf
 	nginx -s reload
 fi
-systemctl enable x-ui
+systemctl is-enabled x-ui || sudo systemctl enable x-ui
 x-ui start > /dev/null 2>&1
 ############################################Warp Plus (MOD)#############################################
 systemctl stop warp-plus > /dev/null 2>&1
