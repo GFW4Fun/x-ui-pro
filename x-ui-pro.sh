@@ -452,11 +452,7 @@ tasks=(
   "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus'"
   "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1"
 )
-for task in "${tasks[@]}"; do
-  if ! crontab -l | grep -Fxq "$task"; then
-    (crontab -l; echo "$task") | crontab -
-  fi
-done
+crontab -l | grep -qE "x-ui" || { printf "%s\n" "${tasks[@]}" | crontab -; }
 ##################################Show Details##########################################################
 if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
