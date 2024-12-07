@@ -13,6 +13,7 @@ msg_inf '  \___/  |     |   |   ___ |_____] |_____/  |     |'
 msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|';
 hrline
 ##################################Random Port and Path ###################################################
+mkdir -p /root/.cache
 Pak=$(command -v apt||echo dnf);
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
@@ -444,7 +445,7 @@ EOF
 sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/installer.sh)" @ --with-xray
 service_enable "v2raya" "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
-crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab - 2>/dev/null;
+crontab -l >/dev/null 2>&1 | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab - >/dev/null 2>&1
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }';") | crontab -
 (crontab -l 2>/dev/null; echo "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1';") | crontab -
