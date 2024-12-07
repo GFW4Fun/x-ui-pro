@@ -141,7 +141,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 		systemctl disable "$service" > /dev/null 2>&1
 	done
 	#rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx 
- 	sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh)"
+ 	printf 'n' | bash <(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh) 
  	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/*
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 	
