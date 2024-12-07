@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.7.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.7.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -134,17 +134,16 @@ fi
 fi
 ##############################Uninstall##################################################################
 if [[ "${UNINSTALL}" == *"y"* ]]; then
-	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor v2ray v2raya" | xargs -n 1 $Pak -y remove
+	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor" | xargs -n 1 $Pak -y remove
 	$Pak -y autoremove
-	for service in nginx tor x-ui warp-plus v2ray v2raya; do
+	for service in nginx tor x-ui warp-plus v2ray v2raya xray sing-box; do
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
 	done
 	#rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx 
  	printf 'n' | bash <(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh) 
  	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/*
-	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
-	
+	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -	
 	command -v x-ui &> /dev/null && printf 'y\n' | x-ui uninstall
 	
 	clear && msg_ok "Completely Uninstalled!" && exit 1
