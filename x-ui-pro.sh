@@ -432,7 +432,7 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus --scan
+ExecStart=/etc/warp-plus/warp-plus
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-abort
