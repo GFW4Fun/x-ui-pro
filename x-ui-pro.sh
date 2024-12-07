@@ -136,7 +136,7 @@ fi
 if [[ "${UNINSTALL}" == *"y"* ]]; then
 	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor" | xargs -n 1 $Pak -y remove
 	$Pak -y autoremove
-	for service in nginx tor x-ui warp-plus v2ray v2raya xray sing-box; do
+	for service in nginx tor x-ui warp-plus v2ray v2raya xray; do
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
 	done
@@ -401,6 +401,7 @@ if ! systemctl start nginx > /dev/null 2>&1 || ! nginx -t &>/dev/null || nginx -
 	nginx -c /etc/nginx/nginx.conf
 	nginx -s reload
 fi
+systemctl enable x-ui
 x-ui start > /dev/null 2>&1
 ############################################Warp Plus (MOD)#############################################
 systemctl stop warp-plus > /dev/null 2>&1
@@ -442,7 +443,7 @@ EOF
 service_enable "warp-plus"
 ##########################################Install v2ray-core + v2rayA-webui#############################
 sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/installer.sh)" @ --with-xray
-service_enable "v2raya" "sing-box" "x-ui"
+service_enable "v2raya"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor';") | crontab -
