@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.6.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.7.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -140,8 +140,9 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
 	done
-	#rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx
- 	rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/sites-enabled/*
+	#rm -rf /etc/warp-plus/ /etc/v2raya/ /etc/nginx/ /usr/sbin/nginx /usr/lib/nginx 
+ 	sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh)"
+ 	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/*
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 	
 	command -v x-ui &> /dev/null && printf 'y\n' | x-ui uninstall
@@ -431,7 +432,7 @@ After=network.target nss-lookup.target
 
 [Service]
 WorkingDirectory=/etc/warp-plus/
-ExecStart=/etc/warp-plus/warp-plus --scan --cfon --country $Random_country
+ExecStart=/etc/warp-plus/warp-plus --scan
 ExecStop=/bin/kill -TERM \$MAINPID
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-abort
@@ -441,15 +442,7 @@ WantedBy=multi-user.target
 EOF
 service_enable "warp-plus"
 ##########################################Install v2ray-core + v2rayA-webui#############################
-if [[ "$Pak" = "dnf" ]]; then
-	sudo dnf -y copr enable zhullyb/v2rayA
-else
-	wget -qO - https://apt.v2raya.org/key/public-key.asc | sudo tee /etc/apt/keyrings/v2raya.asc
-	echo "deb [signed-by=/etc/apt/keyrings/v2raya.asc] https://apt.v2raya.org/ v2raya main" | sudo tee /etc/apt/sources.list.d/v2raya.list
-fi
-$Pak -y update
-$Pak -y install v2ray
-$Pak -y install v2raya
+sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/installer.sh)" @ --with-xray
 service_enable "v2ray" "v2raya"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
