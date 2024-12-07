@@ -108,13 +108,15 @@ Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knock
 To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox core.
 </details>
 
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
+
 ### Server Configuration :wrench:🐧⚙️
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/Config_XUI_ADMIN_4.jpg)
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/grpc_config_format.jpg)
 ### Client Configuration 👨‍💻📱✏️
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_CONFIG_XRAY_CLIENT_EDIT2.png)
-➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖
+<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
+
 ## Enable WARP<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/cdnon.png" width="34"> TOR 🧅 (Fix Google&ChatGPT Forbidden/Hide VPS IP)
 #### XUI > Xray Configs > Outbounds > Add Outbound ➕💾👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor02.jpg)
@@ -132,6 +134,7 @@ XUI Panel > Panel Setting > Subscription > Enable Service (Don't change /sub/ /j
 XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 
 In the displayed address, change `  :  to  /  ` ✏️
+<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
 
 ## Useful Links :fire: :link:
 ```
