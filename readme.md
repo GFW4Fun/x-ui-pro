@@ -123,7 +123,7 @@ To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox cor
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/warptor3.jpg)
 #### v2rayA Panel Settings (v2rayA suggested as Outbound and supports the subscription links):⚙️👇
 ![](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/v2rayadminpanel2.jpg)
-If you forget your password, run "v2raya-reset-password" to reset it.
+If you forget your password, run "v2raya-reset-password" to reset it (in ssh bash)
 
 v2rayA the configuration directory is: /usr/local/etc/v2raya
 ## Enable XUI Subscription :link:
