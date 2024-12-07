@@ -442,7 +442,7 @@ EOF
 service_enable "warp-plus"
 ##########################################Install v2ray-core + v2rayA-webui#############################
 sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/installer.sh)" @ --with-xray
-service_enable "v2ray" "v2raya" "xray" "sing-box" "x-ui"
+service_enable "v2ray" "v2raya" "sing-box" "x-ui"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -
 (crontab -l 2>/dev/null; echo "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor';") | crontab -
