@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.7.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.7.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -136,7 +136,7 @@ fi
 ##############################Uninstall##################################################################
 if [[ "${UNINSTALL}" == *"y"* ]]; then
 	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor" | xargs -n 1 $Pak -y remove
-	$Pak -y autoremove
+	#$Pak -y autoremove
 	for service in nginx tor x-ui warp-plus v2ray v2raya xray; do
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
