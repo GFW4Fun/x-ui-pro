@@ -13,7 +13,7 @@ msg_inf '  \___/  |     |   |   ___ |_____] |_____/  |     |'
 msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|';
 hrline
 ##################################Random Port and Path ###################################################
-mkdir -p /root/.cache
+mkdir -p ${HOME}/.cache
 Pak=$(command -v apt||echo dnf);
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
