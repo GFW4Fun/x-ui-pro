@@ -462,7 +462,7 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	hrline
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
-	msg "ID: $(hostnamectl | awk '/Machine ID/{print $3}' | cksum | awk '{print $1 % 65536}') | IP: ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
+	msg "ID: $(hostnamectl | awk '/Machine ID/{print $3}' | cksum | awk '{print $1 % 65536}') | ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
 	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | OS: %s\033[0m\n" \
 	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" "$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
 	hrline
