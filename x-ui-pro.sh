@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.5.8 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.5.9 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -462,9 +462,10 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	certbot certificates | grep -i 'Path:\|Domains:\|Expiry Date:' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	hrline
 	IPInfo=$(curl -Ls "https://ipapi.co/json" || curl -Ls "https://ipinfo.io/json")
-	msg "ID: $(hostnamectl | awk '/Machine ID/{print $3}' | cksum | awk '{print $1 % 65536}') | ${IP4} | $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
-	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | OS: %s\033[0m\n" \
-	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" "$(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
+	msg "ID: $(hostnamectl | awk '/Machine ID/{print $3}' | cksum | awk '{print $1 % 65536}') | IP: ${IP4} | OS: $(hostnamectl | awk -F: '/Operating System/{print $2}' | xargs)"
+	msg "Hostname: $(uname -n) | $(echo "${IPInfo}" | jq -r '.org, .country' | paste -sd' | ')"
+ 	printf "\033[1;37;40m CPU: %s/%s Core | RAM: %s | SSD: %s Gi\033[0m\n" \
+	"$(hostnamectl | awk -F: '/Architecture/{print $2}' | xargs)"  "$(nproc)" "$(free -h | awk '/^Mem:/{print $2}')" "$(df / | awk 'NR==2 {print $2 / 1024 / 1024}')"
 	hrline
   	msg_err  "XrayUI Panel [IP:PORT/PATH]"
 	[[ -n "$IP4" && "$IP4" =~ $IP4_REGEX ]] && msg_inf "IPv4: http://$IP4:$PORT$RNDSTR"
