@@ -136,7 +136,6 @@ fi
 ##############################Uninstall##################################################################
 if [[ "${UNINSTALL}" == *"y"* ]]; then
 	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor" | xargs -n 1 $Pak -y remove
-	#$Pak -y autoremove
 	for service in nginx tor x-ui warp-plus v2ray v2raya xray; do
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
