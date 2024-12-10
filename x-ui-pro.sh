@@ -53,7 +53,7 @@ done
 }
 ####################################UFW Rules################################################################
 if [[ -n "$ENABLEUFW" ]]; then
-	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 3389 8443 5900 | xargs -n 1 sudo ufw allow && sudo ufw enable
+	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 2052 2053 2082 2083 2086 2087 2095 2096 3389 5900 8443 8880 | xargs -n 1 sudo ufw allow && sudo ufw enable
 	msg_inf "UFW settings changed!"; exit 1
 fi
 ##############################TOR Change Region Country #####################################################
@@ -446,10 +446,9 @@ sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/inst
 service_enable "v2raya" "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 tasks=(
-  "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2ray v2raya warp-plus tor'"
+  "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2raya warp-plus tor'"
   "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }'"
   "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\" > /dev/null 2>&1'"
-  "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus'"
   "0 0 * * 0 sudo bash /etc/nginx/cloudflareips.sh > /dev/null 2>&1"
 )
 crontab -l | grep -qE "x-ui" || { printf "%s\n" "${tasks[@]}" | crontab -; }
