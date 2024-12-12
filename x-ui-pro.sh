@@ -140,7 +140,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
 	done
-	bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ remove --purge
+	#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ remove --purge
  	printf 'n' | bash <(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh) 
  	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/*
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -	
@@ -441,7 +441,7 @@ Restart=on-abort
 WantedBy=multi-user.target
 EOF
 ##########################################Install v2ray-core + v2rayA-webui#############################
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+#bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
 sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/installer.sh)" @ --with-xray
 service_enable "v2raya" "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
