@@ -152,6 +152,7 @@ __________________________________________________________ Config Fragment
 https://misaturo.github.io/Xray-Fragment-Configurator/
 _____________________________________________________________ Config Tools
 https://github.com/MrMohebi/xray-proxy-grabber-telegram
+https://github.com/GFW4Fun/Xray-Load-Balancer
 https://github.com/lilendian0x00/xray-knife
 https://github.com/mheidari98/proxyUtil
 https://github.com/RealCuf/VCG-Script
