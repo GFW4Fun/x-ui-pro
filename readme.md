@@ -137,36 +137,14 @@ In the displayed address, change `  :  to  /  ` ✏️
 <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
 
 ## Useful Links :fire: :link:
-```
-_________________________________________________________________ IP Tools
-https://www.cloudflare.com/ips/
-https://cloudflare-scanner.vercel.app/
-https://cloudflare-v2ray.vercel.app/
-https://drunkleen.github.io/ip-scanner/
-https://ircfspace.github.io/scanner/
-https://vfarid.github.io/cf-ip-scanner/
-https://www.ipaddressguide.com/cidr
-https://codifyformatter.org/random-ip
-https://github.com/ircfspace/tester
-__________________________________________________________ Config Fragment
-https://misaturo.github.io/Xray-Fragment-Configurator/
-_____________________________________________________________ Config Tools
-https://github.com/MrMohebi/xray-proxy-grabber-telegram
-https://github.com/GFW4Fun/Xray-Load-Balancer
-https://github.com/lilendian0x00/xray-knife
-https://github.com/mheidari98/proxyUtil
-https://github.com/RealCuf/VCG-Script
-https://github.com/shabane/kamaji
-______________________________________________________________ Free Config
-https://github.com/mermeroo/V2RAY-and-CLASH-Subscription-Links
-https://github.com/soroushmirzaei/telegram-configs-collector
-https://github.com/mahdibland/V2RayAggregator/tree/master
-https://github.com/barry-far/V2ray-Configs
-https://github.com/ripaojiedian/freenode
-https://github.com/Pawdroid/Free-servers
-https://github.com/snakem982/proxypool
-https://github.com/NiREvil/vless
-```
+[Bulk Config With Random CDN IP Range](https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/)
+
+[Free Multi Clash/Xray/v2ray Sub link](https://raw.githubusercontent.com/mermeroo/V2RAY-and-CLASH-Subscription-Links/refs/heads/main/SUB%20LINKS)
+
+[Xray Json Config Fragment for bypass firewall](https://misaturo.github.io/Xray-Fragment-Configurator/)
+
+[Xray Merge Multi Config for Balancer](https://github.com/Surfboardv2ray/Xray-Load-Balancer)
+
 
 ##
 ### Special thanks to xray/xui/v2ray/singbox developers :heart:
