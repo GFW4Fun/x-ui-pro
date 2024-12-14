@@ -139,12 +139,11 @@ In the displayed address, change `  :  to  /  ` ✏️
 ## Useful Links :fire: :link:
 [Bulk Config With Random CDN IP Range](https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/)
 
-[Free Multi Clash/Xray/v2ray Sub link](https://raw.githubusercontent.com/mermeroo/V2RAY-and-CLASH-Subscription-Links/refs/heads/main/SUB%20LINKS)
+[Xray Merge Multi Config for Balancer](https://github.com/Surfboardv2ray/Xray-Load-Balancer)
 
 [Xray Json Config Fragment for bypass firewall](https://misaturo.github.io/Xray-Fragment-Configurator/)
 
-[Xray Merge Multi Config for Balancer](https://github.com/Surfboardv2ray/Xray-Load-Balancer)
-
+[Free Multi Clash/Xray/v2ray Sub link](https://raw.githubusercontent.com/mermeroo/V2RAY-and-CLASH-Subscription-Links/refs/heads/main/SUB%20LINKS)
 
 ##
 ### Special thanks to xray/xui/v2ray/singbox developers :heart:
