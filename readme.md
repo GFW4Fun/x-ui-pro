@@ -136,7 +136,7 @@ XUI Panel > Inbounds > General Actions > Export All URLs - Subscriptions
 In the displayed address, change `  :  to  /  ` ✏️
 <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
 
-## Useful Links :fire: :link:
+## Useful Tools :fire: :link:
 [Bulk Config With Random CDN IP Range](https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/)
 
 [Xray Merge Multi Config for Balancer](https://github.com/Surfboardv2ray/Xray-Load-Balancer)
