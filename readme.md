@@ -103,7 +103,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
 ```
-Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) for client!
+Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
 To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox core.
 </details>
@@ -126,7 +126,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
-Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) for client!
+Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
 The above points are highly recommended. Always use port 443 and enable TLS.
 </details>
