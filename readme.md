@@ -128,7 +128,8 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
 Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) for client!
 
- </details>
+The four points above are highly recommended. Always use port 443 and enable TLS
+</details>
  
 <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
 
