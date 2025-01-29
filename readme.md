@@ -110,17 +110,19 @@ To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox cor
 
 <details><summary>:point_right:Secure mode! :arrow_heading_down:</summary>
  
-#### 1. Enable Secure/CDN mode, 2. Enable UFW Firewall, 3. Random Fake HTML, 4. Bulk Config with Random CDN IP.
- 
+#### Enable Secure/CDN Mode 
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -xuiver last -cdn on -secure yes -country xx"
 ```
+#### Enable UFW Firewall
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
 ```
+#### Random Fake HTML
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes
 ```
+####  Bulk Config with Random CDN IP
 ```
 https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
