@@ -108,6 +108,24 @@ Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knock
 To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox core.
 </details>
 
+<details><summary>:point_right:Secure mode! :arrow_heading_down:</summary>
+ 
+```
+sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -xuiver last -cdn on -secure yes -country xx"
+```
+```
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
+```
+```
+bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes
+```
+```
+https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
+```
+Secure mode only works with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) for client!
+
+ </details>
+ 
 <img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/hr.png" width="100%">
 
 ### Server Configuration :wrench:🐧⚙️
