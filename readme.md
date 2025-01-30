@@ -89,7 +89,10 @@ bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-o
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
 ```
-
+**Uninstall V2rayA ❌**
+```
+sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/uninstaller.sh)"
+```
 **Other install arguments:☢️**
 ```
 -panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
