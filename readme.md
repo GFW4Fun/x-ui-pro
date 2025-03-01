@@ -129,7 +129,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
-### v2rayN DNS Settings - DNS over HTTPS (DoH) 
+#### v2rayN DNS Settings - DNS over HTTPS (DoH) 
 ```
 {"servers": ["https://8.8.8.8/dns-query","https://dns.quad9.net/dns-query"]}
 ```
