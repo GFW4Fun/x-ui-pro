@@ -131,7 +131,7 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
 #### v2rayN DNS Settings - DNS over HTTPS (DoH) 
 ```
-{"servers": ["https://8.8.8.8/dns-query","https://dns.quad9.net/dns-query"]}
+{"servers": ["https://8.8.8.8/dns-query","https://9.9.9.9/dns-query"]}
 ```
 Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
