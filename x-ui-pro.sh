@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.8.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.8.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -269,6 +269,7 @@ if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
 	PANEL=( "https://raw.githubusercontent.com/alireza0/x-ui/${VERSION}/install.sh"
 		"https://raw.githubusercontent.com/mhsanaei/3x-ui/${VERSION}/install.sh"
 		"https://raw.githubusercontent.com/FranzKafkaYu/x-ui/${VERSION}/install_en.sh"
+		"https://raw.githubusercontent.com/AghayeCoder/tx-ui/${VERSION}/install.sh"
 	);
 	[[ "$VERSION" == "master" ]] && VERSION=""
 	printf 'n\n' | bash <(wget -qO- "${PANEL[$PNLNUM]}") "$VERSION" ||  { printf 'n\n' | bash <(curl -Ls "${PANEL[$PNLNUM]}") "$VERSION"; }
