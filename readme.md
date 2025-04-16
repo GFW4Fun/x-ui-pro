@@ -95,7 +95,7 @@ sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/unin
 ```
 **Other install arguments:☢️**
 ```
--panel 0 > Alireza0_XUI  1 > MHSanaei_XUI 2 > FranzKafkaYu_XUI
+-panel 0-Alireza0_XUI  1-MHSanaei_XUI 2-FranzKafkaYu_XUI 3-AghayeCoder_tx-ui
 ```
 ```
 -xuiver 2.4.7  # XUI Panel version (default is 'last' version)
