@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.8.3 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.8.4 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -262,7 +262,7 @@ fi
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
-	[[ "$PNLNUM" =~ ^[0-2]+$ ]] || PNLNUM=1	
+	[[ "$PNLNUM" =~ ^[0-3]+$ ]] || PNLNUM=1	
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
 	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
 	else [[ $PNLNUM == "1" ]] && VERSION="v${VERSION#v}" || VERSION="${VERSION#v}" ; fi	
