@@ -161,9 +161,9 @@ if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 	MainDomain=${domain}
 fi
 ###############################Install Packages#########################################################
-$Pak -y update
 $Pak -y purge sqlite
 $Pak -y purge sqlite3
+$Pak -y update
 for pkg in epel-release cronie psmisc unzip curl nginx nginx-full certbot python3-certbot-nginx sqlite sqlite3 jq openssl tor tor-geoipdb; do
   dpkg -l "$pkg" &> /dev/null || rpm -q "$pkg" &> /dev/null || $Pak -y install "$pkg"
 done
