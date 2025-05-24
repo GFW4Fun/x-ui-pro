@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.8.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.8.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -162,9 +162,11 @@ if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 fi
 ###############################Install Packages#########################################################
 $Pak -y update
+$Pak -y purge sqlite3
 for pkg in epel-release cronie psmisc unzip curl nginx nginx-full certbot python3-certbot-nginx sqlite sqlite3 jq openssl tor tor-geoipdb; do
   dpkg -l "$pkg" &> /dev/null || rpm -q "$pkg" &> /dev/null || $Pak -y install "$pkg"
 done
+sudo ln -s /usr/bin/sqlite3 /usr/local/bin/sqlite3
 service_enable "nginx" "tor" "cron" "crond"
 ############################### Get nginx Ver and Stop ##################################################
 vercompare() { 
