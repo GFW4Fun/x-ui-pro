@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.8.9 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.9.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -17,6 +17,8 @@ mkdir -p ${HOME}/.cache
 Pak=$(command -v apt||echo dnf);
 RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
+XUIUSER="admin"
+XUIPASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
 while true; do PORT=$((RANDOM%30000+30000)); nc -z 127.0.0.1 "$PORT" &>/dev/null || break; done
 Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
@@ -261,7 +263,7 @@ sqlite3 "$XUIDB" << EOF
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
 fi
-sudo /usr/local/x-ui/x-ui setting -username admin -password admin
+sudo /usr/local/x-ui/x-ui setting -username "${XUIUSER}" -password "${XUIPASS}"
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
@@ -285,8 +287,6 @@ if [[ -f $XUIDB ]]; then
  	fuser "$XUIDB" 2>/dev/null
 	PORT=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webPort' LIMIT 1;" 2>&1)
  	RNDSTR=$(sqlite3 "${XUIDB}" "SELECT value FROM settings WHERE key='webBasePath' LIMIT 1;" 2>&1)	
-	XUIUSER=$(sqlite3 "${XUIDB}" 'SELECT "username" FROM users;' 2>&1)
-	XUIPASS=$(sqlite3 "${XUIDB}" 'SELECT "password" FROM users;' 2>&1)
 	RNDSTR=$(add_slashes "$RNDSTR" | tr -d '[:space:]')
 	[[ "$RNDSTR" == "/" ]] && NOPATH="#"
 	if [[ -z "${PORT}" ]] || ! [[ "${PORT}" =~ ^-?[0-9]+$ ]]; then
@@ -294,8 +294,10 @@ if [[ -f $XUIDB ]]; then
   	fi
 else
 	PORT="2053"
-	RNDSTR="/";NOPATH="#";
-	XUIUSER="admin";XUIPASS="admin";
+	RNDSTR="/";
+	NOPATH="#";
+	XUIUSER="admin";
+	XUIPASS="admin";
 fi
 #######################################################################################################
 CountryAllow=$(echo "$CountryAllow" | tr ',' '|' | tr -cd 'A-Za-z|' | awk '{print toupper($0)}')
