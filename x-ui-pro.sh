@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.9.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.9.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -15,10 +15,11 @@ hrline
 ##################################Random Port and Path ###################################################
 mkdir -p ${HOME}/.cache
 Pak=$(command -v apt||echo dnf);
-RNDSTR=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
-RNDSTR2=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
-XUIUSER="admin"
-XUIPASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)");
+gen_str() { tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)"; }
+RNDSTR=$(gen_str)
+RNDSTR2=$(gen_str)
+XUIUSER=$(gen_str)
+XUIPASS=$(gen_str)
 while true; do PORT=$((RANDOM%30000+30000)); nc -z 127.0.0.1 "$PORT" &>/dev/null || break; done
 Random_country=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
 TorRandomCountry=$(echo ATBEBGBRCACHCZDEDKEEESFIFRGBHRHUIEINITJPLVNLNOPLPTRORSSESGSKUAUS | fold -w2 | shuf -n1)
