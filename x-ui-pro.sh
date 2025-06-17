@@ -15,7 +15,7 @@ hrline
 ##################################Random Port and Path ###################################################
 mkdir -p ${HOME}/.cache
 Pak=$(command -v apt||echo dnf);
-gen_str() { tr -dc A-Za-z0-9 </dev/urandom | head -c "$(shuf -i 6-12 -n1)"; }
+gen_str() { l=$((RANDOM%7+6)); LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $l; }
 RNDSTR=$(gen_str)
 RNDSTR2=$(gen_str)
 XUIUSER=$(gen_str)
