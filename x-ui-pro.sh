@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.8.8 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.8.9 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -261,6 +261,7 @@ sqlite3 "$XUIDB" << EOF
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
 fi
+sudo /usr/local/x-ui/x-ui setting -username admin -password admin
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
