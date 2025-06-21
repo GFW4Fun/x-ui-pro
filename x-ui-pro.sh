@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.9.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.9.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -264,7 +264,6 @@ sqlite3 "$XUIDB" << EOF
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
 fi
-sudo /usr/local/x-ui/x-ui setting -username "${XUIUSER}" -password "${XUIPASS}"
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
@@ -461,6 +460,7 @@ tasks=(
 )
 crontab -l | grep -qE "x-ui" || { printf "%s\n" "${tasks[@]}" | crontab -; }
 ##################################Show Details##########################################################
+sudo /usr/local/x-ui/x-ui setting -username "$XUIUSER" -password "$XUIPASS"
 if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	printf '0\n' | x-ui | grep --color=never -i ':' | awk '{print "\033[1;37;40m" $0 "\033[0m"}'
 	hrline
