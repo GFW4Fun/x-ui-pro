@@ -264,6 +264,7 @@ sqlite3 "$XUIDB" << EOF
 	INSERT INTO 'settings' (key, value) VALUES ('webPort', '${PORT}'),('webCertFile', ''),('webKeyFile', ''),('webBasePath', '${RNDSTRSLASH}');
 EOF
 fi
+sudo /usr/local/x-ui/x-ui setting -username "$XUIUSER" -password "$XUIPASS"
 }
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
