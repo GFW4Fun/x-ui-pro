@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v11.9.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v11.9.5 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -138,7 +138,7 @@ fi
 fi
 ##############################Uninstall##################################################################
 if [[ "${UNINSTALL}" == *"y"* ]]; then
-	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor python3 python3-certbot-nginx" | xargs -n 1 $Pak -y remove
+	echo "python3-certbot-nginx nginx nginx-full nginx-core nginx-common nginx-extras tor" | xargs -n 1 $Pak -y remove
 	for service in nginx tor x-ui warp-plus v2raya xray; do
 		systemctl stop "$service" > /dev/null 2>&1
 		systemctl disable "$service" > /dev/null 2>&1
@@ -167,7 +167,7 @@ fi
 $Pak -y purge sqlite
 $Pak -y purge sqlite3
 $Pak -y update
-for pkg in epel-release cronie psmisc unzip curl nginx nginx-full certbot python3-certbot-nginx sqlite sqlite3 jq openssl tor tor-geoipdb; do
+for pkg in epel-release cronie psmisc unzip curl nginx nginx-full python3 certbot python3-certbot-nginx sqlite sqlite3 jq openssl tor tor-geoipdb; do
   dpkg -l "$pkg" &> /dev/null || rpm -q "$pkg" &> /dev/null || $Pak -y install "$pkg"
 done
 service_enable "nginx" "tor" "cron" "crond"
