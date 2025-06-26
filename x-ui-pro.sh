@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v12.0.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -269,6 +269,7 @@ sudo /usr/local/x-ui/x-ui setting -username "$XUIUSER" -password "$XUIPASS"
 ###################################Install X-UI#########################################################
 if ! systemctl is-active --quiet x-ui || ! command -v x-ui &> /dev/null; then
 	[[ "$PNLNUM" =~ ^[0-3]+$ ]] || PNLNUM=1	
+	grep -qi '^ID=fedora' /etc/os-release 2>/dev/null && PNLNUM=3
  	VERSION=$(echo "$VERSION" | tr -d '[:space:]')
 	if [[ -z "$VERSION" || "$VERSION" != *.* ]]; then VERSION="master"
 	else [[ $PNLNUM == "1" ]] && VERSION="v${VERSION#v}" || VERSION="${VERSION#v}" ; fi	
