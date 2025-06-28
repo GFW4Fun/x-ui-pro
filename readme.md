@@ -133,6 +133,10 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
 {"servers": ["https://8.8.8.8/dns-query","https://9.9.9.9/dns-query"]}
 ```
+#### Enable v2ray Fragment (core basic settings)
+[Xray Json Config Fragment](https://misaturo.github.io/Xray-Fragment-Configurator/)
+
+
 Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
 The above points are highly recommended. Always use port 443 and enable TLS.
