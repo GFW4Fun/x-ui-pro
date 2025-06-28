@@ -111,7 +111,7 @@ Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knock
 To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox core.
 </details>
 
-<details><summary>:point_right:Secure mode! :arrow_heading_down:</summary>
+<details><summary>:point_right:Install XUI-PRO [Secure mode] :arrow_heading_down:</summary>
  
 #### Enable Secure/CDN Mode 
 ```
