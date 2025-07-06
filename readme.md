@@ -134,12 +134,15 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 {"servers": ["https://8.8.8.8/dns-query","https://9.9.9.9/dns-query"]}
 ```
 #### Enable v2ray Fragment (core basic settings)
-[Xray Json Config Fragment](https://misaturo.github.io/Xray-Fragment-Configurator/)
+```
+https://misaturo.github.io/Xray-Fragment-Configurator/
+```
 
 #### Secure SSH (Change Port 22 to Custome Port)
 ```
 sudo bash -c 'read -p "Enter new SSH port: " port && sed -i "s/^#Port 22/Port $port/" /etc/ssh/sshd_config && ufw allow ${port}/tcp && systemctl restart sshd'
 ```
+
 
 Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
