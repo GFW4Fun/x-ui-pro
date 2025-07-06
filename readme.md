@@ -136,6 +136,10 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 #### Enable v2ray Fragment (core basic settings)
 [Xray Json Config Fragment](https://misaturo.github.io/Xray-Fragment-Configurator/)
 
+#### Secure SSH (Change Port to 2220)
+```
+sed -i 's/#Port 22/Port 2220/g' /etc/ssh/sshd_config
+```
 
 Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
 
