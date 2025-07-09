@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.0.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v12.0.3 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -12,10 +12,6 @@ msg_inf ' _     _ _     _ _____      _____   ______   _____ '
 msg_inf '  \___/  |     |   |   ___ |_____] |_____/  |     |'
 msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|';
 hrline
-###########################################Fix VPS#######################################################
-sudo bash -c 'c=$(grep -c "^nameserver" /etc/resolv.conf); for d in 8.8.8.8 1.1.1.1; do grep -q "^nameserver $d" /etc/resolv.conf || { [ $c -lt 3 ] && echo "nameserver $d" >> /etc/resolv.conf && c=$((c+1)); }; done'
-
-sudo bash -c 'type apt&&{ apt update&&apt install -y build-essential; }||type dnf&&{ dnf groupinstall -y "Development Tools"; }||type yum&&{ yum groupinstall -y "Development Tools"; }||type pacman&&{ pacman -Sy --noconfirm base-devel; }'
 ##################################Random Port and Path ###################################################
 mkdir -p ${HOME}/.cache
 Pak=$(command -v apt || command -v dnf); Pak=${Pak:-apt}
@@ -166,6 +162,10 @@ MainDomain=$(echo "$domain" 2>&1 | sed 's/.*\.\([^.]*\..*\)$/\1/')
 if [[ "${SubDomain}.${MainDomain}" != "${domain}" ]] ; then
 	MainDomain=${domain}
 fi
+###########################################Fix VPS#######################################################
+sudo bash -c 'c=$(grep -c "^nameserver" /etc/resolv.conf); for d in 8.8.8.8 1.1.1.1; do grep -q "^nameserver $d" /etc/resolv.conf || { [ $c -lt 3 ] && echo "nameserver $d" >> /etc/resolv.conf && c=$((c+1)); }; done'
+
+sudo bash -c 'type apt&&{ apt update&&apt install -y build-essential; }||type dnf&&{ dnf groupinstall -y "Development Tools"; }||type yum&&{ yum groupinstall -y "Development Tools"; }||type pacman&&{ pacman -Sy --noconfirm base-devel; }'
 ###############################Install Packages#########################################################
 sudo $Pak -y purge sqlite sqlite3 python3-certbot-nginx 2>/dev/null || true
 [[ $Pak == *apt ]]&&sudo apt update||sudo dnf makecache
