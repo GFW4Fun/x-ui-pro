@@ -6,6 +6,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
 - Install multiple domains with one a server/panel
 - More security and low detection with nginx
 - Auto SSL Renew, Reload Daily Services
+- Auto Daily backups x-ui.db to /var/backups
 - X-UI Xray / V2rayA  Admin Web Panel
 - Compatible with Cloudflare CDN/IP
 - Random 170 fake HTML template!
