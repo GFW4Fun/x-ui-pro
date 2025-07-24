@@ -138,7 +138,10 @@ https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
 ```
 https://misaturo.github.io/Xray-Fragment-Configurator/
 ```
-
+#### Disable ICMP 
+```
+sudo sysctl -w net.ipv4.icmp_echo_ignore_all=1 net.ipv6.icmp.echo_ignore_all=1 && sudo sysctl -p &>/dev/null
+```
 #### Secure SSH (Change Port 22 to Custome Port)
 ```
 sudo bash -c 'read -p "Enter new SSH port: " port && sed -i "s/^#Port 22/Port $port/" /etc/ssh/sshd_config && ufw allow ${port}/tcp && systemctl restart sshd'
