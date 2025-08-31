@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.1.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v12.1.1 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -244,9 +244,8 @@ for t in v4 v6; do
   done || { echo "Cloudflare failed $t"; exit 1; }
 done
 echo "real_ip_header X-Forwarded-For;" >>"$tmp_r"
-echo "real_ip_recursive on;" >> "$tmp_r"
 echo "}" >>"$tmp_w"
-mv -f "$tmp_r" "$R/cloudflare_real_ips.conf" "$tmp_w" "$R/cloudflare_whitelist.conf"
+mv -f "$tmp_r" "$R/cloudflare_real_ips.conf" && mv -f "$tmp_w" "$R/cloudflare_whitelist.conf"
 EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
