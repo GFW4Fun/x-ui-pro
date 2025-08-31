@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.0.4 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v12.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -230,23 +230,23 @@ http {
 EOF
 
 rm -f "/etc/nginx/cloudflareips.sh"
-cat << 'EOF' >> /etc/nginx/cloudflareips.sh
+cat << 'EOF' > /etc/nginx/cloudflareips.sh
 #!/bin/bash
 [[ $EUID -ne 0 ]] && exec sudo "$0" "$@"
-rm -f "/etc/nginx/conf.d/cloudflare_real_ips.conf" "/etc/nginx/conf.d/cloudflare_whitelist.conf"
-CLOUDFLARE_REAL_IPS_PATH=/etc/nginx/conf.d/cloudflare_real_ips.conf
-CLOUDFLARE_WHITELIST_PATH=/etc/nginx/conf.d/cloudflare_whitelist.conf
-echo "geo \$realip_remote_addr \$cloudflare_ip {
-	default 0;" >> $CLOUDFLARE_WHITELIST_PATH
-for type in v4 v6; do
-	echo "# IP$type"
-	for ip in `curl https://www.cloudflare.com/ips-$type`; do
-		echo "set_real_ip_from $ip;" >> $CLOUDFLARE_REAL_IPS_PATH;
-		echo "	$ip 1;" >> $CLOUDFLARE_WHITELIST_PATH;
-	done
+R=/etc/nginx/conf.d; [ -d $R ] || mkdir -p $R || exit 1
+tmp_r=$(mktemp) && tmp_w=$(mktemp) || exit 1; trap 'rm -f "$tmp_r" "$tmp_w"' EXIT
+echo "geo \$realip_remote_addr \$cloudflare_ip { default 0;" >"$tmp_w"
+for t in v4 v6; do
+  curl -fsSL --connect-timeout 9 "https://www.cloudflare.com/ips-$t" | \
+  grep -E '^[0-9a-fA-F:.]+(/[0-9]+)?$' | while read -r ip; do
+    echo "set_real_ip_from $ip;" >>"$tmp_r"
+    echo "    $ip 1;" >>"$tmp_w"
+  done || { echo "Cloudflare failed $t"; exit 1; }
 done
-echo "real_ip_header X-Forwarded-For;" >> $CLOUDFLARE_REAL_IPS_PATH
-echo "}" >> $CLOUDFLARE_WHITELIST_PATH
+echo "real_ip_header X-Forwarded-For;" >>"$tmp_r"
+echo "real_ip_recursive on;" >> "$tmp_r"
+echo "}" >>"$tmp_w"
+mv -f "$tmp_r" "$R/cloudflare_real_ips.conf" "$tmp_w" "$R/cloudflare_whitelist.conf"
 EOF
 
 sudo bash "/etc/nginx/cloudflareips.sh" > /dev/null 2>&1;
