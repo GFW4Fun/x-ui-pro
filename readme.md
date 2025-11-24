@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_Pro_Logo.png">
+![XUI-PRO logo](https://raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/media/XUI_Pro_Logo.png)
 x-ui-pro is an open-source project that provides an auto-installation script for a lightweight and secure web proxy server. It combines the features of x-ui, v2rayA, warp, psiphon tor and nginx to offer a comprehensive solution (Many protocols and tools) for bypassing internet restrictions.
 
 - Handle **WebSocket/GRPC/HttpUgrade/XHTTP** via **nginx**.
