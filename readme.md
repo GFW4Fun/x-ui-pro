@@ -15,6 +15,8 @@ x-ui-pro is an open-source project that provides an auto-installation script for
  
 ##
 
+<span style="color:red; font-weight:bold; font-size:20px;">🚀 New version is coming soon!</span>
+
 **Install XUI-PRO**:dvd::package:
 
 ```
