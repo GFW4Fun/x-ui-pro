@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.1.1 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v12.1.2 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -330,7 +330,7 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
-	error_page 400 402 403 500 501 502 503 504 =404 /404;
+	error_page 400 402 403 404 500 501 502 503 504 =200 /index.html;
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
 	location $RNDSTR {
