@@ -86,7 +86,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-optimizer.sh)
 ```
 
-**Enable UFW :no_entry_sign: Firewall**
+**Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)**
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
 ```
@@ -119,7 +119,7 @@ To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox cor
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 1 -xuiver last -cdn on -secure yes -country xx"
 ```
-#### Enable UFW Firewall
+#### Enable UFW Firewall (Prevent direct access to xui-xray-v2ray ports)
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
 ```
