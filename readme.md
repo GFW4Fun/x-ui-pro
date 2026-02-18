@@ -148,7 +148,7 @@ sudo bash -c 'read -p "Enter new SSH port: " port && sed -i "s/^#Port 22/Port $p
 ```
 
 
-Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
+**Secure mode requires [GFW Anti-DPI UA Random Patcher](https://github.com/GFW4Fun/GFW-AntiDPI-UA-Random-Patcher) on the client side only.**
 
 The above points are highly recommended. Always use port 443 and enable TLS.
 </details>
