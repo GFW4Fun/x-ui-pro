@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v13.0.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v13.1.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -58,7 +58,7 @@ done
 if [[ -n "$ENABLEUFW" ]]; then
     sudo "$Pak" -y install ufw || { msg_err "UFW install failed!"; exit 1; }
     ufw --force reset && ufw allow OpenSSH 2>/dev/null || ufw allow 22/tcp
-    EXTRA=$(ss -tulnp 2>/dev/null | grep -E 'singbox|sing-box|xray|v2ray|v2fly|x-ui|warp|nginx|tor' | awk '{print $5}' | grep -oE '[0-9]+$')
+    EXTRA=$(ss -tulnp 2>/dev/null | grep -E 'singbox|sing-box|x-ui|nginx' | awk '{print $5}' | grep -oE '[0-9]+$')
     { echo "22 21 80 443 3306 53 2052 2053 2082 2083 2086 2087 2095 2096 3389 5900 8443 8880"; echo "$EXTRA"; } | tr ' ' '\n' | grep -E '^[0-9]+$' | sort -un | xargs -n1 sudo ufw allow
     sudo ufw --force enable && msg_inf "UFW settings changed!"; exit 0
 fi
@@ -131,7 +131,7 @@ RandomHTML=$(for i in *; do echo "$i"; done | shuf -n1 2>&1)
 msg_inf "Random template name: ${RandomHTML}"
 
 if [[ -d "${RandomHTML}" && -d "/var/www/html/" ]]; then
-	rm -rf /var/www/html/*
+	find /var/www/html/ -mindepth 1 -maxdepth 1 ! -name "*.txt" -exec rm -rf {} +
 	cp -a "${RandomHTML}"/. "/var/www/html/"
 	msg_ok "Template extracted successfully!" && exit 1
 else
