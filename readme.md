@@ -107,7 +107,8 @@ sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/unin
 ```
 -secure yes   # Enable Nginx auth + Block Bad UA [xray,v2ray,go-http-client,vpn,proxy,tunnel,bot...] (Only advanced users) 
 ```
-Secure mode works only with [GFW-knocker/Xray-core](https://github.com/GFW-knocker/Xray-core) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side.
+
+**Secure mode requires [GFW Anti-DPI UA Random Patcher](https://github.com/GFW4Fun/GFW-AntiDPI-UA-Random-Patcher) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side only.**
 
 To clean or change the phrase "Go-http-client/x" from the xray/v2ray/singbox core.
 </details>
@@ -126,17 +127,9 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -RandomTemplate yes
 ```
-####  Bulk Config with Random CDN IP
+####  Bulk Config with Random CDN IP(Cloudflare users)
 ```
 https://gfw4fun.github.io/xray_bulk_config_with_random_cdn_ip_range/
-```
-#### v2rayN DNS Settings - DNS over HTTPS (DoH) 
-```
-{"servers": ["https://8.8.8.8/dns-query","https://9.9.9.9/dns-query"]}
-```
-#### Enable v2ray Fragment (core basic settings)
-```
-https://misaturo.github.io/Xray-Fragment-Configurator/
 ```
 #### Disable ICMP 
 ```
@@ -148,7 +141,7 @@ sudo bash -c 'read -p "Enter new SSH port: " port && sed -i "s/^#Port 22/Port $p
 ```
 
 
-**Secure mode requires [GFW Anti-DPI UA Random Patcher](https://github.com/GFW4Fun/GFW-AntiDPI-UA-Random-Patcher) on the client side only.**
+**Secure mode requires [GFW Anti-DPI UA Random Patcher](https://github.com/GFW4Fun/GFW-AntiDPI-UA-Random-Patcher) / [GFW-knocker/MahsaNG](https://github.com/GFW-knocker/MahsaNG) on the client side only.**
 
 The above points are highly recommended. Always use port 443 and enable TLS.
 </details>
