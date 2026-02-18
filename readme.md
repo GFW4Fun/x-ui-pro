@@ -86,7 +86,7 @@ bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) 
 bash <(wget -qO- raw.githubusercontent.com/hawshemi/Linux-Optimizer/main/linux-optimizer.sh)
 ```
 
-**Enable UFW :no_entry_sign: Firewall (Prevent direct access to xui-xray-v2ray ports)**
+**Enable UFW :no_entry_sign: Firewall**
 ```
 bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -ufw on
 ```
