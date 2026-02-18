@@ -15,9 +15,7 @@ x-ui-pro is an open-source project that provides an auto-installation script for
  
 ##
 
-<span style="color:red; font-weight:bold; font-size:20px;">🚀 New version is coming soon!</span>
-
-**Install XUI-PRO**:dvd::package:
+**Install XUI-PRO + ArgoSBX(SingBox)**:dvd::package:
 
 ```
 sudo su -c "$(command -v apt||echo dnf) -y install wget;bash <(wget -qO- raw.githubusercontent.com/GFW4Fun/x-ui-pro/master/x-ui-pro.sh) -panel 0 -xuiver last -cdn off -secure no -country xx"
