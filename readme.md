@@ -186,6 +186,8 @@ In the displayed address, change `  :  to  /  ` ✏️
 
 [Xray Merge Multi Config for Balancer](https://github.com/Surfboardv2ray/Xray-Load-Balancer)
 
+[GFW-AntiDPI-UA-Random-Patcher](https://github.com/GFW4Fun/GFW-AntiDPI-UA-Random-Patcher)
+
 [Xray Json Config Fragment for bypass firewall](https://misaturo.github.io/Xray-Fragment-Configurator/)
 
 [Free Multi Clash/Xray/v2ray Sub link](https://raw.githubusercontent.com/mermeroo/V2RAY-and-CLASH-Subscription-Links/refs/heads/main/SUB%20LINKS)
