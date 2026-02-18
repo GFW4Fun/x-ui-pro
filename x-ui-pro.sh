@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v12.1.2 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v13.0.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -14,8 +14,8 @@ msg_inf ' _/   \_ |_____| __|__     |       |     \_ |_____|';
 hrline
 ##################################Random Port and Path ###################################################
 mkdir -p ${HOME}/.cache
-Pak=$(command -v apt || command -v dnf); Pak=${Pak:-apt}
-gen_str() { l=$((RANDOM%7+6)); LC_CTYPE=C tr -dc 'A-Za-z0-9' < /dev/urandom | head -c $l; }
+Pak=$(command -v apt || command -v dnf || command -v yum) && Pak=$(basename "$Pak") || { msg_err "No package manager!"; exit 1; }
+gen_str() { local l=$((RANDOM%7+6)); LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom 2>/dev/null | head -c "$l" || tr -dc 'A-Za-z0-9' </proc/sys/kernel/random/uuid 2>/dev/null | head -c "$l"; }
 RNDSTR=$(gen_str)
 RNDSTR2=$(gen_str)
 XUIUSER=$(gen_str)
@@ -56,8 +56,11 @@ done
 }
 ####################################UFW Rules################################################################
 if [[ -n "$ENABLEUFW" ]]; then
-	sudo $(command -v apt || echo dnf) -y install ufw && ufw reset && echo ssh ftp http https mysql 53 2052 2053 2082 2083 2086 2087 2095 2096 3389 5900 8443 8880 | xargs -n 1 sudo ufw allow && sudo ufw enable
-	msg_inf "UFW settings changed!"; exit 1
+    sudo "$Pak" -y install ufw || { msg_err "UFW install failed!"; exit 1; }
+    ufw --force reset && ufw allow OpenSSH 2>/dev/null || ufw allow 22/tcp
+    EXTRA=$(ss -tulnp 2>/dev/null | grep -E 'singbox|sing-box|xray|v2ray|v2fly|x-ui|warp|nginx|tor' | awk '{print $5}' | grep -oE '[0-9]+$')
+    { echo "22 21 80 443 3306 53 2052 2053 2082 2083 2086 2087 2095 2096 3389 5900 8443 8880"; echo "$EXTRA"; } | tr ' ' '\n' | grep -E '^[0-9]+$' | sort -un | xargs -n1 sudo ufw allow
+    sudo ufw --force enable && msg_inf "UFW settings changed!"; exit 0
 fi
 ##############################TOR Change Region Country #####################################################
 if [[ -n "$TorCountry" ]]; then
@@ -147,7 +150,7 @@ if [[ "${UNINSTALL}" == *"y"* ]]; then
  	rm -rf /etc/warp-plus/ /etc/nginx/sites-enabled/*
 	crontab -l | grep -v "nginx\|systemctl\|x-ui\|v2ray" | crontab -	
 	command -v x-ui &> /dev/null && printf 'y\n' | x-ui uninstall
-	
+	agsbx del &> /dev/null
 	clear && msg_ok "Completely Uninstalled!" && exit 1
 fi
 ##############################Domain Validations#########################################################
@@ -330,7 +333,7 @@ server {
 	if (\$ssl_server_name !~* ^(.+\.)?$MainDomain\$ ) {set \$safe "\${safe}0"; }
 	if (\$safe = 10){return 444;}
 	if (\$request_uri ~ "(\"|'|\`|~|,|:|--|;|%|\\$|&&|\?\?|0x00|0X00|\||\\|\{|\}|\[|\]|<|>|\.\.\.|\.\.\/|\/\/\/)"){set \$hack 1;}
-	error_page 400 402 403 404 500 501 502 503 504 =200 /index.html;
+	error_page 400 402 403 404 500 501 502 503 504 =200 /;
 	proxy_intercept_errors on;
 	#X-UI Admin Panel
 	location $RNDSTR {
@@ -456,7 +459,7 @@ sudo sh -c "$(wget -qO- https://github.com/v2rayA/v2rayA-installer/raw/main/inst
 service_enable "v2raya" "warp-plus"
 ######################cronjob for ssl/reload service/cloudflareips######################################
 tasks=(
-  "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2raya warp-plus tor'"
+  "0 0 * * * sudo su -c 'x-ui restart > /dev/null 2>&1 && systemctl reload v2raya warp-plus tor && agsbx res > /dev/null 2>&1'"
   "0 0 * * * sudo su -c 'nginx -s reload 2>&1 | grep -q error && { pkill nginx || killall nginx; nginx -c /etc/nginx/nginx.conf; nginx -s reload; }'"
   "0 0 1 * * sudo su -c 'certbot renew --nginx --force-renewal --non-interactive --post-hook \"nginx -s reload\"' >> /var/log/certbot_renew.log 2>&1"
   "* * * * * sudo su -c '[[ \"\$(curl -s --socks5-hostname 127.0.0.1:8086 checkip.amazonaws.com)\" =~ ^((([0-9]{1,3}\.){3}[0-9]{1,3})|(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}))\$ ]] || systemctl restart warp-plus'"
@@ -464,6 +467,10 @@ tasks=(
   "0 2 * * * mkdir -p /var/backups && cp /etc/x-ui/x-ui.db /var/backups/x-ui.db.$(date +\%F-\%H-\%M-\%S) && find /var/backups -name \"x-ui.db.*\" -mtime +7 -delete"
 )
 crontab -l | grep -qE "x-ui" || { printf "%s\n" "${tasks[@]}" | crontab -; }
+##################################https://yonggekkk.github.io/argosbx/###################################
+arpt="" anpt="" hypt="" tupt="" sspt="" warp="sx" ippz="4" bash <(curl -Ls https://raw.githubusercontent.com/yonggekkk/argosbx/main/argosbx.sh)
+randname=$(gen_str).txt
+sudo cp /root/agsbx/jh.txt /var/www/html/$randname
 ##################################Show Details##########################################################
 sudo /usr/local/x-ui/x-ui setting -username "$XUIUSER" -password "$XUIPASS"
 if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
@@ -492,6 +499,9 @@ if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
 	msg_inf "XrayUI: https://${domain}${RNDSTR}"
 	msg_inf "V2rayA: https://${domain}/${RNDSTR2}/\n"
 	msg "Username: $XUIUSER\n Password: $XUIPASS"
+	hrline
+	msg_ok "ArgoSBX(SingBox) Configs Subscription URL:\n"
+	msg_inf "https://${domain}/${randname}"
 	hrline
 	msg_war "Note: Save This Screen!"	
 else
