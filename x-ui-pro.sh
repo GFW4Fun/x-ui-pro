@@ -1,5 +1,5 @@
 #!/bin/bash
-#################### x-ui-pro v13.1.0 @ github.com/GFW4Fun ##############################################
+#################### x-ui-pro v13.2.0 @ github.com/GFW4Fun ##############################################
 [[ $EUID -ne 0 ]] && { echo "not root!"; exec sudo "$0" "$@"; }
 msg()     { echo -e "\e[1;37;40m $1 \e[0m";}
 msg_ok()  { echo -e "\e[1;32;40m $1 \e[0m";}
@@ -470,7 +470,7 @@ crontab -l | grep -qE "x-ui" || { printf "%s\n" "${tasks[@]}" | crontab -; }
 ##################################https://yonggekkk.github.io/argosbx/###################################
 arpt="" anpt="" hypt="" tupt="" sspt="" warp="sx" ippz="4" bash <(curl -Ls https://raw.githubusercontent.com/yonggekkk/argosbx/main/argosbx.sh)
 randname=$(gen_str).txt
-sudo cp /root/agsbx/jh.txt /var/www/html/$randname
+sudo cp /root/agsbx/jhsub.txt /var/www/html/$randname
 ##################################Show Details##########################################################
 sudo /usr/local/x-ui/x-ui setting -username "$XUIUSER" -password "$XUIPASS"
 if systemctl is-active --quiet x-ui || command -v x-ui &> /dev/null; then clear
